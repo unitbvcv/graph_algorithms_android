@@ -5,9 +5,9 @@ public class WeightedArc extends Arc
 	
 	private Integer m_weight = null;
 
-	public WeightedArc(Node first, Node second, ArcDirection direction, int weight) 
+	public WeightedArc(Node first, Node second, int weight) 
 	{
-		super(first, second, direction);
+		super(first, second);
 		m_weight = new Integer(weight);
 	}
 
