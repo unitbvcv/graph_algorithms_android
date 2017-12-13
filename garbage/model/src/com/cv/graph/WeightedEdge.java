@@ -4,10 +4,10 @@ public class WeightedEdge extends Edge
 {
 	private Integer m_weight = null;
 
-	public WeightedEdge(Node first, Node second, int cost) 
+	public WeightedEdge(Node first, Node second, int weight) 
 	{
 		super(first, second);
-		m_weight = new Integer(cost);
+		m_weight = new Integer(weight);
 	}
 
 	public Integer getWeight() 
