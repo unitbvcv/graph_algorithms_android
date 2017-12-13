@@ -6,8 +6,8 @@ import java.util.Optional;
 public abstract class AbstractGraph 
 {
 
-	private HashSet<Node> m_nodes = null;
-	private HashSet<Edge> m_edges = null;
+	protected HashSet<Node> m_nodes = null;
+	protected HashSet<Edge> m_edges = null;
 	
 	public HashSet<Node> getNodes() 
 	{
