@@ -2,17 +2,17 @@ package com.cv.graph;
 
 public class WeightedEdge extends Edge
 {
-	private Integer m_cost = null;
+	private Integer m_weight = null;
 
 	public WeightedEdge(Node first, Node second, int cost) 
 	{
 		super(first, second);
-		m_cost = new Integer(cost);
+		m_weight = new Integer(cost);
 	}
 
-	public Integer getCost() 
+	public Integer getWeight() 
 	{
-		return m_cost;
+		return m_weight;
 	}
 	
 	public boolean equals(Object other)
@@ -21,7 +21,7 @@ public class WeightedEdge extends Edge
 		{
 			WeightedEdge otherWEdge = (WeightedEdge)other;
 			return ((Edge)this).equals((Edge)other) 
-				&& m_cost.intValue() == otherWEdge.getCost().intValue();
+				&& m_weight.intValue() == otherWEdge.getWeight().intValue();
 		}
 		return false;
 	}
