@@ -10,6 +10,9 @@ public class UndirectedGraph extends AbstractGraph
 		super();
 	}
 
+	/**
+	 * Returns an Edge object.
+	 */
 	@Override
 	public Edge getEdge(Node a, Node b) 
 	{
