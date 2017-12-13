@@ -15,10 +15,11 @@ public class Node
 		return m_id;
 	}
 	
-//	public boolean equals(Object other)
-//	{
-//		if (other instanceof Node)
-//			return m_id.contentEquals(((Node)other).getID());
-//		return false;
-//	}
+	public boolean equals(Object other)
+	{
+		if (other instanceof Node)
+			return m_id.contentEquals(((Node)other).getID());
+		return false;
+	}
+	
 }
