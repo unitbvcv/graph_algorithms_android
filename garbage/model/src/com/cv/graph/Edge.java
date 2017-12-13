@@ -3,7 +3,7 @@ package com.cv.graph;
 public class Edge 
 {
 	
-	private Node m_A, m_B;
+	private Node m_A = null, m_B = null;
 	
 	public Edge(Node first, Node second)
 	{

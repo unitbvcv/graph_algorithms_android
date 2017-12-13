@@ -3,7 +3,7 @@ package com.cv.graph;
 public class Node 
 {
 	
-	private String m_id;
+	private String m_id = null;
 	
 	public Node(String nodeID)
 	{
