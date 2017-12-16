@@ -22,6 +22,10 @@ public class Main
         graph.addNode(node5);
         Node node6 = new Node("6");
         graph.addNode(node6);
+        Node node7 = new Node("7");
+        graph.addNode(node7);
+        Node node8 = new Node("8");
+        graph.addNode(node8);
 
         Arc arc1 = new Arc(node1, node2);
         Arc arc2 = new Arc(node1, node3);
@@ -32,6 +36,8 @@ public class Main
         Arc arc7 = new Arc(node4, node5);
         Arc arc8 = new Arc(node4, node6);
         Arc arc9 = new Arc(node5, node6);
+        Arc arc10 = new Arc(node7, node3);
+        Arc arc11 = new Arc(node7, node8);
 
         graph.addEdge(arc1);
         graph.addEdge(arc2);
@@ -42,6 +48,8 @@ public class Main
         graph.addEdge(arc7);
         graph.addEdge(arc8);
         graph.addEdge(arc9);
+        graph.addEdge(arc10);
+        graph.addEdge(arc11);
 
         Algorithms.GenericGraphTraversalResult result = Algorithms.GenericGraphTraversal(graph, node1);
 

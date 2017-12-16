@@ -87,6 +87,7 @@ public class Algorithms {
                     unvisited.remove(newStartNode);
                     visited.clear();
                     visited.add(newStartNode);
+                    result.getPredecessors().put(newStartNode, null);
                     ++pas;
                     result.getOrders().put(newStartNode, pas);
                 }
