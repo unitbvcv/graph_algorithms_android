@@ -20,6 +20,11 @@ public class Edge
 	{
 		return m_B;
 	}
+
+	public Node getOtherEnd(Node oneEnd)
+	{
+		return m_A.equals(oneEnd) ? m_B : (m_B.equals(oneEnd) ? m_A : null);
+	}
 	
 	public boolean equals(Object other)
 	{
