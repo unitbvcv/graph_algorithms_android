@@ -2,19 +2,98 @@ package com.cv.graph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class Algorithms {
-    public class GenericGraphTraversalResult {
+
+    public static class GenericGraphTraversalResult
+    {
         private HashMap<Node, Node> predecessors = new HashMap<>();
         private HashMap<Node, Integer> orders = new HashMap<>();
 
-        public HashMap<Node, Node> getPredecessors() {
+        public HashMap<Node, Node> getPredecessors()
+        {
             return predecessors;
         }
 
-        public HashMap<Node, Integer> getOrders() {
+        public HashMap<Node, Integer> getOrders()
+        {
             return orders;
         }
+    }
+
+    public static GenericGraphTraversalResult GenericGraphTraversal(AbstractGraph graph, Node startNode)
+    {
+        if (graph instanceof  UndirectedGraph || graph instanceof  DirectedGraph)
+        {
+            GenericGraphTraversalResult result = new Algorithms.GenericGraphTraversalResult();
+
+            // multimea nodurilor nevizitate
+            HashSet<Node> unvisited = new HashSet<>(graph.getNodes());
+            unvisited.remove(startNode);
+
+            // multimea nodurilor vizitate
+            HashSet<Node> visited = new HashSet<>();
+            visited.add(startNode);
+
+            // multimea nodurilor analizate
+            HashSet<Node> analyzed = new HashSet<>();
+
+            // nodul de start nu are predecesor, restul nodurilor nu sunt prezente in mapa inca
+            result.getPredecessors().put(startNode, null);
+
+            // pasul numara cate noduri parcurge algoritmul
+            int pas = 1;
+
+            // nodul de start e primul vizitat, restul nodurilor nu sunt prezente in mapa inca
+            result.getOrders().put(startNode, pas);
+
+            while (!analyzed.containsAll(graph.getNodes())) // W != N
+            {
+                while (!visited.isEmpty()) // V != multimea vida
+                {
+                    // se selecteaza un nod x din V
+                    Node x = visited.stream().findAny().get();
+
+                    // arc/muchie (x, y) din A cu y din U
+                    Edge foundEdge = graph.getEdges().stream()
+                    .filter(edge -> {
+                        if (edge instanceof Arc)
+                            return edge.getA().equals(x) && unvisited.contains(edge.getB());
+                        return edge.getA().equals(x) && unvisited.contains(edge.getB())
+                            || edge.getB().equals(x) && unvisited.contains(edge.getA());})
+                    .findAny().orElse(null);
+
+                    // daca exista arc/muchie (x, y) din A cu y din U
+                    if (foundEdge != null)
+                    {
+                        Node y = foundEdge.getOtherEnd(x);
+                        unvisited.remove(y);
+                        visited.add(y);
+                        result.getPredecessors().put(y, x);
+                        ++pas;
+                        result.getOrders().put(y, pas);
+                    }
+                    else
+                    {
+                        visited.remove(x);
+                        analyzed.add(x);
+                    }
+                }
+
+                if (!unvisited.isEmpty())
+                {
+                    Node newStartNode = unvisited.stream().findAny().get();
+                    unvisited.remove(newStartNode);
+                    visited.clear();
+                    visited.add(newStartNode);
+                    ++pas;
+                    result.getOrders().put(newStartNode, pas);
+                }
+            }
+            return result;
+        }
+        return null;
     }
 
     public class BreadthFirstTraversalResult {
