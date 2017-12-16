@@ -19,7 +19,7 @@ public abstract class AbstractGraph
 		Optional<Node> foundNode = m_nodes.stream()
 		.filter(node -> node.getID().contentEquals(id))
 		.findAny();
-		return foundNode.isPresent() ? foundNode.get() : null;
+		return foundNode.orElse(null);
 	}
 	
 	public boolean addNode(Node node) // sau cu id
