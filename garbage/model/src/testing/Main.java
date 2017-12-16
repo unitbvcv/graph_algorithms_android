@@ -47,7 +47,8 @@ public class Main
 
         System.out.println("Vector de predecesori:");
         result.getPredecessors().forEach( (nod, predecesor) ->
-        {System.out.println("Nod: " + nod.getID() + " Predecesor: " + predecesor.getID());});
+        {System.out.println("Nod: " + nod.getID() + " Predecesor: "
+                + (predecesor == null ? "null" : predecesor.getID()));});
 
         System.out.println();
         System.out.println("Vector de ordine:");
