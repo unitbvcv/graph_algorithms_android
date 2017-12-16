@@ -1,5 +1,6 @@
 package com.cv.graph;
 
+import java.util.HashSet;
 import java.util.Optional;
 
 public class UndirectedGraph extends AbstractGraph
@@ -8,6 +9,8 @@ public class UndirectedGraph extends AbstractGraph
 	public UndirectedGraph()
 	{
 		super();
+		m_edges = new HashSet<>();
+		m_nodes = new HashSet<>();
 	}
 
 	/**

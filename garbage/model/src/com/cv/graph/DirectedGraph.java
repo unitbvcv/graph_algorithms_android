@@ -1,5 +1,6 @@
 package com.cv.graph;
 
+import java.util.HashSet;
 import java.util.Optional;
 
 public class DirectedGraph extends AbstractGraph
@@ -10,6 +11,8 @@ public class DirectedGraph extends AbstractGraph
 	public DirectedGraph()
 	{
 		super();
+		m_edges = new HashSet<>();
+		m_nodes = new HashSet<>();
 	}
 	
 	/**

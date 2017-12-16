@@ -8,7 +8,7 @@ public abstract class AbstractGraph
 
 	protected HashSet<Node> m_nodes = null;
 	protected HashSet<Edge> m_edges = null;
-	
+
 	public HashSet<Node> getNodes() 
 	{
 		return m_nodes;
