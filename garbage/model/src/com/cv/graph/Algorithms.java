@@ -1,5 +1,6 @@
 package com.cv.graph;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -97,7 +98,7 @@ public class Algorithms {
         return null;
     }
 
-    public class BreadthFirstTraversalResult {
+    public static class BreadthFirstTraversalResult {
         private HashMap<Node, Node> predecessors = new HashMap<>();
         private HashMap<Node, Integer> roadLengths = new HashMap<>();
 
@@ -108,6 +109,72 @@ public class Algorithms {
         public HashMap<Node, Integer> getRoadLengths() {
             return roadLengths;
         }
+    }
+
+    public static  BreadthFirstTraversalResult BreadthFirstTraversal(AbstractGraph graph, Node startNode)
+    {
+        if (graph instanceof DirectedGraph || graph instanceof UndirectedGraph)
+        {
+            BreadthFirstTraversalResult result = new BreadthFirstTraversalResult();
+
+            // multimea nodurilor nevizitate
+            HashSet<Node> unvisited = new HashSet<>(graph.getNodes());
+            unvisited.remove(startNode);
+
+            // multimea nodurilor vizitate
+            ArrayDeque<Node> visited = new ArrayDeque<>(graph.getNodes().size());
+            visited.add(startNode);
+
+            // multimea nodurilor analizate
+            HashSet<Node> analyzed = new HashSet<>();
+
+            // nodul de start nu are predecesor, restul nodurilor nu sunt prezente in mapa inca
+            result.getPredecessors().put(startNode, null);
+
+            // nodul de start are lungimea drumului 0
+            result.getRoadLengths().put(startNode, 0);
+
+            while (!analyzed.containsAll(graph.getNodes())) // W != N
+            {
+                while (!visited.isEmpty()) // V != multimea vida
+                {
+                    // se selecteaza cel mai vechi nod x din V
+                    Node x = visited.poll();
+
+                    // pentru toate arcele/muchiile din x
+                    graph.getEdges().stream()
+                    .filter(edge -> {
+                        if (edge instanceof Arc)
+                            return edge.getA().equals(x);
+                        return edge.getA().equals(x) || edge.getB().equals(x);})
+                    .forEach(edge -> {
+                        Node y = edge.getOtherEnd(x);
+                        if (unvisited.contains(y))
+                        {
+                            unvisited.remove(y);
+                            visited.add(y);
+                            result.predecessors.put(y, x);
+                            result.getRoadLengths().put(y, result.getRoadLengths().get(x) + 1);
+                        }
+                    });
+
+                    visited.remove(x);
+                    analyzed.add(x);
+                }
+
+                if (!unvisited.isEmpty())
+                {
+                    Node newStartNode = unvisited.stream().findAny().get();
+                    unvisited.remove(newStartNode);
+                    visited.clear();
+                    visited.add(newStartNode);
+                    result.getPredecessors().put(newStartNode, null);
+                    result.getRoadLengths().put(newStartNode, 0);
+                }
+            }
+            return result;
+        }
+        return null;
     }
 
     public class DepthFirstTraversalResult {
