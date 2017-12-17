@@ -1,9 +1,6 @@
 package com.cv.graph;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public class Algorithms {
 
@@ -284,6 +281,60 @@ public class Algorithms {
             return treeEdges;
         }
     }
+
+    public static MinimumPartialTreeResult PrimsAlgorithm(UndirectedWeightedGraph graph, Node startNode)
+    {
+        MinimumPartialTreeResult result = new MinimumPartialTreeResult();
+
+        // multimea N1 reprezinta un fel de multime de noduri analizate, pornind cu nodul de start
+        HashSet<Node> N1 = new HashSet<>();
+
+        // multimea nonN1 reprezinta toate nodurile neanalizate inca
+        HashSet<Node> nonN1 = new HashSet<>(graph.getNodes());
+
+        // functia v mapeaza pentru fiecare nod valoarea arcului cu cost minim prin care se poate accesa
+        // respectivul nod; aceasta valoare se schimba pe masura ce muchii cu cost mai mic devin vizitate si
+        // nodul nu devine din neanalizat analizat
+        HashMap<Node, Integer> v = new HashMap<>();
+
+        // functia e mapeaza pentru fiecare nod arcul cu cost minim prin care se acceseaza respectivul nod; analog cu v
+        HashMap<Node, WeightedEdge> e = new HashMap<>();
+
+        // initializam v
+        for (Node node : graph.getNodes())
+            v.put(node, Integer.MAX_VALUE);
+        v.put(startNode, 0);
+
+        while (!N1.containsAll(graph.getNodes()))
+        {
+            int min = Integer.MAX_VALUE;
+            Node y = null;
+            // gasirea nodului cu costul minim din v
+            for (Map.Entry<Node, Integer> entry : v.entrySet())
+            {
+                if (entry.getValue() < min)
+                {
+                    min = entry.getValue();
+                    y = entry.getKey();
+                }
+            }
+
+            // y devine nod analizat
+            N1.add(y);
+            nonN1.remove(y);
+            // daca y != startNode, am gasit arcul cu cost minim la nodul y
+            if (!y.equals(startNode))
+                result.getTreeEdges().add(e.get(y));
+
+            // verificam daca nu exista drumuri mai scurte prin y fata de drumurile deja descoperite
+            // parcurgem toate arcele care pleaca din y si merg intr-un nod neanalizat
+            graph.getEdges().stream()
+            .filter( edge -> (edge.getA().equals(y) || edge.getB().equals(y)) && nonN1.contains(edge.getOtherEnd(y)));
+        }
+
+        return result;
+    }
+
 
     public static class BellmanFordDijkstraResult
     {
