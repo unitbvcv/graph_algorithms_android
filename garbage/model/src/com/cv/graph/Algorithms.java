@@ -98,7 +98,9 @@ public class Algorithms {
         return null;
     }
 
-    public static class BreadthFirstTraversalResult {
+
+    public static class BreadthFirstTraversalResult
+    {
         private HashMap<Node, Node> predecessors = new HashMap<>();
         private HashMap<Node, Integer> roadLengths = new HashMap<>();
 
@@ -177,12 +179,14 @@ public class Algorithms {
         return null;
     }
 
-    public class DepthFirstTraversalResult {
+
+    public static class DepthFirstTraversalResult
+    {
         private HashMap<Node, Node> predecessors = new HashMap<>();
         private HashMap<Node, Integer> visitedTimes = new HashMap<>();
-        private HashMap<Node, Integer> analizedTimes = new HashMap<>();
+        private HashMap<Node, Integer> analysedTimes = new HashMap<>();
 
-        public HashMap<Node, Node> getPredecessor() {
+        public HashMap<Node, Node> getPredecessors() {
             return predecessors;
         }
 
@@ -191,11 +195,89 @@ public class Algorithms {
         }
 
         public HashMap<Node, Integer> getAnalizedTime() {
-            return analizedTimes;
+            return analysedTimes;
         }
     }
 
-    public class MinimumPartialTreeResult {
+    public static DepthFirstTraversalResult DepthFirstTraversal(AbstractGraph graph, Node startNode)
+    {
+        if (graph instanceof  DirectedGraph || graph instanceof UndirectedGraph) // verificare nenecesara
+        {
+            DepthFirstTraversalResult result = new DepthFirstTraversalResult();
+
+            // multimea nodurilor nevizitate
+            HashSet<Node> unvisited = new HashSet<>(graph.getNodes());
+            unvisited.remove(startNode);
+
+            // multimea nodurilor vizitate
+            ArrayDeque<Node> visited = new ArrayDeque<>(graph.getNodes().size());
+            visited.push(startNode);
+
+            // multimea nodurilor analizate
+            HashSet<Node> analyzed = new HashSet<>();
+
+            // nodul de start nu are predecesor, restul nodurilor nu sunt prezente in mapa inca
+            result.getPredecessors().put(startNode, null);
+
+            int timp = 1;
+
+            // nodul de start e primul vizitat, restul nodurilor nu sunt prezente in mapa inca
+            result.getVisitedTime().put(startNode, timp);
+
+            while (!analyzed.containsAll(graph.getNodes())) // W != N
+            {
+                while (!visited.isEmpty()) // V != multimea vida
+                {
+                    // se selecteaza un nod x din V
+                    Node x = visited.peek();
+
+                    // arc/muchie (x, y) din A cu y din U
+                    Edge foundEdge = graph.getEdges().stream()
+                    .filter(edge -> {
+                        if (edge instanceof Arc)
+                            return edge.getA().equals(x) && unvisited.contains(edge.getB());
+                        return edge.getA().equals(x) && unvisited.contains(edge.getB())
+                            || edge.getB().equals(x) && unvisited.contains(edge.getA());})
+                    .findAny().orElse(null);
+
+                    // daca exista arc/muchie (x, y) din A cu y din U
+                    if (foundEdge != null)
+                    {
+                        Node y = foundEdge.getOtherEnd(x);
+                        unvisited.remove(y);
+                        visited.push(y);
+                        result.getPredecessors().put(y, x);
+                        ++timp;
+                        result.getVisitedTime().put(y, timp);
+                    }
+                    else
+                    {
+                        visited.pop();
+                        analyzed.add(x);
+                        ++timp;
+                        result.getAnalizedTime().put(x, timp);
+                    }
+                }
+
+                if (!unvisited.isEmpty())
+                {
+                    Node newStartNode = unvisited.stream().findAny().get();
+                    unvisited.remove(newStartNode);
+                    visited.clear();
+                    visited.push(newStartNode);
+                    result.getPredecessors().put(newStartNode, null);
+                    ++timp;
+                    result.getVisitedTime().put(newStartNode, timp);
+                }
+            }
+            return result;
+        }
+        return null;
+    }
+
+
+    public static class MinimumPartialTreeResult
+    {
         private ArrayList<WeightedEdge> treeEdges = new ArrayList<>();
 
         public ArrayList<WeightedEdge> getTreeEdges() {
@@ -203,7 +285,8 @@ public class Algorithms {
         }
     }
 
-    public class BellmanFordDijkstraResult {
+    public static class BellmanFordDijkstraResult
+    {
         private HashMap<Node, Integer> distances = new HashMap<>();
         private HashMap<Node, Integer> predecessors = new HashMap<>();
 
@@ -216,7 +299,8 @@ public class Algorithms {
         }
     }
 
-    public class FloydWarshallResult {
+    public static class FloydWarshallResult
+    {
         private HashMap<Node, HashMap<Node, Integer>> distances = new HashMap<>();
         private HashMap<Node, HashMap<Node, Integer>> predecessors = new HashMap<>();
 
@@ -229,7 +313,8 @@ public class Algorithms {
         }
     }
 
-    public class EulerianResult {
+    public static class EulerianResult
+    {
         private ArrayList<Arc> eulerianRoad = new ArrayList<>();
 
         public ArrayList<Arc> getEulerianRoad() {

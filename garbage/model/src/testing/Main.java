@@ -121,9 +121,79 @@ public class Main
         {System.out.println("Nod: " + nod.getID() + " Lungime: " + lungime);});
     }
 
+    public static void testAlgorithm3()
+    {
+        DirectedGraph graph = new DirectedGraph();
+
+        Node n1 = new Node("1");
+        Node n2 = new Node("2");
+        Node n3 = new Node("3");
+        Node n4 = new Node("4");
+        Node n5 = new Node("5");
+        Node n6 = new Node("6");
+        Node n7 = new Node("7");
+        Node n8 = new Node("8");
+
+        graph.addNode(n1);
+        graph.addNode(n2);
+        graph.addNode(n3);
+        graph.addNode(n4);
+        graph.addNode(n5);
+        graph.addNode(n6);
+        graph.addNode(n7);
+        graph.addNode(n8);
+
+        Arc a1 = new Arc(n1, n2);
+        Arc a2 = new Arc(n1, n5);
+        Arc a3 = new Arc(n2, n5);
+        Arc a4 = new Arc(n2, n3);
+        Arc a5 = new Arc(n3, n4);
+        Arc a6 = new Arc(n4, n2);
+        Arc a7 = new Arc(n5, n4);
+        Arc a8 = new Arc(n6, n7);
+        Arc a9 = new Arc(n6, n8);
+        Arc a10 = new Arc(n7, n1);
+        Arc a11 = new Arc(n7, n5);
+        Arc a12 = new Arc(n8, n6);
+        Arc a13 = new Arc(n8, n7);
+
+        graph.addEdge(a1);
+        graph.addEdge(a2);
+        graph.addEdge(a3);
+        graph.addEdge(a4);
+        graph.addEdge(a5);
+        graph.addEdge(a6);
+        graph.addEdge(a7);
+        graph.addEdge(a8);
+        graph.addEdge(a9);
+        graph.addEdge(a10);
+        graph.addEdge(a11);
+        graph.addEdge(a12);
+        graph.addEdge(a13);
+
+
+        Algorithms.DepthFirstTraversalResult result = Algorithms.DepthFirstTraversal(graph, n1);
+
+        System.out.println("Vector de predecesori:");
+        result.getPredecessors().forEach( (nod, predecesor) ->
+        {System.out.println("Nod: " + nod.getID() + " Predecesor: "
+                + (predecesor == null ? "null" : predecesor.getID()));});
+
+        System.out.println();
+        System.out.println("Vector de timpi vizitati:");
+        result.getVisitedTime().forEach((nod, timp1) ->
+        {System.out.println("Nod: " + nod.getID() + " Timp: " + timp1);});
+
+        System.out.println();
+        System.out.println("Vector de timpi analizati:");
+        result.getAnalizedTime().forEach((nod, timp2) ->
+        {System.out.println("Nod: " + nod.getID() + " Timp: " + timp2);});
+
+    }
+
     public static void main(String args[])
     {
-        testAlgorithm2();
+        testAlgorithm3();
     }
 
 }
