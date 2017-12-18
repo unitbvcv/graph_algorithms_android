@@ -1,6 +1,7 @@
 package com.cv.graph;
 
 import java.util.*;
+import java.util.function.BiPredicate;
 
 public class Algorithms {
 
@@ -152,12 +153,12 @@ public class Algorithms {
                         {
                             unvisited.remove(y);
                             visited.add(y);
-                            result.predecessors.put(y, x);
+                            result.getPredecessors().put(y, x);
                             result.getRoadLengths().put(y, result.getRoadLengths().get(x) + 1);
                         }
                     });
 
-                    visited.remove(x);
+                    //visited.remove(x);
                     analyzed.add(x);
                 }
 
@@ -342,6 +343,21 @@ public class Algorithms {
                     }
                 }
         }
+
+        return result;
+    }
+
+    public static MinimumPartialTreeResult KruskalAlgorithm(UndirectedWeightedGraph graph)
+    {
+        MinimumPartialTreeResult result = new MinimumPartialTreeResult();
+
+        // Procedura Sortare: sortarea arcelor dupa cost
+        PriorityQueue<WeightedEdge> sortedEdges = new PriorityQueue<>
+                (graph.getEdges().size(), Comparator.comparing(WeightedEdge::getWeight));
+        graph.getEdges().forEach(edge -> sortedEdges.add((WeightedEdge)edge));
+
+
+
 
         return result;
     }
