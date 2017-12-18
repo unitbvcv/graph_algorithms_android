@@ -309,10 +309,11 @@ public class Algorithms {
         {
             int min = Integer.MAX_VALUE;
             Node y = null;
+
             // gasirea nodului cu costul minim din v
             for (Map.Entry<Node, Integer> entry : v.entrySet())
             {
-                if (entry.getValue() < min)
+                if (nonN1.contains(entry.getKey()) && entry.getValue() < min)
                 {
                     min = entry.getValue();
                     y = entry.getKey();
@@ -322,14 +323,24 @@ public class Algorithms {
             // y devine nod analizat
             N1.add(y);
             nonN1.remove(y);
+
             // daca y != startNode, am gasit arcul cu cost minim la nodul y
             if (!y.equals(startNode))
                 result.getTreeEdges().add(e.get(y));
 
             // verificam daca nu exista drumuri mai scurte prin y fata de drumurile deja descoperite
             // parcurgem toate arcele care pleaca din y si merg intr-un nod neanalizat
-            graph.getEdges().stream()
-            .filter( edge -> (edge.getA().equals(y) || edge.getB().equals(y)) && nonN1.contains(edge.getOtherEnd(y)));
+            for (Edge edge : graph.getEdges())
+                if ((edge.getA().equals(y) || edge.getB().equals(y)) && nonN1.contains(edge.getOtherEnd(y)))
+                {
+                    WeightedEdge wEdge = (WeightedEdge) edge;
+                    Node nonY = edge.getOtherEnd(y);
+                    if (v.get(nonY) > wEdge.getWeight())
+                    {
+                        v.put(nonY, wEdge.getWeight());
+                        e.put(nonY, wEdge);
+                    }
+                }
         }
 
         return result;
