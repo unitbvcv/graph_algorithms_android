@@ -3,7 +3,7 @@ package com.cv.graph;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Optional;
-import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 public class UndirectedGraph extends AbstractGraph
 {
@@ -46,25 +46,32 @@ public class UndirectedGraph extends AbstractGraph
 		{
 			Algorithms.DepthFirstTraversalResult result = Algorithms.DepthFirstTraversal(this, m_nodes.iterator().next());
 			HashMap<Node, Integer> vizitat = result.getVisitedTime();
-			HashMap<Node, Integer> analizat = result.getAnalizedTime();
-
-            for (Edge edge : m_edges)
-			{
-                BiPredicate<Node, Node> isReturnEdge = (x, y) -> {
-                    int t1_x = 	vizitat.get(x),
-                        t2_x = analizat.get(x),
-                        t1_y = vizitat.get(y),
-                        t2_y = analizat.get(y);
-                    Node yPredecessor = result.getPredecessors().get(y);
-                    boolean xPredecessorOfY = yPredecessor != null && x.equals(yPredecessor);
-                    //return t1_y < t1_x && t1_x < t2_x && t2_x < t2_y && !xPredecessorOfY;
-                    return !xPredecessorOfY && (t1_y < t1_x && t1_x < t2_x && t2_x < t2_y);
+			//HashMap<Node, Integer> analizat = result.getAnalizedTime();
+			
+            Predicate<Edge> isReturnEdge = (edge) -> {
+            	
+            	Node x, y;
+            	
+            	// se aleg nodurile muchiei (x, y) a.i. t1_x < t1_y
+            	if (vizitat.get(edge.getA()) < vizitat.get(edge.getB()))
+            	{
+            		x = edge.getA();
+            		y = edge.getB();
+            	}
+            	else
+            	{
+            		x = edge.getB();
+            		y = edge.getA();
+            	}
+            	
+                Node yPredecessor = result.getPredecessors().get(y);
+                boolean xPredecessorOfY = x.equals(yPredecessor);
+                return !xPredecessorOfY;
                 };
-
-                if (isReturnEdge.test(edge.getA(), edge.getB())
-                        || isReturnEdge.test(edge.getB(), edge.getA()))
+                
+            for (Edge edge : m_edges)			
+                if (isReturnEdge.test(edge))
 					return true;
-			}
 		}
 		return false;
 	}

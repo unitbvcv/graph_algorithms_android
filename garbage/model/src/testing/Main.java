@@ -229,26 +229,60 @@ public class Main
             + " - " + edge.getB().getID() + " Cost: " + edge.getWeight()));
     }
 
-    public static void main(String args[])
+    public static void testCyclic()
     {
-        UndirectedGraph graph = new UndirectedGraph();
+    	UndirectedGraph graph = new UndirectedGraph();
 
         Node n1 = new Node("1");
         Node n2 = new Node("2");
         Node n3 = new Node("3");
+        Node n4 = new Node("4");
+        Node n5 = new Node("5");
+        Node n6 = new Node("6");
+        Node n7 = new Node("7");
+        Node n8 = new Node("8");
+        Node n9 = new Node("9");
+        Node n10 = new Node("10");
 
         graph.addNode(n1);
         graph.addNode(n2);
         graph.addNode(n3);
+        graph.addNode(n4);
+        graph.addNode(n5);
+        graph.addNode(n6);
+        graph.addNode(n7);
+        graph.addNode(n8);
+        graph.addNode(n9);
+        graph.addNode(n10);
 
         Edge e1 = new Edge(n1, n2);
-        Edge e2 = new Edge(n2, n3);
+        Edge e2 = new Edge(n1, n5);
+        Edge e3 = new Edge(n1, n6);
+        Edge e4 = new Edge(n2, n3);
+        Edge e5 = new Edge(n2, n4);
+        Edge e6 = new Edge(n6, n7);
+        Edge e7 = new Edge(n6, n8);
+        Edge e8 = new Edge(n6, n9);
+        Edge e9 = new Edge(n9, n10);
+        Edge e10 = new Edge(n9, n2);
 
         graph.addEdge(e1);
         graph.addEdge(e2);
-
-
+        graph.addEdge(e3);
+        graph.addEdge(e4);
+        graph.addEdge(e5);
+        graph.addEdge(e6);
+        graph.addEdge(e7);
+        graph.addEdge(e8);
+        graph.addEdge(e9);
+        graph.addEdge(e10);
+        
         System.out.println(graph.isCyclic());
+    }
+    
+    public static void main(String args[])
+    {
+        
     }
 
 }
