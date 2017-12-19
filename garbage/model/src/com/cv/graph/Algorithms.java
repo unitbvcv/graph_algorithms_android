@@ -1,7 +1,6 @@
 package com.cv.graph;
 
 import java.util.*;
-import java.util.function.BiPredicate;
 
 public class Algorithms {
 
@@ -356,9 +355,22 @@ public class Algorithms {
                 (graph.getEdges().size(), Comparator.comparing(WeightedEdge::getWeight));
         graph.getEdges().forEach(edge -> sortedEdges.add((WeightedEdge)edge));
 
+        // creez un graph auxiliar de test prin care verific daca adaugarea unei muchii
+        // produce un ciclu sau nu
+        UndirectedWeightedGraph testGraph = new UndirectedWeightedGraph();
+        graph.getNodes().forEach(node -> testGraph.addNode(node));
 
-
-
+        int numberOfEdges = graph.getEdges().size();
+        for (int i = 0; i < numberOfEdges; ++i)
+        {
+        	WeightedEdge testEdge = sortedEdges.poll();
+        	testGraph.addEdge(testEdge);
+        	if (testGraph.isCyclic())
+        		testGraph.removeEdge(testEdge);
+        	else
+        		result.getTreeEdges().add(testEdge);
+        }
+        
         return result;
     }
 
