@@ -451,6 +451,24 @@ public class Algorithms {
         }
     }
 
+    public static BellmanFordDijkstraResult DijkstraAlgorithm(DirectedWeightedGraph graph, Node startNode)
+    {
+        BellmanFordDijkstraResult result = new BellmanFordDijkstraResult();
+
+        // here algorithm
+
+        return result;
+    }
+
+    public static BellmanFordDijkstraResult BellmanFordAlgorithm(DirectedWeightedGraph graph, Node startNode)
+    {
+        BellmanFordDijkstraResult result = new BellmanFordDijkstraResult();
+
+        // here algorithm
+
+        return result;
+    }
+
     public static class FloydWarshallResult
     {
         private HashMap<Node, HashMap<Node, Integer>> distances = new HashMap<>();
@@ -465,6 +483,16 @@ public class Algorithms {
         }
     }
 
+    public static FloydWarshallResult FloydWarshallAlgorithm(DirectedWeightedGraph graph)
+    {
+        FloydWarshallResult result = new FloydWarshallResult();
+
+        // do your thing
+
+        return result;
+    }
+
+
     public static class EulerianResult
     {
         private ArrayList<Arc> eulerianRoad = new ArrayList<>();
@@ -473,4 +501,14 @@ public class Algorithms {
             return eulerianRoad;
         }
     }
+
+    public static EulerianResult EulerianCircuit(DirectedGraph graph)
+    {
+        EulerianResult result = new EulerianResult();
+
+        // here alg
+
+        return result;
+    }
+
 }
