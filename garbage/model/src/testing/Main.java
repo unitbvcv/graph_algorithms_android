@@ -321,10 +321,51 @@ public class Main
         .forEach(edge -> System.out.println(edge.getA().getID()
             + " - " + edge.getB().getID() + " Cost: " + edge.getWeight()));
     }
-    
+
+    public static void testAlgorithm6()
+    {
+        UndirectedWeightedGraph graph = new UndirectedWeightedGraph();
+
+        Node n1 = new Node("1");
+        Node n2 = new Node("2");
+        Node n3 = new Node("3");
+        Node n4 = new Node("4");
+        Node n5 = new Node("5");
+
+        graph.addNode(n1);
+        graph.addNode(n2);
+        graph.addNode(n3);
+        graph.addNode(n4);
+        graph.addNode(n5);
+
+        WeightedEdge edge1 = new WeightedEdge(n1, n2, 35);
+        WeightedEdge edge2 = new WeightedEdge(n1, n3, 40);
+        WeightedEdge edge3 = new WeightedEdge(n3, n2, 25);
+        WeightedEdge edge4 = new WeightedEdge(n4, n2, 10);
+        WeightedEdge edge5 = new WeightedEdge(n3, n4, 20);
+        WeightedEdge edge6 = new WeightedEdge(n5, n3, 15);
+        WeightedEdge edge7 = new WeightedEdge(n4, n5, 30);
+        WeightedEdge edge8 = new WeightedEdge(n5, n2,  5);
+
+        graph.addEdge(edge1);
+        graph.addEdge(edge2);
+        graph.addEdge(edge3);
+        graph.addEdge(edge4);
+        graph.addEdge(edge5);
+        graph.addEdge(edge6);
+        graph.addEdge(edge7);
+        graph.addEdge(edge8);
+
+        MinimumPartialTreeResult result = Algorithms.BoruvkaAlgorithm(graph);
+
+        result.getTreeEdges().stream()
+                .forEach(edge -> System.out.println(edge.getA().getID()
+                        + " - " + edge.getB().getID() + " Cost: " + edge.getWeight()));
+    }
+
     public static void main(String args[])
     {
-    	testAlgorithm5();
+    	testAlgorithm6();
     }
 
 }

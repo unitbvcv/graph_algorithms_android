@@ -1,6 +1,7 @@
 package com.cv.graph;
 
 import java.util.*;
+import java.util.function.BiPredicate;
 
 public class Algorithms {
 
@@ -371,6 +372,67 @@ public class Algorithms {
         		result.getTreeEdges().add(testEdge);
         }
         
+        return result;
+    }
+
+    public static MinimumPartialTreeResult BoruvkaAlgorithm(UndirectedWeightedGraph graph)
+    {
+        MinimumPartialTreeResult result = new MinimumPartialTreeResult();
+
+        // multimea M reprezinta multimea de multimi de noduri
+        // acele multimi de noduri contin noduri legate prin muchii de cost minim
+        // M e partitie
+        // M o sa contina duplicate pe parcursul algoritmului pe masura ce se reunesc multimile de noduri
+        HashMap<String, HashSet<Node>> M = new HashMap<>();
+
+        // initial fiecare nod e in propria sa multime
+        for (Node node : graph.getNodes())
+        {
+            HashSet<Node> Ni = new HashSet<>();
+            Ni.add(node);
+            M.put(node.getID(), Ni);
+        }
+
+        while (result.getTreeEdges().size() < graph.getNodes().size() - 1)
+        {
+            HashMap<String, String> reuniuni = new HashMap<>();
+
+            for (Map.Entry<String, HashSet<Node>> Ni : M.entrySet())
+            {
+                // se selecteaza muchia de cost minim care leaga nodurile din Ni de un alt nod
+                Edge minimumCostEdge = graph.getEdges().stream()
+                .filter(edge -> {
+                    BiPredicate<Node, Node> verificare = (y, nonY) ->
+                            Ni.getValue().contains(y) && !Ni.getValue().contains(nonY);
+
+                    return verificare.test(edge.getA(), edge.getB())
+                        || verificare.test(edge.getB(), edge.getA());
+
+                }).min( (edge1, edge2) -> {
+                    WeightedEdge wEdge1 = (WeightedEdge)edge1;
+                    WeightedEdge wEdge2 = (WeightedEdge)edge2;
+
+                    return wEdge1.getWeight().compareTo(wEdge2.getWeight());
+                } ).orElse(null);
+
+                if (minimumCostEdge != null)
+                {
+                    Node nonY = Ni.getValue().contains(minimumCostEdge.getA()) ? minimumCostEdge.getB() : minimumCostEdge.getA();
+
+                    reuniuni.put(Ni.getKey(), nonY.getID());
+
+                    if (result.getTreeEdges().contains(minimumCostEdge) == false)
+                        result.getTreeEdges().add((WeightedEdge) minimumCostEdge);
+                }
+            }
+
+            reuniuni.forEach( (i, j) -> {
+                M.get(i).addAll(M.get(j));
+                M.put(j, M.get(i));
+            });
+
+        }
+
         return result;
     }
 
