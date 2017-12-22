@@ -21,7 +21,8 @@ public class WeightedArc extends Arc
 		if (other instanceof WeightedArc)
 		{
 			WeightedArc otherWArc = (WeightedArc)other;
-			return ((Arc)this).equals(other)
+			return this.getA().equals(otherWArc.getA())
+				&& this.getB().equals(otherWArc.getB())
 				&& m_weight.intValue() == otherWArc.getWeight().intValue();
 		}
 		return false;

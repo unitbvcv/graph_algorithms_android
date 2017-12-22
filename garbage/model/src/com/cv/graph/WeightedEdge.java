@@ -20,7 +20,8 @@ public class WeightedEdge extends Edge
 		if (other instanceof WeightedEdge)
 		{
 			WeightedEdge otherWEdge = (WeightedEdge)other;
-			return ((Edge)this).equals((Edge)other) 
+			return (getA().equals(otherWEdge.getA()) && getB().equals(otherWEdge.getB())
+				|| getA().equals(otherWEdge.getB()) && getB().equals(otherWEdge.getA()))
 				&& m_weight.intValue() == otherWEdge.getWeight().intValue();
 		}
 		return false;
