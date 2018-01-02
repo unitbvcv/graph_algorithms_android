@@ -450,16 +450,81 @@ public class Algorithms {
 
     public static class EulerianResult {
         private ArrayList<Arc> eulerianRoad = new ArrayList<>();
+        private  ArrayList<Node> eulerianNodes = new ArrayList<>();
 
         public ArrayList<Arc> getEulerianRoad() {
             return eulerianRoad;
         }
+
+        public ArrayList<Node> getEulerianNodes()
+        {
+            return eulerianNodes;
+        }
     }
 
-    public static EulerianResult EulerianCircuit(DirectedGraph graph) {
+    public static EulerianResult EulerianCircuit(DirectedGraph graph, Node startNode)
+    {
         EulerianResult result = new EulerianResult();
 
-        // here alg
+        DepthFirstTraversalResult ptdf = DepthFirstTraversal(graph, startNode);
+
+        // W - lista de noduri care formeaza circuitul
+        ArrayList<Node> W = result.getEulerianNodes();
+
+        // b - vector in care marcam daca un arc e din arborele parcurgere
+        HashMap<Arc, Integer> b = new HashMap<>();
+
+        // V-x  = lista nodurilor adiacente catre interiorul lui x
+        HashMap<Node, ArrayList<Node>> V_x = new HashMap<>();
+
+        // i - vector de indecsi pt fiecare nod
+        HashMap<Node, Integer> index = new HashMap<>();
+
+
+        // Initializari
+
+        // daca arcul apartine arborelui parcurgere  [ (x, y) e A' ]
+        for (Edge edge1 : graph.getEdges())
+        {
+            Arc arc = (Arc) edge1;
+            Node y_predecessor = ptdf.getPredecessors().get(arc.getB());
+            if (y_predecessor != null && y_predecessor.equals(arc.getA()))
+                b.put(arc, 1);
+            else b.put(arc, 0);
+        }
+
+        for (Node node : graph.getNodes())
+        {
+            V_x.put(node, new ArrayList<>());
+            index.put(node, -1);
+        }
+
+        graph.getEdges().stream().map(edge -> (Arc) edge).forEach(arc -> {
+            if (b.get(arc) == 0)
+                V_x.get(arc.getB()).add(0, arc.getA());
+            else
+                V_x.get(arc.getB()).add(arc.getA());
+        });
+
+        Node x = startNode;
+
+        // i(x) <= RO-(x)
+        while (index.get(x) < V_x.get(x).size())
+        {
+            W.add(0, x);
+            index.put(x, index.get(x) + 1 );
+            if (index.get(x) < V_x.get(x).size())
+                x = V_x.get(x).get(index.get(x));
+        }
+
+
+        Node first = W.get(0);
+        for (int i = 1; i < W.size(); ++i)
+        {
+            Node second = W.get(i);
+            result.eulerianRoad.add(new Arc(first, second));
+            first = second;
+        }
 
         return result;
     }

@@ -277,10 +277,10 @@ public class Main
         graph.addEdge(e8);
         graph.addEdge(e9);
         graph.addEdge(e10);
-        
+
         System.out.println(graph.isCyclic());
     }
-    
+
     public static void testAlgorithm5()
     {
     	UndirectedWeightedGraph graph = new UndirectedWeightedGraph();
@@ -314,9 +314,9 @@ public class Main
         graph.addEdge(edge6);
         graph.addEdge(edge7);
         graph.addEdge(edge8);
-        
+
         MinimumPartialTreeResult result = Algorithms.KruskalAlgorithm(graph);
-        
+
         result.getTreeEdges().stream()
         .forEach(edge -> System.out.println(edge.getA().getID()
             + " - " + edge.getB().getID() + " Cost: " + edge.getWeight()));
@@ -363,9 +363,57 @@ public class Main
                         + " - " + edge.getB().getID() + " Cost: " + edge.getWeight()));
     }
 
+    public static void testAlgorithm10()
+    {
+        DirectedGraph graph = new DirectedGraph();
+
+        Node n1 = new Node("1");
+        Node n2 = new Node("2");
+        Node n3 = new Node("3");
+        Node n4 = new Node("4");
+        Node n5 = new Node("5");
+
+        graph.addNode(n1);
+        graph.addNode(n2);
+        graph.addNode(n3);
+        graph.addNode(n4);
+        graph.addNode(n5);
+
+        Arc a1 = new Arc(n1, n2);
+        Arc a2 = new Arc(n1, n4);
+        Arc a3 = new Arc(n2, n3);
+        Arc a4 = new Arc(n2, n5);
+        Arc a5 = new Arc(n3, n1);
+        Arc a6 = new Arc(n3, n5);
+        Arc a7 = new Arc(n4, n1);
+        Arc a8 = new Arc(n4, n3);
+        Arc a9 = new Arc(n5, n2);
+        Arc a10 = new Arc(n5, n4);
+
+        graph.addEdge(a1);
+        graph.addEdge(a2);
+        graph.addEdge(a3);
+        graph.addEdge(a4);
+        graph.addEdge(a5);
+        graph.addEdge(a6);
+        graph.addEdge(a7);
+        graph.addEdge(a8);
+        graph.addEdge(a9);
+        graph.addEdge(a10);
+
+        Algorithms.EulerianResult result = Algorithms.EulerianCircuit(graph, n3);
+
+        System.out.print("W: ");
+        result.getEulerianNodes().forEach(node -> System.out.print(node.getID() + " "));
+        System.out.print("\n\nD:\n");
+        result.getEulerianRoad().forEach(arc -> System.out.println(arc.getA().getID() + " "
+                + arc.getB().getID()));
+    }
+
+
     public static void main(String args[])
     {
-    	testAlgorithm6();
+    	testAlgorithm10();
     }
 
 }
