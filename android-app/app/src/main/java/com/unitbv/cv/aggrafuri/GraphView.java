@@ -4,23 +4,35 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-/**
- * Created by Cosmin on 03-Jan-18.
- */
-
 public class GraphView extends View {
-    Paint paint = new Paint();
-    Canvas oldCanvas = null;
-    float clickPositionX = -1;
-    float clickPositionY = -1;
+    public enum GraphViewType {
+        UNDIRECTED,
+        DIRECTED,
+        UNDIRECTED_WEIGHTED,
+        DIRECTED_WEIGHTED
+    }
 
-    public GraphView(Context context, AttributeSet attrs) {
+    private GraphViewType graphType;
+
+    private Paint paint = new Paint();
+    private float clickPositionX = -1;
+    private float clickPositionY = -1;
+
+    private final int NODE_COLOR_A = 255;
+    private final int NODE_COLOR_R = 0;
+    private final int NODE_COLOR_G = 0;
+    private final int NODE_COLOR_B = 0;
+
+
+    public GraphView(GraphViewType graphType, Context context, AttributeSet attrs) {
         super(context, attrs);
-        paint.setARGB(255, 255, 0, 0);
+
+        this.graphType = graphType;
+
+        paint.setARGB(NODE_COLOR_A, NODE_COLOR_R, NODE_COLOR_G, NODE_COLOR_B);
         setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -36,9 +48,6 @@ public class GraphView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if(clickPositionX >= 0 && clickPositionY >= 0) {
-            canvas.drawCircle(clickPositionX, clickPositionY, 100, paint);
-        }
-
+        //viewController.viewTouched(canvas, clickPositionX, clickPositionY);
     }
 }
