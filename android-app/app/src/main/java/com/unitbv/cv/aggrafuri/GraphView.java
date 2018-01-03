@@ -20,6 +20,7 @@ public class GraphView extends View {
     private final int NODE_COLOR_R = 0;
     private final int NODE_COLOR_G = 0;
     private final int NODE_COLOR_B = 0;
+    private final float NODE_CIRCLE_RADIUS = 50;
 
     private boolean canvasNeedsClearing = false;
 
@@ -39,10 +40,12 @@ public class GraphView extends View {
         setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                clickPositionX = motionEvent.getX();
-                clickPositionY = motionEvent.getY();
-
-                invalidate();
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP)
+                {
+                    clickPositionX = motionEvent.getX();
+                    clickPositionY = motionEvent.getY();
+                    invalidate();
+                }
                 return true;
             }
         });
@@ -63,6 +66,12 @@ public class GraphView extends View {
         if(canvasNeedsClearing == true) {
             canvas.drawColor(Color.WHITE);
             canvasNeedsClearing = false;
+        }
+
+        if(clickPositionX >= 0 && clickPositionY >= 0) {
+            canvas.drawCircle(clickPositionX, clickPositionY, NODE_CIRCLE_RADIUS, paint);
+            clickPositionX = -1;
+            clickPositionY = -1;
         }
     }
 
