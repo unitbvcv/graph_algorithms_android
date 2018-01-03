@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="150dp"
-        android:layout_height="145dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
@@ -39,7 +39,7 @@
     <TextView
         android:id="@+id/textView3"
         android:layout_width="0dp"
-        android:layout_height="21dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="Cosmin Polifronie"
         app:layout_constraintBottom_toTopOf="@+id/textView"
