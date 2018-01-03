@@ -22,6 +22,10 @@ public class GraphView extends View {
     private final int NODE_COLOR_B = 0;
     private final float NODE_CIRCLE_RADIUS = 50;
 
+    private final int BACKGROUND_COLOR_R = 255;
+    private final int BACKGROUND_COLOR_G = 255;
+    private final int BACKGROUND_COLOR_B = 255;
+
     private boolean canvasNeedsClearing = false;
 
     public enum GraphViewType {
@@ -64,7 +68,7 @@ public class GraphView extends View {
         super.onDraw(canvas);
 
         if(canvasNeedsClearing == true) {
-            canvas.drawColor(Color.WHITE);
+            canvas.drawRGB(BACKGROUND_COLOR_R, BACKGROUND_COLOR_G, BACKGROUND_COLOR_B);
             canvasNeedsClearing = false;
         }
 
