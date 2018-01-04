@@ -537,6 +537,35 @@ public class Main
         graph.addEdge(a13);
 
         Algorithms.FloydWarshallResult result = Algorithms.FloydWarshallAlgorithm(graph);
+
+        System.out.println("------------ DISTANCES -------------");
+        result.getDistances().entrySet().stream().sorted((node1, node2) -> {
+            return node1.getKey().getID().compareTo(node2.getKey().getID());
+        })
+                .forEach((node_i) -> {
+                    node_i.getValue().entrySet().stream().sorted((node1, node2) -> {
+                        return node1.getKey().getID().compareTo(node2.getKey().getID());
+                    })
+                            .forEach((node_j) -> {
+                                System.out.print(padLeftSpaces("" + node_j.getValue(), 8) + " ");
+                            });
+                System.out.println("");});
+
+        System.out.println("----------- PREDECESSORS -----------");
+        result.getPredecessors().entrySet().stream().sorted((node1, node2) -> {
+            return node1.getKey().getID().compareTo(node2.getKey().getID());
+        })
+                .forEach((node_i) -> {
+                    node_i.getValue().entrySet().stream().sorted((node1, node2) -> {
+                        return node1.getKey().getID().compareTo(node2.getKey().getID());
+                    })
+                            .forEach((node_j) -> {
+                                if (node_j.getValue() == null)
+                                    System.out.print(padLeftSpaces("null", 8) + " ");
+                                else
+                                    System.out.print(padLeftSpaces("" + node_j.getValue().getID(), 8) + " ");
+                            });
+                    System.out.println("");});
     }
 
     public static void testAlgorithm10()
@@ -584,6 +613,14 @@ public class Main
         System.out.print("\n\nD:\n");
         result.getEulerianRoad().forEach(arc -> System.out.println(arc.getA().getID() + " "
                 + arc.getB().getID()));
+    }
+
+    public static String padLeftSpaces(String str, int spaces) {
+        return String.format("%1$" + spaces + "s", str);
+    }
+
+    public static String padRightSpaces(String str, int spaces) {
+        return String.format("%1$-" + spaces + "s", str);
     }
 
     public static void main(String args[])

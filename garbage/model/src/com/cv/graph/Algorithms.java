@@ -565,6 +565,17 @@ public class Algorithms {
             }
         }
 
+        for (Node k : graph.getNodes()) {
+            for (Node i : graph.getNodes()) {
+                for (Node j : graph.getNodes()) {
+                    if (d.get(i).get(j) + d.get(k).get(j) < d.get(i).get(j)) {
+                        d.get(i).put(j, d.get(i).get(k) + d.get(k).get(j));
+                        p.get(i).put(j, p.get(k).get(j));
+                    }
+                }
+            }
+        }
+
         return result;
     }
     public static EulerianResult EulerianCircuit(DirectedGraph graph, Node startNode) {
