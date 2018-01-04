@@ -1,4 +1,4 @@
-package com.unitbv.cv.aggrafuri;
+package com.unitbv.cv.aggrafuri.ui;
 
 import android.content.Context;
 import android.graphics.Canvas;

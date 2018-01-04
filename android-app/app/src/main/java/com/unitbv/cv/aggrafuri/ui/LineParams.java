@@ -1,4 +1,4 @@
-package com.unitbv.cv.aggrafuri;
+package com.unitbv.cv.aggrafuri.ui;
 
 public class LineParams {
     private float startX = 0.0f, startY = 0.0f, stopX = 0.0f, stopY = 0.0f;

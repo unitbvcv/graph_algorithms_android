@@ -1,4 +1,4 @@
-package com.unitbv.cv.aggrafuri;
+package com.unitbv.cv.aggrafuri.ui;
 
 public class ArcParams {
     private float left = 0.0f, right = 0.0f, top = 0.0f,

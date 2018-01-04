@@ -1,4 +1,4 @@
-package com.unitbv.cv.aggrafuri;
+package com.unitbv.cv.aggrafuri.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -7,6 +7,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.unitbv.cv.aggrafuri.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
