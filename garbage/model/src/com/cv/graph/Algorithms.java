@@ -69,13 +69,13 @@ public class Algorithms {
     }
     public static class FloydWarshallResult {
         private HashMap<Node, HashMap<Node, Double>> distances = new HashMap<>();
-        private HashMap<Node, HashMap<Node, Double>> predecessors = new HashMap<>();
+        private HashMap<Node, HashMap<Node, Node>> predecessors = new HashMap<>();
 
         public HashMap<Node, HashMap<Node, Double>> getDistances() {
             return distances;
         }
 
-        public HashMap<Node, HashMap<Node, Double>> getPredecessors() {
+        public HashMap<Node, HashMap<Node, Node>> getPredecessors() {
             return predecessors;
         }
     }
@@ -518,7 +518,7 @@ public class Algorithms {
     public static FloydWarshallResult FloydWarshallAlgorithm(DirectedWeightedGraph graph) {
         FloydWarshallResult result = new FloydWarshallResult();
 
-        // do your thing
+
 
         return result;
     }

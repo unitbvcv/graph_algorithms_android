@@ -543,7 +543,7 @@ public class Main
 
     public static void main(String args[])
     {
-    	testAlgorithm8();
+    	testAlgorithm10();
     }
 
 }
