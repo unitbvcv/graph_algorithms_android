@@ -518,7 +518,7 @@ public class Algorithms {
     public static FloydWarshallResult FloydWarshallAlgorithm(DirectedWeightedGraph graph) {
         FloydWarshallResult result = new FloydWarshallResult();
 
-
+        
 
         return result;
     }
