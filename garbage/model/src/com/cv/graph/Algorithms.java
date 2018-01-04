@@ -1,6 +1,7 @@
 package com.cv.graph;
 
 import java.util.*;
+import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
@@ -464,7 +465,53 @@ public class Algorithms {
     public static BellmanFordDijkstraResult BellmanFordAlgorithm(DirectedWeightedGraph graph, Node startNode) {
         BellmanFordDijkstraResult result = new BellmanFordDijkstraResult();
 
-        // here algorithm
+        HashMap<Node, Integer> d = result.getDistances();
+        HashMap<Node, Integer> dp = new HashMap<>();
+        HashMap<Node, Node> p = result.getPredecessors();
+
+        for(Node y : graph.getNodes()) {
+            d.put(y, Integer.MAX_VALUE);
+            p.put(y, null);
+        }
+
+        d.put(startNode, 0);
+
+        BiPredicate<HashMap<Node, Integer>, HashMap<Node, Integer>> doWhileCondition = (l_d, l_dp) -> {
+            for (Map.Entry<Node, Integer> pair : l_d.entrySet()) {
+                Integer cost1 = pair.getValue();
+                Integer cost2 = l_dp.get(pair.getKey());
+
+                if (!cost1.equals(cost2))
+                    return true;
+            }
+
+            return false;
+        };
+
+        do {
+            dp.putAll(d);
+
+            for (Node y : graph.getNodes()) {
+                List<Edge> predecessorEdgesList = graph.getEdges().stream().filter(edge -> edge.getB().equals(y)).collect(Collectors.toList());
+                if (!predecessorEdgesList.isEmpty()) {
+                    ArrayList<Node> predecessorList = new ArrayList<>();
+
+                    for (Edge edge : predecessorEdgesList) {
+                        if(edge.getA() != null)
+                            predecessorList.add(edge.getA());
+                    }
+
+                    BiFunction<Node, Node, Integer> compareEquation = (node1, node2) -> {return dp.get(node1) + ((WeightedArc)graph.getEdge(node1, node2)).getWeight();};
+
+                    Node x = predecessorList.stream().min((x1, x2) -> Integer.compare(compareEquation.apply(x1, y), compareEquation.apply(x2, y))).orElse(null);
+
+                    if (compareEquation.apply(x, y) < dp.get(y)) {
+                        d.put(y, dp.get(x) + ((WeightedArc)graph.getEdge(x, y)).getWeight());
+                        p.put(y, x);
+                    }
+                }
+            }
+        } while(doWhileCondition.test(d, dp));
 
         return result;
     }
