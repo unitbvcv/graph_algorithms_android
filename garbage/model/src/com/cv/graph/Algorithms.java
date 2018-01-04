@@ -556,11 +556,11 @@ public class Algorithms {
 
         for (Map.Entry<Node, HashMap<Node, Node>> i : p.entrySet()) {
             for (Node node : graph.getNodes()) {
-                if (!i.getKey().equals(node) && d.get(i).get(node) < Double.POSITIVE_INFINITY) {
-                    p.get(i).put(node, i.getKey());
+                if (!i.getKey().equals(node) && d.get(i.getKey()).get(node) < Double.POSITIVE_INFINITY) {
+                    p.get(i.getKey()).put(node, i.getKey());
                 }
                 else {
-                    p.get(i).put(node, null);
+                    p.get(i.getKey()).put(node, null);
                 }
             }
         }
