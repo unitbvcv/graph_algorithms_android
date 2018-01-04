@@ -205,13 +205,13 @@ public class Main
         graph.addNode(n4);
         graph.addNode(n5);
 
-        WeightedEdge edge1 = new WeightedEdge(n1, n2, 35);
-        WeightedEdge edge2 = new WeightedEdge(n1, n3, 40);
-        WeightedEdge edge3 = new WeightedEdge(n3, n2, 25);
-        WeightedEdge edge4 = new WeightedEdge(n4, n2, 10);
-        WeightedEdge edge5 = new WeightedEdge(n3, n4, 20);
-        WeightedEdge edge6 = new WeightedEdge(n5, n3, 15);
-        WeightedEdge edge7 = new WeightedEdge(n4, n5, 30);
+        WeightedEdge edge1 = new WeightedEdge(n1, n2, 35.0);
+        WeightedEdge edge2 = new WeightedEdge(n1, n3, 40.0);
+        WeightedEdge edge3 = new WeightedEdge(n3, n2, 25.0);
+        WeightedEdge edge4 = new WeightedEdge(n4, n2, 10.0);
+        WeightedEdge edge5 = new WeightedEdge(n3, n4, 20.0);
+        WeightedEdge edge6 = new WeightedEdge(n5, n3, 15.0);
+        WeightedEdge edge7 = new WeightedEdge(n4, n5, 30.0);
         //WeightedEdge edge8 = new WeightedEdge(n5, n2,  5);
 
         graph.addEdge(edge1);
@@ -297,14 +297,14 @@ public class Main
         graph.addNode(n4);
         graph.addNode(n5);
 
-        WeightedEdge edge1 = new WeightedEdge(n1, n2, 35);
-        WeightedEdge edge2 = new WeightedEdge(n1, n3, 40);
-        WeightedEdge edge3 = new WeightedEdge(n3, n2, 25);
-        WeightedEdge edge4 = new WeightedEdge(n4, n2, 10);
-        WeightedEdge edge5 = new WeightedEdge(n3, n4, 20);
-        WeightedEdge edge6 = new WeightedEdge(n5, n3, 15);
-        WeightedEdge edge7 = new WeightedEdge(n4, n5, 30);
-        WeightedEdge edge8 = new WeightedEdge(n5, n2,  5);
+        WeightedEdge edge1 = new WeightedEdge(n1, n2, 35.0);
+        WeightedEdge edge2 = new WeightedEdge(n1, n3, 40.0);
+        WeightedEdge edge3 = new WeightedEdge(n3, n2, 25.0);
+        WeightedEdge edge4 = new WeightedEdge(n4, n2, 10.0);
+        WeightedEdge edge5 = new WeightedEdge(n3, n4, 20.0);
+        WeightedEdge edge6 = new WeightedEdge(n5, n3, 15.0);
+        WeightedEdge edge7 = new WeightedEdge(n4, n5, 30.0);
+        WeightedEdge edge8 = new WeightedEdge(n5, n2,  5.0);
 
         graph.addEdge(edge1);
         graph.addEdge(edge2);
@@ -338,14 +338,14 @@ public class Main
         graph.addNode(n4);
         graph.addNode(n5);
 
-        WeightedEdge edge1 = new WeightedEdge(n1, n2, 35);
-        WeightedEdge edge2 = new WeightedEdge(n1, n3, 40);
-        WeightedEdge edge3 = new WeightedEdge(n3, n2, 25);
-        WeightedEdge edge4 = new WeightedEdge(n4, n2, 10);
-        WeightedEdge edge5 = new WeightedEdge(n3, n4, 20);
-        WeightedEdge edge6 = new WeightedEdge(n5, n3, 15);
-        WeightedEdge edge7 = new WeightedEdge(n4, n5, 30);
-        WeightedEdge edge8 = new WeightedEdge(n5, n2,  5);
+        WeightedEdge edge1 = new WeightedEdge(n1, n2, 35.0);
+        WeightedEdge edge2 = new WeightedEdge(n1, n3, 40.0);
+        WeightedEdge edge3 = new WeightedEdge(n3, n2, 25.0);
+        WeightedEdge edge4 = new WeightedEdge(n4, n2, 10.0);
+        WeightedEdge edge5 = new WeightedEdge(n3, n4, 20.0);
+        WeightedEdge edge6 = new WeightedEdge(n5, n3, 15.0);
+        WeightedEdge edge7 = new WeightedEdge(n4, n5, 30.0);
+        WeightedEdge edge8 = new WeightedEdge(n5, n2,  5.0);
 
         graph.addEdge(edge1);
         graph.addEdge(edge2);
@@ -384,20 +384,20 @@ public class Main
         graph.addNode(n7);
         graph.addNode(n8);
 
-        WeightedArc a1 = new WeightedArc(n1, n2, 28);
-        WeightedArc a2 = new WeightedArc(n1, n3, 1);
-        WeightedArc a3 = new WeightedArc(n1, n4, 2);
-        WeightedArc a4 = new WeightedArc(n2, n5, 9);
-        WeightedArc a5 = new WeightedArc(n2, n7, 10);
-        WeightedArc a6 = new WeightedArc(n3, n2, 8);
-        WeightedArc a7 = new WeightedArc(n3, n7, 26);
-        WeightedArc a8 = new WeightedArc(n4, n7, 24);
-        WeightedArc a9 = new WeightedArc(n4, n8, 27);
-        WeightedArc a10 = new WeightedArc(n5, n3, 5);
-        WeightedArc a11 = new WeightedArc(n5, n6, 8);
-        WeightedArc a12 = new WeightedArc(n5, n8, 7);
-        WeightedArc a13 = new WeightedArc(n6, n8, 7);
-        WeightedArc a14 = new WeightedArc(n7, n8, 1);
+        WeightedArc a1 = new WeightedArc(n1, n2, 28.0);
+        WeightedArc a2 = new WeightedArc(n1, n3, 1.0);
+        WeightedArc a3 = new WeightedArc(n1, n4, 2.0);
+        WeightedArc a4 = new WeightedArc(n2, n5, 9.0);
+        WeightedArc a5 = new WeightedArc(n2, n7, 10.0);
+        WeightedArc a6 = new WeightedArc(n3, n2, 8.0);
+        WeightedArc a7 = new WeightedArc(n3, n7, 26.0);
+        WeightedArc a8 = new WeightedArc(n4, n7, 24.0);
+        WeightedArc a9 = new WeightedArc(n4, n8, 27.0);
+        WeightedArc a10 = new WeightedArc(n5, n3, 5.0);
+        WeightedArc a11 = new WeightedArc(n5, n6, 8.0);
+        WeightedArc a12 = new WeightedArc(n5, n8, 7.0);
+        WeightedArc a13 = new WeightedArc(n6, n8, 7.0);
+        WeightedArc a14 = new WeightedArc(n7, n8, 1.0);
 
         graph.addEdge(a1);
         graph.addEdge(a2);
@@ -449,20 +449,20 @@ public class Main
         graph.addNode(n7);
         graph.addNode(n8);
 
-        WeightedArc a1 = new WeightedArc(n1, n2, 28);
-        WeightedArc a2 = new WeightedArc(n1, n3, 1);
-        WeightedArc a3 = new WeightedArc(n1, n4, 2);
-        WeightedArc a4 = new WeightedArc(n2, n5, 9);
-        WeightedArc a5 = new WeightedArc(n2, n7, 10);
-        WeightedArc a6 = new WeightedArc(n3, n2, 8);
-        WeightedArc a7 = new WeightedArc(n3, n7, 26);
-        WeightedArc a8 = new WeightedArc(n4, n7, 24);
-        WeightedArc a9 = new WeightedArc(n4, n8, 27);
-        WeightedArc a10 = new WeightedArc(n5, n3, 5);
-        WeightedArc a11 = new WeightedArc(n5, n6, 8);
-        WeightedArc a12 = new WeightedArc(n5, n8, 7);
-        WeightedArc a13 = new WeightedArc(n6, n8, 7);
-        WeightedArc a14 = new WeightedArc(n7, n8, 1);
+        WeightedArc a1 = new WeightedArc(n1, n2, 28.0);
+        WeightedArc a2 = new WeightedArc(n1, n3, 1.0);
+        WeightedArc a3 = new WeightedArc(n1, n4, 2.0);
+        WeightedArc a4 = new WeightedArc(n2, n5, 9.0);
+        WeightedArc a5 = new WeightedArc(n2, n7, 10.0);
+        WeightedArc a6 = new WeightedArc(n3, n2, 8.0);
+        WeightedArc a7 = new WeightedArc(n3, n7, 26.0);
+        WeightedArc a8 = new WeightedArc(n4, n7, 24.0);
+        WeightedArc a9 = new WeightedArc(n4, n8, 27.0);
+        WeightedArc a10 = new WeightedArc(n5, n3, 5.0);
+        WeightedArc a11 = new WeightedArc(n5, n6, 8.0);
+        WeightedArc a12 = new WeightedArc(n5, n8, 7.0);
+        WeightedArc a13 = new WeightedArc(n6, n8, 7.0);
+        WeightedArc a14 = new WeightedArc(n7, n8, 1.0);
 
         graph.addEdge(a1);
         graph.addEdge(a2);
@@ -555,19 +555,19 @@ public class Main
         graph.addNode(n4);
         graph.addNode(n5);
 
-        WeightedArc a1 = new WeightedArc(n1, n2, 2);
-        WeightedArc a2 = new WeightedArc(n1, n3, 4);
-        WeightedArc a3 = new WeightedArc(n1, n5, 3);
-        WeightedArc a4 = new WeightedArc(n2, n1, 2);
-        WeightedArc a5 = new WeightedArc(n2, n3, 8);
-        WeightedArc a6 = new WeightedArc(n2, n5, 1);
-        WeightedArc a7 = new WeightedArc(n3, n1, 6);
-        WeightedArc a8 = new WeightedArc(n3, n2, 2);
-        WeightedArc a9 = new WeightedArc(n3, n4, 4);
-        WeightedArc a10 = new WeightedArc(n3, n5, 3);
-        WeightedArc a11 = new WeightedArc(n4, n1, 1);
-        WeightedArc a12 = new WeightedArc(n4, n5, 5);
-        WeightedArc a13 = new WeightedArc(n5, n4, 1);
+        WeightedArc a1 = new WeightedArc(n1, n2, 2.0);
+        WeightedArc a2 = new WeightedArc(n1, n3, 4.0);
+        WeightedArc a3 = new WeightedArc(n1, n5, 3.0);
+        WeightedArc a4 = new WeightedArc(n2, n1, 2.0);
+        WeightedArc a5 = new WeightedArc(n2, n3, 8.0);
+        WeightedArc a6 = new WeightedArc(n2, n5, 1.0);
+        WeightedArc a7 = new WeightedArc(n3, n1, 6.0);
+        WeightedArc a8 = new WeightedArc(n3, n2, 2.0);
+        WeightedArc a9 = new WeightedArc(n3, n4, 4.0);
+        WeightedArc a10 = new WeightedArc(n3, n5, 3.0);
+        WeightedArc a11 = new WeightedArc(n4, n1, 1.0);
+        WeightedArc a12 = new WeightedArc(n4, n5, 5.0);
+        WeightedArc a13 = new WeightedArc(n5, n4, 1.0);
 
         graph.addEdge(a1);
         graph.addEdge(a2);
