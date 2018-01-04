@@ -493,6 +493,52 @@ public class Main
         });
     }
 
+    public static void testAlgorithm9() {
+        DirectedWeightedGraph graph = new DirectedWeightedGraph();
+
+        Node n1 = new Node("1");
+        Node n2 = new Node("2");
+        Node n3 = new Node("3");
+        Node n4 = new Node("4");
+        Node n5 = new Node("5");
+
+        graph.addNode(n1);
+        graph.addNode(n2);
+        graph.addNode(n3);
+        graph.addNode(n4);
+        graph.addNode(n5);
+
+        WeightedArc a1 = new WeightedArc(n1, n2, 2.0);
+        WeightedArc a2 = new WeightedArc(n1, n3, 4.0);
+        WeightedArc a3 = new WeightedArc(n1, n5, 3.0);
+        WeightedArc a4 = new WeightedArc(n2, n1, 2.0);
+        WeightedArc a5 = new WeightedArc(n2, n3, 8.0);
+        WeightedArc a6 = new WeightedArc(n2, n5, 1.0);
+        WeightedArc a7 = new WeightedArc(n3, n1, 6.0);
+        WeightedArc a8 = new WeightedArc(n3, n2, 2.0);
+        WeightedArc a9 = new WeightedArc(n3, n4, 4.0);
+        WeightedArc a10 = new WeightedArc(n3, n5, 3.0);
+        WeightedArc a11 = new WeightedArc(n4, n1, 1.0);
+        WeightedArc a12 = new WeightedArc(n4, n5, 5.0);
+        WeightedArc a13 = new WeightedArc(n5, n4, 1.0);
+
+        graph.addEdge(a1);
+        graph.addEdge(a2);
+        graph.addEdge(a3);
+        graph.addEdge(a4);
+        graph.addEdge(a5);
+        graph.addEdge(a6);
+        graph.addEdge(a7);
+        graph.addEdge(a8);
+        graph.addEdge(a9);
+        graph.addEdge(a10);
+        graph.addEdge(a11);
+        graph.addEdge(a12);
+        graph.addEdge(a13);
+
+        Algorithms.FloydWarshallResult result = Algorithms.FloydWarshallAlgorithm(graph);
+    }
+
     public static void testAlgorithm10()
     {
         DirectedGraph graph = new DirectedGraph();
@@ -538,52 +584,6 @@ public class Main
         System.out.print("\n\nD:\n");
         result.getEulerianRoad().forEach(arc -> System.out.println(arc.getA().getID() + " "
                 + arc.getB().getID()));
-    }
-
-    public static void testAlgorithm9() {
-        DirectedWeightedGraph graph = new DirectedWeightedGraph();
-
-        Node n1 = new Node("1");
-        Node n2 = new Node("2");
-        Node n3 = new Node("3");
-        Node n4 = new Node("4");
-        Node n5 = new Node("5");
-
-        graph.addNode(n1);
-        graph.addNode(n2);
-        graph.addNode(n3);
-        graph.addNode(n4);
-        graph.addNode(n5);
-
-        WeightedArc a1 = new WeightedArc(n1, n2, 2.0);
-        WeightedArc a2 = new WeightedArc(n1, n3, 4.0);
-        WeightedArc a3 = new WeightedArc(n1, n5, 3.0);
-        WeightedArc a4 = new WeightedArc(n2, n1, 2.0);
-        WeightedArc a5 = new WeightedArc(n2, n3, 8.0);
-        WeightedArc a6 = new WeightedArc(n2, n5, 1.0);
-        WeightedArc a7 = new WeightedArc(n3, n1, 6.0);
-        WeightedArc a8 = new WeightedArc(n3, n2, 2.0);
-        WeightedArc a9 = new WeightedArc(n3, n4, 4.0);
-        WeightedArc a10 = new WeightedArc(n3, n5, 3.0);
-        WeightedArc a11 = new WeightedArc(n4, n1, 1.0);
-        WeightedArc a12 = new WeightedArc(n4, n5, 5.0);
-        WeightedArc a13 = new WeightedArc(n5, n4, 1.0);
-
-        graph.addEdge(a1);
-        graph.addEdge(a2);
-        graph.addEdge(a3);
-        graph.addEdge(a4);
-        graph.addEdge(a5);
-        graph.addEdge(a6);
-        graph.addEdge(a7);
-        graph.addEdge(a8);
-        graph.addEdge(a9);
-        graph.addEdge(a10);
-        graph.addEdge(a11);
-        graph.addEdge(a12);
-        graph.addEdge(a13);
-
-        Algorithms.FloydWarshallAlgorithm(graph);
     }
 
     public static void main(String args[])

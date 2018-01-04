@@ -538,11 +538,30 @@ public class Algorithms {
         HashMap<Node, HashMap<Node, Double>> b = new HashMap<>();
         for (Node node : graph.getNodes()) {
             b.put(node, new HashMap<>());
+            d.put(node, new HashMap<>());
+            p.put(node, new HashMap<>());
         }
 
         for (Map.Entry<Node, HashMap<Node, Double>> i : b.entrySet()) {
             for (Node node : graph.getNodes()) {
                 i.getValue().put(node, bValueCalculator.apply(i.getKey(), node));
+            }
+        }
+
+        for (Map.Entry<Node, HashMap<Node, Double>> i : d.entrySet()) {
+            for (Node node : graph.getNodes()) {
+                i.getValue().put(node, bValueCalculator.apply(i.getKey(), node));
+            }
+        }
+
+        for (Map.Entry<Node, HashMap<Node, Node>> i : p.entrySet()) {
+            for (Node node : graph.getNodes()) {
+                if (!i.getKey().equals(node) && d.get(i).get(node) < Double.POSITIVE_INFINITY) {
+                    p.get(i).put(node, i.getKey());
+                }
+                else {
+                    p.get(i).put(node, null);
+                }
             }
         }
 
