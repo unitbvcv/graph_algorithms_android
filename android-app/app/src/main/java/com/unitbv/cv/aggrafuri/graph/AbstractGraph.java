@@ -7,7 +7,7 @@ public abstract class AbstractGraph
 {
 
 	protected HashSet<Node> m_nodes = null;
-	protected HashSet<com.unitbv.cv.aggrafuri.ui.Edge> m_edges = null;
+	protected HashSet<Edge> m_edges = null;
 
 	public HashSet<Node> getNodes() 
 	{
@@ -32,13 +32,13 @@ public abstract class AbstractGraph
 		return m_nodes.remove(node);
 	}
 	
-	public HashSet<com.unitbv.cv.aggrafuri.ui.Edge> getEdges()
+	public HashSet<Edge> getEdges()
 	{
 		return m_edges;
 	}
 	
-	public abstract com.unitbv.cv.aggrafuri.ui.Edge getEdge(Node a, Node b);
-	public abstract boolean addEdge(com.unitbv.cv.aggrafuri.ui.Edge edge);
-	public abstract boolean removeEdge(com.unitbv.cv.aggrafuri.ui.Edge edge);
+	public abstract Edge getEdge(Node a, Node b);
+	public abstract boolean addEdge(Edge edge);
+	public abstract boolean removeEdge(Edge edge);
 	
 }
