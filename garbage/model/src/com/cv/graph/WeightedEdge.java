@@ -2,15 +2,15 @@ package com.cv.graph;
 
 public class WeightedEdge extends Edge
 {
-	private Integer m_weight = null;
+	private Double m_weight = null;
 
 	public WeightedEdge(Node first, Node second, int weight) 
 	{
 		super(first, second);
-		m_weight = new Integer(weight);
+		m_weight = new Double(weight);
 	}
 
-	public Integer getWeight() 
+	public Double getWeight()
 	{
 		return m_weight;
 	}

@@ -46,7 +46,7 @@ public class UndirectedGraph extends AbstractGraph
 		{
 			Algorithms.DepthFirstTraversalResult result = Algorithms.DepthFirstTraversal(this, m_nodes.iterator().next());
 			HashMap<Node, Integer> vizitat = result.getVisitedTime();
-			//HashMap<Node, Integer> analizat = result.getAnalizedTime();
+			//HashMap<Node, Double> analizat = result.getAnalizedTime();
 			
             Predicate<Edge> isReturnEdge = (edge) -> {
             	
