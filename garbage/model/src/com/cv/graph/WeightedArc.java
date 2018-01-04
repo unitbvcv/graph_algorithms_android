@@ -5,7 +5,7 @@ public class WeightedArc extends Arc
 	
 	private Double m_weight = null;
 
-	public WeightedArc(Node first, Node second, int weight) 
+	public WeightedArc(Node first, Node second, Double weight)
 	{
 		super(first, second);
 		m_weight = new Double(weight);
