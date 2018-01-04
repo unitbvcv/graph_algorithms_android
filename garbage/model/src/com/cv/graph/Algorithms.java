@@ -518,7 +518,33 @@ public class Algorithms {
     public static FloydWarshallResult FloydWarshallAlgorithm(DirectedWeightedGraph graph) {
         FloydWarshallResult result = new FloydWarshallResult();
 
-        
+        HashMap<Node, HashMap<Node, Double>> d = result.getDistances();
+        HashMap<Node, HashMap<Node, Node>> p = result.getPredecessors();
+
+        BiFunction<Node, Node, Double> bValueCalculator = (node1, node2) -> {
+            if (node1.equals(node2)) {
+                return 0.0;
+            }
+
+            else if (graph.getEdge(node1, node2) != null) {
+                return ((WeightedArc)graph.getEdge(node1, node2)).getWeight();
+            }
+
+            else {
+                return Double.POSITIVE_INFINITY;
+            }
+        };
+
+        HashMap<Node, HashMap<Node, Double>> b = new HashMap<>();
+        for (Node node : graph.getNodes()) {
+            b.put(node, new HashMap<>());
+        }
+
+        for (Map.Entry<Node, HashMap<Node, Double>> i : b.entrySet()) {
+            for (Node node : graph.getNodes()) {
+                i.getValue().put(node, bValueCalculator.apply(i.getKey(), node));
+            }
+        }
 
         return result;
     }
