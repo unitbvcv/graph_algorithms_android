@@ -8,12 +8,17 @@ public class WeightedArc extends Arc
 	public WeightedArc(Node first, Node second, int weight) 
 	{
 		super(first, second);
-		m_weight = new Integer(weight);
+		m_weight = Integer.valueOf(weight);
 	}
 
 	public Integer getWeight() 
 	{
 		return m_weight;
+	}
+
+	public void setWeight(int weight)
+	{
+		m_weight = Integer.valueOf(weight);
 	}
 	
 	public boolean equals(Object other)
