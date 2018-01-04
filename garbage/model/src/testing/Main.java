@@ -363,6 +363,71 @@ public class Main
                         + " - " + edge.getB().getID() + " Cost: " + edge.getWeight()));
     }
 
+    public static void testAlgorithm7() {
+        DirectedWeightedGraph graph = new DirectedWeightedGraph();
+
+        Node n1 = new Node("1");
+        Node n2 = new Node("2");
+        Node n3 = new Node("3");
+        Node n4 = new Node("4");
+        Node n5 = new Node("5");
+        Node n6 = new Node("6");
+        Node n7 = new Node("7");
+        Node n8 = new Node("8");
+
+        graph.addNode(n1);
+        graph.addNode(n2);
+        graph.addNode(n3);
+        graph.addNode(n4);
+        graph.addNode(n5);
+        graph.addNode(n6);
+        graph.addNode(n7);
+        graph.addNode(n8);
+
+        WeightedArc a1 = new WeightedArc(n1, n2, 28);
+        WeightedArc a2 = new WeightedArc(n1, n3, 1);
+        WeightedArc a3 = new WeightedArc(n1, n4, 2);
+        WeightedArc a4 = new WeightedArc(n2, n5, 9);
+        WeightedArc a5 = new WeightedArc(n2, n7, 10);
+        WeightedArc a6 = new WeightedArc(n3, n2, 8);
+        WeightedArc a7 = new WeightedArc(n3, n7, 26);
+        WeightedArc a8 = new WeightedArc(n4, n7, 24);
+        WeightedArc a9 = new WeightedArc(n4, n8, 27);
+        WeightedArc a10 = new WeightedArc(n5, n3, 5);
+        WeightedArc a11 = new WeightedArc(n5, n6, 8);
+        WeightedArc a12 = new WeightedArc(n5, n8, 7);
+        WeightedArc a13 = new WeightedArc(n6, n8, 7);
+        WeightedArc a14 = new WeightedArc(n7, n8, 1);
+
+        graph.addEdge(a1);
+        graph.addEdge(a2);
+        graph.addEdge(a3);
+        graph.addEdge(a4);
+        graph.addEdge(a5);
+        graph.addEdge(a6);
+        graph.addEdge(a7);
+        graph.addEdge(a8);
+        graph.addEdge(a9);
+        graph.addEdge(a10);
+        graph.addEdge(a11);
+        graph.addEdge(a12);
+        graph.addEdge(a13);
+        graph.addEdge(a14);
+
+        Algorithms.BellmanFordDijkstraResult result = Algorithms.DijkstraAlgorithm(graph, n1);
+        System.out.println("------------ DISTANCES -------------");
+        result.getDistances().forEach((node, weight) -> System.out.println(n1.getID() + " -> " + node.getID() + " (" + weight + ")"));
+        System.out.println("----------- PREDECESSORS -----------");
+        result.getPredecessors().forEach((node1, node2) -> {
+            if (node1 == null)
+                System.out.println("null" + " <- " + node2.getID());
+            else if (node2 == null)
+                System.out.println(node1.getID() + " <- " + "null");
+            else
+                System.out.println(node1.getID() + " <- " + node2.getID());
+        });
+    }
+
     public static void testAlgorithm10()
     {
         DirectedGraph graph = new DirectedGraph();
@@ -413,7 +478,7 @@ public class Main
 
     public static void main(String args[])
     {
-    	testAlgorithm10();
+    	testAlgorithm7();
     }
 
 }

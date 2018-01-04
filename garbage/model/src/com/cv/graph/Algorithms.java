@@ -2,6 +2,7 @@ package com.cv.graph;
 
 import java.util.*;
 import java.util.function.BiPredicate;
+import java.util.stream.Collectors;
 
 public class Algorithms {
 
@@ -55,13 +56,13 @@ public class Algorithms {
     }
     public static class BellmanFordDijkstraResult {
         private HashMap<Node, Integer> distances = new HashMap<>();
-        private HashMap<Node, Integer> predecessors = new HashMap<>();
+        private HashMap<Node, Node> predecessors = new HashMap<>();
 
         public HashMap<Node, Integer> getDistances() {
             return distances;
         }
 
-        public HashMap<Node, Integer> getPredecessors() {
+        public HashMap<Node, Node> getPredecessors() {
             return predecessors;
         }
     }
@@ -423,7 +424,40 @@ public class Algorithms {
     public static BellmanFordDijkstraResult DijkstraAlgorithm(DirectedWeightedGraph graph, Node startNode) {
         BellmanFordDijkstraResult result = new BellmanFordDijkstraResult();
 
-        // here algorithm
+        // W - nodurile grafului
+        // d - distanta de la nodul de start pana la restul de noduri
+        // p - predecesorul nodului curent
+        ArrayList<Node> W = new ArrayList<>(graph.getNodes());
+        HashMap<Node, Integer> d = result.getDistances();
+        HashMap<Node, Node> p = result.getPredecessors();
+
+        for(Node y : W) {
+            d.put(y, Integer.MAX_VALUE);
+            p.put(y, null);
+        }
+
+        d.put(startNode, 0);
+
+        while(!W.isEmpty()) {
+            Node x;
+            Map.Entry entry = d.entrySet().stream().filter(pair -> W.contains(pair.getKey())).min((pair1, pair2) -> pair1.getValue().compareTo(pair2.getValue())).orElse(null);
+            if (entry != null) {
+                x = (Node)entry.getKey();
+                W.remove(x);
+                List<Edge> succesorEdgesList = graph.getEdges().stream().filter(edge -> edge.getA().equals(x) && W.contains(edge.getB())).collect(Collectors.toList());
+
+                for(Edge edge : succesorEdgesList) {
+                    Node y = edge.getB();
+
+                    Integer arcWeight = ((WeightedArc)edge).getWeight();
+
+                    if (d.get(x) + arcWeight < d.get(y)) {
+                        d.put(y, d.get(x) + arcWeight);
+                        p.put(y, x);
+                    }
+                }
+            }
+        }
 
         return result;
     }
