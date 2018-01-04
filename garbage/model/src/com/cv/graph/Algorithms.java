@@ -17,6 +17,79 @@ public class Algorithms {
             return orders;
         }
     }
+    public static class BreadthFirstTraversalResult {
+        private HashMap<Node, Node> predecessors = new HashMap<>();
+        private HashMap<Node, Integer> roadLengths = new HashMap<>();
+
+        public HashMap<Node, Node> getPredecessors() {
+            return predecessors;
+        }
+
+        public HashMap<Node, Integer> getRoadLengths() {
+            return roadLengths;
+        }
+    }
+    public static class DepthFirstTraversalResult {
+        private HashMap<Node, Node> predecessors = new HashMap<>();
+        private HashMap<Node, Integer> visitedTimes = new HashMap<>();
+        private HashMap<Node, Integer> analysedTimes = new HashMap<>();
+
+        public HashMap<Node, Node> getPredecessors() {
+            return predecessors;
+        }
+
+        public HashMap<Node, Integer> getVisitedTime() {
+            return visitedTimes;
+        }
+
+        public HashMap<Node, Integer> getAnalizedTime() {
+            return analysedTimes;
+        }
+    }
+    public static class MinimumPartialTreeResult {
+        private ArrayList<WeightedEdge> treeEdges = new ArrayList<>();
+
+        public ArrayList<WeightedEdge> getTreeEdges() {
+            return treeEdges;
+        }
+    }
+    public static class BellmanFordDijkstraResult {
+        private HashMap<Node, Integer> distances = new HashMap<>();
+        private HashMap<Node, Integer> predecessors = new HashMap<>();
+
+        public HashMap<Node, Integer> getDistances() {
+            return distances;
+        }
+
+        public HashMap<Node, Integer> getPredecessors() {
+            return predecessors;
+        }
+    }
+    public static class FloydWarshallResult {
+        private HashMap<Node, HashMap<Node, Integer>> distances = new HashMap<>();
+        private HashMap<Node, HashMap<Node, Integer>> predecessors = new HashMap<>();
+
+        public HashMap<Node, HashMap<Node, Integer>> getDistances() {
+            return distances;
+        }
+
+        public HashMap<Node, HashMap<Node, Integer>> getPredecessors() {
+            return predecessors;
+        }
+    }
+    public static class EulerianResult {
+        private ArrayList<Arc> eulerianRoad = new ArrayList<>();
+        private  ArrayList<Node> eulerianNodes = new ArrayList<>();
+
+        public ArrayList<Arc> getEulerianRoad() {
+            return eulerianRoad;
+        }
+
+        public ArrayList<Node> getEulerianNodes()
+        {
+            return eulerianNodes;
+        }
+    }
 
     public static GenericGraphTraversalResult GenericGraphTraversal(AbstractGraph graph, Node startNode) {
         GenericGraphTraversalResult result = new Algorithms.GenericGraphTraversalResult();
@@ -84,21 +157,6 @@ public class Algorithms {
         }
         return result;
     }
-
-
-    public static class BreadthFirstTraversalResult {
-        private HashMap<Node, Node> predecessors = new HashMap<>();
-        private HashMap<Node, Integer> roadLengths = new HashMap<>();
-
-        public HashMap<Node, Node> getPredecessors() {
-            return predecessors;
-        }
-
-        public HashMap<Node, Integer> getRoadLengths() {
-            return roadLengths;
-        }
-    }
-
     public static BreadthFirstTraversalResult BreadthFirstTraversal(AbstractGraph graph, Node startNode) {
         BreadthFirstTraversalResult result = new BreadthFirstTraversalResult();
 
@@ -158,28 +216,7 @@ public class Algorithms {
         }
         return result;
     }
-
-
-    public static class DepthFirstTraversalResult {
-        private HashMap<Node, Node> predecessors = new HashMap<>();
-        private HashMap<Node, Integer> visitedTimes = new HashMap<>();
-        private HashMap<Node, Integer> analysedTimes = new HashMap<>();
-
-        public HashMap<Node, Node> getPredecessors() {
-            return predecessors;
-        }
-
-        public HashMap<Node, Integer> getVisitedTime() {
-            return visitedTimes;
-        }
-
-        public HashMap<Node, Integer> getAnalizedTime() {
-            return analysedTimes;
-        }
-    }
-
-    public static DepthFirstTraversalResult DepthFirstTraversal(AbstractGraph graph, Node startNode)
-    {
+    public static DepthFirstTraversalResult DepthFirstTraversal(AbstractGraph graph, Node startNode) {
         DepthFirstTraversalResult result = new DepthFirstTraversalResult();
 
         // multimea nodurilor nevizitate
@@ -246,16 +283,6 @@ public class Algorithms {
         }
         return result;
     }
-
-
-    public static class MinimumPartialTreeResult {
-        private ArrayList<WeightedEdge> treeEdges = new ArrayList<>();
-
-        public ArrayList<WeightedEdge> getTreeEdges() {
-            return treeEdges;
-        }
-    }
-
     public static MinimumPartialTreeResult PrimsAlgorithm(UndirectedWeightedGraph graph, Node startNode) {
         MinimumPartialTreeResult result = new MinimumPartialTreeResult();
 
@@ -313,7 +340,6 @@ public class Algorithms {
 
         return result;
     }
-
     public static MinimumPartialTreeResult KruskalAlgorithm(UndirectedWeightedGraph graph) {
         MinimumPartialTreeResult result = new MinimumPartialTreeResult();
 
@@ -339,7 +365,6 @@ public class Algorithms {
 
         return result;
     }
-
     public static MinimumPartialTreeResult BoruvkaAlgorithm(UndirectedWeightedGraph graph) {
         MinimumPartialTreeResult result = new MinimumPartialTreeResult();
 
@@ -395,21 +420,6 @@ public class Algorithms {
 
         return result;
     }
-
-
-    public static class BellmanFordDijkstraResult {
-        private HashMap<Node, Integer> distances = new HashMap<>();
-        private HashMap<Node, Integer> predecessors = new HashMap<>();
-
-        public HashMap<Node, Integer> getDistances() {
-            return distances;
-        }
-
-        public HashMap<Node, Integer> getPredecessors() {
-            return predecessors;
-        }
-    }
-
     public static BellmanFordDijkstraResult DijkstraAlgorithm(DirectedWeightedGraph graph, Node startNode) {
         BellmanFordDijkstraResult result = new BellmanFordDijkstraResult();
 
@@ -417,7 +427,6 @@ public class Algorithms {
 
         return result;
     }
-
     public static BellmanFordDijkstraResult BellmanFordAlgorithm(DirectedWeightedGraph graph, Node startNode) {
         BellmanFordDijkstraResult result = new BellmanFordDijkstraResult();
 
@@ -425,20 +434,6 @@ public class Algorithms {
 
         return result;
     }
-
-    public static class FloydWarshallResult {
-        private HashMap<Node, HashMap<Node, Integer>> distances = new HashMap<>();
-        private HashMap<Node, HashMap<Node, Integer>> predecessors = new HashMap<>();
-
-        public HashMap<Node, HashMap<Node, Integer>> getDistances() {
-            return distances;
-        }
-
-        public HashMap<Node, HashMap<Node, Integer>> getPredecessors() {
-            return predecessors;
-        }
-    }
-
     public static FloydWarshallResult FloydWarshallAlgorithm(DirectedWeightedGraph graph) {
         FloydWarshallResult result = new FloydWarshallResult();
 
@@ -446,24 +441,7 @@ public class Algorithms {
 
         return result;
     }
-
-
-    public static class EulerianResult {
-        private ArrayList<Arc> eulerianRoad = new ArrayList<>();
-        private  ArrayList<Node> eulerianNodes = new ArrayList<>();
-
-        public ArrayList<Arc> getEulerianRoad() {
-            return eulerianRoad;
-        }
-
-        public ArrayList<Node> getEulerianNodes()
-        {
-            return eulerianNodes;
-        }
-    }
-
-    public static EulerianResult EulerianCircuit(DirectedGraph graph, Node startNode)
-    {
+    public static EulerianResult EulerianCircuit(DirectedGraph graph, Node startNode) {
         EulerianResult result = new EulerianResult();
 
         DepthFirstTraversalResult ptdf = DepthFirstTraversal(graph, startNode);
@@ -528,5 +506,4 @@ public class Algorithms {
 
         return result;
     }
-
 }
