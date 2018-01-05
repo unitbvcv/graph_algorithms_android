@@ -1,4 +1,4 @@
-package com.cv.graph;
+package com.unitbv.cv.aggrafuri.graph;
 
 import java.util.Optional;
 

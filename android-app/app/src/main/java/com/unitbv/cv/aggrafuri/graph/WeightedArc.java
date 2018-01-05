@@ -1,4 +1,4 @@
-package com.cv.graph;
+package com.unitbv.cv.aggrafuri.graph;
 
 public class WeightedArc extends Arc
 {
