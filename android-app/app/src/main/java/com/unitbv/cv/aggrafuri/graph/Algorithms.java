@@ -625,7 +625,8 @@ public class Algorithms {
     }
     public static BellmanFordDijkstraResult BellmanFordAlgorithm(DirectedWeightedGraph graph, Node startNode) {
         BellmanFordDijkstraResult result = new BellmanFordDijkstraResult();
-
+        result.setStartNode(startNode);
+        
         HashMap<Node, Double> d = result.getDistances();
         HashMap<Node, Double> dp = new HashMap<>();
         HashMap<Node, Node> p = result.getPredecessors();

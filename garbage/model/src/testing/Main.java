@@ -642,7 +642,7 @@ public class Main
         System.out.println(testAlgorithm5());
         System.out.println(testAlgorithm6());
         System.out.println(testAlgorithm7());
-        //System.out.println(testAlgorithm8());
+        System.out.println(testAlgorithm8());
     	System.out.println(testAlgorithm9());
         System.out.println(testAlgorithm10());
     }
