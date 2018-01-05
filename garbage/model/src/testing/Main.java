@@ -5,7 +5,7 @@ import com.cv.graph.Algorithms.MinimumPartialTreeResult;
 
 public class Main
 {
-    public static void testAlgorithm1()
+    public static String testAlgorithm1()
     {
         DirectedGraph graph = new DirectedGraph();
         Node node1 = new Node("1");
@@ -50,19 +50,20 @@ public class Main
         graph.addEdge(arc11);
 
         Algorithms.GenericGraphTraversalResult result = Algorithms.GenericGraphTraversal(graph, node1);
+        return result.toString();
 
-        System.out.println("Vector de predecesori:");
-        result.getPredecessors().forEach( (nod, predecesor) ->
-        {System.out.println("Nod: " + nod.getID() + " Predecesor: "
-                + (predecesor == null ? "null" : predecesor.getID()));});
-
-        System.out.println();
-        System.out.println("Vector de ordine:");
-        result.getOrders().forEach((nod, ordine) ->
-        {System.out.println("Nod: " + nod.getID() + " Ordine: " + ordine);});
+//        System.out.println("Vector de predecesori:");
+//        result.getPredecessors().forEach( (nod, predecesor) ->
+//        {System.out.println("Nod: " + nod.getID() + " Predecesor: "
+//                + (predecesor == null ? "null" : predecesor.getID()));});
+//
+//        System.out.println();
+//        System.out.println("Vector de ordine:");
+//        result.getOrders().forEach((nod, ordine) ->
+//        {System.out.println("Nod: " + nod.getID() + " Ordine: " + ordine);});
     }
 
-    public static void testAlgorithm2()
+    public static String testAlgorithm2()
     {
         DirectedGraph graph = new DirectedGraph();
         Node node1 = new Node("1");
@@ -107,19 +108,20 @@ public class Main
         graph.addEdge(arc11);
 
         Algorithms.BreadthFirstTraversalResult result = Algorithms.BreadthFirstTraversal(graph, node1);
+        return result.toString();
 
-        System.out.println("Vector de predecesori:");
-        result.getPredecessors().forEach( (nod, predecesor) ->
-        {System.out.println("Nod: " + nod.getID() + " Predecesor: "
-                + (predecesor == null ? "null" : predecesor.getID()));});
-
-        System.out.println();
-        System.out.println("Vector de lungimi:");
-        result.getRoadLengths().forEach((nod, lungime) ->
-        {System.out.println("Nod: " + nod.getID() + " Lungime: " + lungime);});
+//        System.out.println("Vector de predecesori:");
+//        result.getPredecessors().forEach( (nod, predecesor) ->
+//        {System.out.println("Nod: " + nod.getID() + " Predecesor: "
+//                + (predecesor == null ? "null" : predecesor.getID()));});
+//
+//        System.out.println();
+//        System.out.println("Vector de lungimi:");
+//        result.getRoadLengths().forEach((nod, lungime) ->
+//        {System.out.println("Nod: " + nod.getID() + " Lungime: " + lungime);});
     }
 
-    public static void testAlgorithm3()
+    public static String testAlgorithm3()
     {
         DirectedGraph graph = new DirectedGraph();
 
@@ -171,25 +173,26 @@ public class Main
 
 
         Algorithms.DepthFirstTraversalResult result = Algorithms.DepthFirstTraversal(graph, n1);
+        return result.toString();
 
-        System.out.println("Vector de predecesori:");
-        result.getPredecessors().forEach( (nod, predecesor) ->
-        {System.out.println("Nod: " + nod.getID() + " Predecesor: "
-                + (predecesor == null ? "null" : predecesor.getID()));});
-
-        System.out.println();
-        System.out.println("Vector de timpi vizitati:");
-        result.getVisitedTime().forEach((nod, timp1) ->
-        {System.out.println("Nod: " + nod.getID() + " Timp: " + timp1);});
-
-        System.out.println();
-        System.out.println("Vector de timpi analizati:");
-        result.getAnalizedTime().forEach((nod, timp2) ->
-        {System.out.println("Nod: " + nod.getID() + " Timp: " + timp2);});
+//        System.out.println("Vector de predecesori:");
+//        result.getPredecessors().forEach( (nod, predecesor) ->
+//        {System.out.println("Nod: " + nod.getID() + " Predecesor: "
+//                + (predecesor == null ? "null" : predecesor.getID()));});
+//
+//        System.out.println();
+//        System.out.println("Vector de timpi vizitati:");
+//        result.getVisitedTime().forEach((nod, timp1) ->
+//        {System.out.println("Nod: " + nod.getID() + " Timp: " + timp1);});
+//
+//        System.out.println();
+//        System.out.println("Vector de timpi analizati:");
+//        result.getAnalizedTime().forEach((nod, timp2) ->
+//        {System.out.println("Nod: " + nod.getID() + " Timp: " + timp2);});
 
     }
 
-    public static void testAlgorithm4()
+    public static String testAlgorithm4()
     {
         UndirectedWeightedGraph graph = new UndirectedWeightedGraph();
 
@@ -224,10 +227,10 @@ public class Main
         //graph.addEdge(edge8);
 
         Algorithms.MinimumPartialTreeResult result = Algorithms.PrimsAlgorithm(graph, n1);
-
-        result.getTreeEdges().stream()
-        .forEach(edge -> System.out.println(edge.getA().getID()
-            + " - " + edge.getB().getID() + " Cost: " + edge.getWeight()));
+        return result.toString();
+//        result.getTreeEdges().stream()
+//        .forEach(edge -> System.out.println(edge.getA().getID()
+//            + " - " + edge.getB().getID() + " Cost: " + edge.getWeight()));
     }
 
     public static void testCyclic()
@@ -281,7 +284,7 @@ public class Main
         System.out.println(graph.isCyclic());
     }
 
-    public static void testAlgorithm5()
+    public static String testAlgorithm5()
     {
     	UndirectedWeightedGraph graph = new UndirectedWeightedGraph();
 
@@ -316,13 +319,13 @@ public class Main
         graph.addEdge(edge8);
 
         MinimumPartialTreeResult result = Algorithms.KruskalAlgorithm(graph);
-
-        result.getTreeEdges().stream()
-        .forEach(edge -> System.out.println(edge.getA().getID()
-            + " - " + edge.getB().getID() + " Cost: " + edge.getWeight()));
+        return result.toString();
+//        result.getTreeEdges().stream()
+//        .forEach(edge -> System.out.println(edge.getA().getID()
+//            + " - " + edge.getB().getID() + " Cost: " + edge.getWeight()));
     }
 
-    public static void testAlgorithm6()
+    public static String testAlgorithm6()
     {
         UndirectedWeightedGraph graph = new UndirectedWeightedGraph();
 
@@ -358,12 +361,13 @@ public class Main
 
         MinimumPartialTreeResult result = Algorithms.BoruvkaAlgorithm(graph);
 
-        result.getTreeEdges().stream()
-                .forEach(edge -> System.out.println(edge.getA().getID()
-                        + " - " + edge.getB().getID() + " Cost: " + edge.getWeight()));
+        return result.toString();
+//        result.getTreeEdges().stream()
+//                .forEach(edge -> System.out.println(edge.getA().getID()
+//                        + " - " + edge.getB().getID() + " Cost: " + edge.getWeight()));
     }
 
-    public static void testAlgorithm7() {
+    public static String testAlgorithm7() {
         DirectedWeightedGraph graph = new DirectedWeightedGraph();
 
         Node n1 = new Node("1");
@@ -415,20 +419,22 @@ public class Main
         graph.addEdge(a14);
 
         Algorithms.BellmanFordDijkstraResult result = Algorithms.DijkstraAlgorithm(graph, n1);
-        System.out.println("------------ DISTANCES -------------");
-        result.getDistances().forEach((node, weight) -> System.out.println(n1.getID() + " -> " + node.getID() + " (" + weight + ")"));
-        System.out.println("----------- PREDECESSORS -----------");
-        result.getPredecessors().forEach((node1, node2) -> {
-            if (node1 == null)
-                System.out.println("null" + " <- " + node2.getID());
-            else if (node2 == null)
-                System.out.println(node1.getID() + " <- " + "null");
-            else
-                System.out.println(node1.getID() + " <- " + node2.getID());
-        });
+        return result.toString();
+
+//        System.out.println("------------ DISTANCES -------------");
+//        result.getDistances().forEach((node, weight) -> System.out.println(n1.getID() + " -> " + node.getID() + " (" + weight + ")"));
+//        System.out.println("----------- PREDECESSORS -----------");
+//        result.getPredecessors().forEach((node1, node2) -> {
+//            if (node1 == null)
+//                System.out.println("null" + " <- " + node2.getID());
+//            else if (node2 == null)
+//                System.out.println(node1.getID() + " <- " + "null");
+//            else
+//                System.out.println(node1.getID() + " <- " + node2.getID());
+//        });
 }
 
-    public static void testAlgorithm8() {
+    public static String testAlgorithm8() {
         DirectedWeightedGraph graph = new DirectedWeightedGraph();
 
         Node n1 = new Node("1");
@@ -480,20 +486,22 @@ public class Main
         graph.addEdge(a14);
 
         Algorithms.BellmanFordDijkstraResult result = Algorithms.BellmanFordAlgorithm(graph, n1);
-        System.out.println("------------ DISTANCES -------------");
-        result.getDistances().forEach((node, weight) -> System.out.println(n1.getID() + " -> " + node.getID() + " (" + weight + ")"));
-        System.out.println("----------- PREDECESSORS -----------");
-        result.getPredecessors().forEach((node1, node2) -> {
-            if (node1 == null)
-                System.out.println("null" + " <- " + node2.getID());
-            else if (node2 == null)
-                System.out.println(node1.getID() + " <- " + "null");
-            else
-                System.out.println(node1.getID() + " <- " + node2.getID());
-        });
+        return result.toString();
+
+//        System.out.println("------------ DISTANCES -------------");
+//        result.getDistances().forEach((node, weight) -> System.out.println(n1.getID() + " -> " + node.getID() + " (" + weight + ")"));
+//        System.out.println("----------- PREDECESSORS -----------");
+//        result.getPredecessors().forEach((node1, node2) -> {
+//            if (node1 == null)
+//                System.out.println("null" + " <- " + node2.getID());
+//            else if (node2 == null)
+//                System.out.println(node1.getID() + " <- " + "null");
+//            else
+//                System.out.println(node1.getID() + " <- " + node2.getID());
+//        });
     }
 
-    public static void testAlgorithm9() {
+    public static String testAlgorithm9() {
         DirectedWeightedGraph graph = new DirectedWeightedGraph();
 
         Node n1 = new Node("1");
@@ -537,38 +545,39 @@ public class Main
         graph.addEdge(a13);
 
         Algorithms.FloydWarshallResult result = Algorithms.FloydWarshallAlgorithm(graph);
+        return result.toString();
 
-        System.out.println("------------ DISTANCES -------------");
-        result.getDistances().entrySet().stream().sorted((node1, node2) -> {
-            return node1.getKey().getID().compareTo(node2.getKey().getID());
-        })
-                .forEach((node_i) -> {
-                    node_i.getValue().entrySet().stream().sorted((node1, node2) -> {
-                        return node1.getKey().getID().compareTo(node2.getKey().getID());
-                    })
-                            .forEach((node_j) -> {
-                                System.out.print(padLeftSpaces("" + node_j.getValue(), 8) + " ");
-                            });
-                System.out.println("");});
-
-        System.out.println("----------- PREDECESSORS -----------");
-        result.getPredecessors().entrySet().stream().sorted((node1, node2) -> {
-            return node1.getKey().getID().compareTo(node2.getKey().getID());
-        })
-                .forEach((node_i) -> {
-                    node_i.getValue().entrySet().stream().sorted((node1, node2) -> {
-                        return node1.getKey().getID().compareTo(node2.getKey().getID());
-                    })
-                            .forEach((node_j) -> {
-                                if (node_j.getValue() == null)
-                                    System.out.print(padLeftSpaces("null", 8) + " ");
-                                else
-                                    System.out.print(padLeftSpaces("" + node_j.getValue().getID(), 8) + " ");
-                            });
-                    System.out.println("");});
+//        System.out.println("------------ DISTANCES -------------");
+//        result.getDistances().entrySet().stream().sorted((node1, node2) -> {
+//            return node1.getKey().getID().compareTo(node2.getKey().getID());
+//        })
+//                .forEach((node_i) -> {
+//                    node_i.getValue().entrySet().stream().sorted((node1, node2) -> {
+//                        return node1.getKey().getID().compareTo(node2.getKey().getID());
+//                    })
+//                            .forEach((node_j) -> {
+//                                System.out.print(padLeftSpaces("" + node_j.getValue(), 8) + " ");
+//                            });
+//                System.out.println("");});
+//
+//        System.out.println("----------- PREDECESSORS -----------");
+//        result.getPredecessors().entrySet().stream().sorted((node1, node2) -> {
+//            return node1.getKey().getID().compareTo(node2.getKey().getID());
+//        })
+//                .forEach((node_i) -> {
+//                    node_i.getValue().entrySet().stream().sorted((node1, node2) -> {
+//                        return node1.getKey().getID().compareTo(node2.getKey().getID());
+//                    })
+//                            .forEach((node_j) -> {
+//                                if (node_j.getValue() == null)
+//                                    System.out.print(padLeftSpaces("null", 8) + " ");
+//                                else
+//                                    System.out.print(padLeftSpaces("" + node_j.getValue().getID(), 8) + " ");
+//                            });
+//                    System.out.println("");});
     }
 
-    public static void testAlgorithm10()
+    public static String testAlgorithm10()
     {
         DirectedGraph graph = new DirectedGraph();
 
@@ -607,12 +616,13 @@ public class Main
         graph.addEdge(a10);
 
         Algorithms.EulerianResult result = Algorithms.EulerianCircuit(graph, n3);
+        return result.toString();
 
-        System.out.print("W: ");
-        result.getEulerianNodes().forEach(node -> System.out.print(node.getID() + " "));
-        System.out.print("\n\nD:\n");
-        result.getEulerianRoad().forEach(arc -> System.out.println(arc.getA().getID() + " "
-                + arc.getB().getID()));
+//        System.out.print("W: ");
+//        result.getEulerianNodes().forEach(node -> System.out.print(node.getID() + " "));
+//        System.out.print("\n\nD:\n");
+//        result.getEulerianRoad().forEach(arc -> System.out.println(arc.getA().getID() + " "
+//                + arc.getB().getID()));
     }
 
     public static String padLeftSpaces(String str, int spaces) {
@@ -625,7 +635,16 @@ public class Main
 
     public static void main(String args[])
     {
-    	testAlgorithm9();
+        System.out.println(testAlgorithm1());
+        System.out.println(testAlgorithm2());
+        System.out.println(testAlgorithm3());
+        System.out.println(testAlgorithm4());
+        System.out.println(testAlgorithm5());
+        System.out.println(testAlgorithm6());
+        System.out.println(testAlgorithm7());
+        //System.out.println(testAlgorithm8());
+    	System.out.println(testAlgorithm9());
+        System.out.println(testAlgorithm10());
     }
 
 }

@@ -28,7 +28,7 @@ public class Algorithms {
                         + (pair.getValue() == null ? "null" : pair.getValue().getID()) + "\n";
             }
 
-            s += "Vector de ordine: \n";
+            s += "\nVector de ordine: \n";
             for (Map.Entry<Node, Integer> pair : getOrders().entrySet())
             {
                 s += "Nod: " + pair.getKey().getID() + " Ordine: " + pair.getValue() + "\n";
@@ -57,7 +57,7 @@ public class Algorithms {
                         + (pair.getValue() == null ? "null" : pair.getValue().getID()) + "\n";
             }
 
-            s += "Vector de lungimi:\n";
+            s += "\nVector de lungimi:\n";
             for (Map.Entry<Node, Integer> pair : getRoadLengths().entrySet())
             {
                 s += "Nod: " + pair.getKey().getID() + " Lungime: " + pair.getValue() + "\n";
@@ -92,13 +92,13 @@ public class Algorithms {
                         + (pair.getValue() == null ? "null" : pair.getValue().getID()) + "\n";
             }
 
-            s += "Vector de timpi vizitati:\n";
+            s += "\nVector de timpi vizitati:\n";
             for (Map.Entry<Node, Integer> pair : getVisitedTime().entrySet())
             {
                 s += "Nod: " + pair.getKey().getID() + " Timp: " + pair.getValue() + "\n";
             }
 
-            s += "Vector de timpi analizati: \n";
+            s += "\nVector de timpi analizati: \n";
             for (Map.Entry<Node, Integer> pair : getAnalizedTime().entrySet())
             {
                 s += "Nod: " + pair.getKey().getID() + " Timp: " + pair.getValue() + "\n";
@@ -149,13 +149,13 @@ public class Algorithms {
 
         public String toString()
         {
-            String s = "------------ DISTANCES -------------";
+            String s = "------------ DISTANCES -------------\n";
 
             for (Map.Entry<Node, Double> pair : getDistances().entrySet())
             {
                 s += getStartNode().getID() + " -> " + pair.getKey().getID() + " (" + pair.getValue() + ")" + "\n";
             }
-            s += "----------- PREDECESSORS -----------";
+            s += "----------- PREDECESSORS -----------\n";
 
             for (Map.Entry<Node, Node> pair : getPredecessors().entrySet())
             {
@@ -246,7 +246,7 @@ public class Algorithms {
             getEulerianNodes().forEach(node -> sb.append(node.getID() + " "));
             sb.append("\n\nLista de arce:\n");
             getEulerianRoad().forEach(arc -> sb.append(arc.getA().getID() + " "
-                    + arc.getB().getID()));
+                    + arc.getB().getID() + "\n"));
 
             return sb.toString();
         }

@@ -18,17 +18,52 @@ public class Algorithms {
         public HashMap<Node, Integer> getOrders() {
             return orders;
         }
+
+        @Override
+        public String toString() {
+            String s = "Vector de predecesori: \n";
+            for (Map.Entry<Node, Node> pair : getPredecessors().entrySet())
+            {
+                s += "Nod: " + pair.getKey().getID() + " Predecesor: "
+                        + (pair.getValue() == null ? "null" : pair.getValue().getID()) + "\n";
+            }
+
+            s += "\nVector de ordine: \n";
+            for (Map.Entry<Node, Integer> pair : getOrders().entrySet())
+            {
+                s += "Nod: " + pair.getKey().getID() + " Ordine: " + pair.getValue() + "\n";
+            }
+            return s;
+        }
     }
     public static class BreadthFirstTraversalResult {
         private HashMap<Node, Node> predecessors = new HashMap<>();
-        private HashMap<Node, Double> roadLengths = new HashMap<>();
+        private HashMap<Node, Integer> roadLengths = new HashMap<>();
 
         public HashMap<Node, Node> getPredecessors() {
             return predecessors;
         }
 
-        public HashMap<Node, Double> getRoadLengths() {
+        public HashMap<Node, Integer> getRoadLengths() {
             return roadLengths;
+        }
+
+        public String toString()
+        {
+            String s = "Vector de predecesori:\n";
+            for (Map.Entry<Node, Node> pair : getPredecessors().entrySet())
+            {
+                s += "Nod: " + pair.getKey().getID() + " Predecesor: "
+                        + (pair.getValue() == null ? "null" : pair.getValue().getID()) + "\n";
+            }
+
+            s += "\nVector de lungimi:\n";
+            for (Map.Entry<Node, Integer> pair : getRoadLengths().entrySet())
+            {
+                s += "Nod: " + pair.getKey().getID() + " Lungime: " + pair.getValue() + "\n";
+            }
+
+            return s;
         }
     }
     public static class DepthFirstTraversalResult {
@@ -47,6 +82,31 @@ public class Algorithms {
         public HashMap<Node, Integer> getAnalizedTime() {
             return analysedTimes;
         }
+
+        public String toString()
+        {
+            String s ="Vector de predecesori:\n";
+            for (Map.Entry<Node, Node> pair : getPredecessors().entrySet())
+            {
+                s += "Nod: " + pair.getKey().getID() + " Predecesor: "
+                        + (pair.getValue() == null ? "null" : pair.getValue().getID()) + "\n";
+            }
+
+            s += "\nVector de timpi vizitati:\n";
+            for (Map.Entry<Node, Integer> pair : getVisitedTime().entrySet())
+            {
+                s += "Nod: " + pair.getKey().getID() + " Timp: " + pair.getValue() + "\n";
+            }
+
+            s += "\nVector de timpi analizati: \n";
+            for (Map.Entry<Node, Integer> pair : getAnalizedTime().entrySet())
+            {
+                s += "Nod: " + pair.getKey().getID() + " Timp: " + pair.getValue() + "\n";
+            }
+
+            return s;
+        }
+
     }
     public static class MinimumPartialTreeResult {
         private ArrayList<WeightedEdge> treeEdges = new ArrayList<>();
@@ -54,11 +114,23 @@ public class Algorithms {
         public ArrayList<WeightedEdge> getTreeEdges() {
             return treeEdges;
         }
+
+        public String toString()
+        {
+            String s = "Arborele de cost minim:\n";
+            for (WeightedEdge wEdge : getTreeEdges())
+            {
+                s += wEdge.getA().getID() + " - " + wEdge.getB().getID()
+                        + " Cost: " + wEdge.getWeight() + "\n";
+            }
+            return s;
+        }
     }
     public static class BellmanFordDijkstraResult {
+        private Node startNode = null;
+
         private HashMap<Node, Double> distances = new HashMap<>();
         private HashMap<Node, Node> predecessors = new HashMap<>();
-
         public HashMap<Node, Double> getDistances() {
             return distances;
         }
@@ -66,6 +138,41 @@ public class Algorithms {
         public HashMap<Node, Node> getPredecessors() {
             return predecessors;
         }
+
+        public Node getStartNode() {
+            return startNode;
+        }
+
+        public void setStartNode(Node startNode) {
+            this.startNode = startNode;
+        }
+
+        public String toString()
+        {
+            String s = "------------ DISTANCES -------------\n";
+
+            for (Map.Entry<Node, Double> pair : getDistances().entrySet())
+            {
+                s += getStartNode().getID() + " -> " + pair.getKey().getID() + " (" + pair.getValue() + ")" + "\n";
+            }
+            s += "----------- PREDECESSORS -----------\n";
+
+            for (Map.Entry<Node, Node> pair : getPredecessors().entrySet())
+            {
+                s += (pair.getKey() == null ? "null" : pair.getKey().getID())
+                        + " <- " + (pair.getValue() == null ? "null" : pair.getValue().getID()) + "\n";
+            }
+//            result.getPredecessors().forEach((node1, node2) -> {
+//                if (node1 == null)
+//                System.out.println("null" + " <- " + node2.getID());
+//                else if (node2 == null)
+//                    System.out.println(node1.getID() + " <- " + "null");
+//                else
+//                    System.out.println(node1.getID() + " <- " + node2.getID());
+
+            return s;
+        }
+
     }
     public static class FloydWarshallResult {
         private HashMap<Node, HashMap<Node, Double>> distances = new HashMap<>();
@@ -78,6 +185,46 @@ public class Algorithms {
         public HashMap<Node, HashMap<Node, Node>> getPredecessors() {
             return predecessors;
         }
+
+        public String toString()
+        {
+//            public static String padLeftSpaces(String str, int spaces) {
+//            return String.format("%1$" + spaces + "s", str);
+//            }
+            BiFunction<String, Integer, String> padLeftSpaces = (str, spaces) -> String.format("%1$" + spaces + "s", str);
+//
+//            public static String padRightSpaces(String str, int spaces) {
+//            return String.format("%1$-" + spaces + "s", str);
+//            }
+            BiFunction<String, Integer, String> padRightSpaces = (str, spaces) -> String.format("%1$-" + spaces + "s", str);
+
+            StringBuilder sb = new StringBuilder("------------ DISTANCES -------------\n");
+            getDistances().entrySet().stream()
+                    .sorted((node1, node2) -> {
+                        return node1.getKey().getID().compareTo(node2.getKey().getID()); })
+                    .forEach((node_i) -> {
+                        node_i.getValue().entrySet().stream()
+                                .sorted((node1, node2) -> {
+                                    return node1.getKey().getID().compareTo(node2.getKey().getID()); })
+                                .forEach((node_j) -> {
+                                    sb.append(padLeftSpaces.apply("" + node_j.getValue(), 8) + " "); });
+                        sb.append("\n"); });
+
+            sb.append("----------- PREDECESSORS -----------\n");
+            getPredecessors().entrySet().stream()
+                    .sorted((node1, node2) -> {
+                        return node1.getKey().getID().compareTo(node2.getKey().getID()); })
+                    .forEach((node_i) -> {
+                        node_i.getValue().entrySet().stream()
+                                .sorted((node1, node2) -> {
+                                    return node1.getKey().getID().compareTo(node2.getKey().getID()); })
+                                .forEach((node_j) -> {
+                                    sb.append( padLeftSpaces.apply( ( node_j.getValue() == null ? "null" : node_j.getValue().getID() ), 8) + " "); });
+                        sb.append("\n"); });
+
+            return sb.toString();
+        }
+
     }
     public static class EulerianResult {
         private ArrayList<Arc> eulerianRoad = new ArrayList<>();
@@ -91,6 +238,19 @@ public class Algorithms {
         {
             return eulerianNodes;
         }
+
+        public String toString()
+        {
+            StringBuilder sb = new StringBuilder("Nodurile circuitului:\n");
+
+            getEulerianNodes().forEach(node -> sb.append(node.getID() + " "));
+            sb.append("\n\nLista de arce:\n");
+            getEulerianRoad().forEach(arc -> sb.append(arc.getA().getID() + " "
+                    + arc.getB().getID() + "\n"));
+
+            return sb.toString();
+        }
+
     }
 
     public static GenericGraphTraversalResult GenericGraphTraversal(AbstractGraph graph, Node startNode) {
@@ -177,7 +337,7 @@ public class Algorithms {
         result.getPredecessors().put(startNode, null);
 
         // nodul de start are lungimea drumului 0
-        result.getRoadLengths().put(startNode, 0.0);
+        result.getRoadLengths().put(startNode, 0);
 
         while (!analyzed.containsAll(graph.getNodes())) // W != N
         {
@@ -213,7 +373,7 @@ public class Algorithms {
                 visited.clear();
                 visited.add(newStartNode);
                 result.getPredecessors().put(newStartNode, null);
-                result.getRoadLengths().put(newStartNode, 0.0);
+                result.getRoadLengths().put(newStartNode, 0);
             }
         }
         return result;
@@ -424,6 +584,7 @@ public class Algorithms {
     }
     public static BellmanFordDijkstraResult DijkstraAlgorithm(DirectedWeightedGraph graph, Node startNode) {
         BellmanFordDijkstraResult result = new BellmanFordDijkstraResult();
+        result.setStartNode(startNode);
 
         // W - nodurile grafului
         // d - distanta de la nodul de start pana la restul de noduri
