@@ -13,6 +13,7 @@ import android.view.View;
 import com.unitbv.cv.aggrafuri.utils.Math;
 
 import java.util.Random;
+import java.util.Vector;
 
 public class GraphView extends View {
     private GraphViewType graphType = GraphViewType.NOT_SET;
@@ -102,60 +103,16 @@ public class GraphView extends View {
                     x2 + NODE_CIRCLE_RADIUS, y2 + NODE_CIRCLE_RADIUS,
                     0.0f, 360.0f, false, paint);
 
-            double angleOfLine = Math.angleOfLineToOx(x1, y1, x2, y2);
-            int tangent_x_A, tangent_y_A, tangent_x_B, tangent_y_B;
-            double alpha_A;
+            Vector<Float> coord = Math.generateCirclesConnectionPoints(x1, y1, NODE_CIRCLE_RADIUS, x2, y2, NODE_CIRCLE_RADIUS);
 
-            if (x1 <= x2)
-            {
-                if (y1 <= y2) // SE
-                {
-                    alpha_A = angleOfLine;
-                    tangent_x_A = (int) (x1 + NODE_CIRCLE_RADIUS * java.lang.Math.sin(alpha_A) / java.lang.Math.tan(angleOfLine));
-                    tangent_y_A = (int) (y1 + NODE_CIRCLE_RADIUS * java.lang.Math.sin(alpha_A));
+//            Log.d("INFO", "x1: " + x1 + " y1: " + y1 + " x2: " + x2 + " y2: " + y2);
+//            Log.d("INFO", "angleOfLine: " + java.lang.Math.toDegrees(angleOfLine) +
+//                    " alphaA: " + java.lang.Math.toDegrees(alpha_A));
+//            Log.d("INFO", "tangent_x_A: " + tangent_x_A + " tangent_y_A: " + tangent_y_A +
+//            " tangent_x_B: " + tangent_x_B + " tangent_y_B: " + tangent_y_B);
+            int i  = 0;
 
-                    tangent_x_B = (int) (x2 - NODE_CIRCLE_RADIUS * java.lang.Math.cos(alpha_A));
-                    tangent_y_B = (int) (y2 - NODE_CIRCLE_RADIUS * java.lang.Math.cos(alpha_A) * java.lang.Math.tan(angleOfLine));
-                }
-                else // NE
-                {
-                    alpha_A = 2 * java.lang.Math.PI - angleOfLine;
-                    tangent_x_A = (int) (x1 + NODE_CIRCLE_RADIUS * java.lang.Math.cos(alpha_A) );
-                    tangent_y_A = (int) (y1 + NODE_CIRCLE_RADIUS * java.lang.Math.cos(alpha_A) * java.lang.Math.tan(angleOfLine));
-
-                    tangent_x_B = (int) (x2 + NODE_CIRCLE_RADIUS * java.lang.Math.sin(alpha_A) / java.lang.Math.tan(angleOfLine));
-                    tangent_y_B = (int) (y2 + NODE_CIRCLE_RADIUS * java.lang.Math.sin(alpha_A));
-                }
-            }
-            else
-            {
-                if (y1 <= y2) // SV
-                {
-                    alpha_A = java.lang.Math.PI - angleOfLine;
-                    tangent_x_A = (int) (x1 + NODE_CIRCLE_RADIUS * java.lang.Math.sin(alpha_A) / java.lang.Math.tan(angleOfLine));
-                    tangent_y_A = (int) (y1 + NODE_CIRCLE_RADIUS * java.lang.Math.sin(alpha_A));
-
-                    tangent_x_B = (int) (x2 + NODE_CIRCLE_RADIUS * java.lang.Math.cos(alpha_A) );
-                    tangent_y_B = (int) (y2 + NODE_CIRCLE_RADIUS * java.lang.Math.cos(alpha_A) * java.lang.Math.tan(angleOfLine));
-                }
-                else // NV
-                {
-                    alpha_A = angleOfLine - java.lang.Math.PI;
-                    tangent_x_A = (int) (x1 - NODE_CIRCLE_RADIUS * java.lang.Math.cos(alpha_A));
-                    tangent_y_A = (int) (y1 - NODE_CIRCLE_RADIUS * java.lang.Math.cos(alpha_A) * java.lang.Math.tan(angleOfLine));
-
-                    tangent_x_B = (int) (x2 + NODE_CIRCLE_RADIUS * java.lang.Math.sin(alpha_A) / java.lang.Math.tan(angleOfLine));
-                    tangent_y_B = (int) (y2 + NODE_CIRCLE_RADIUS * java.lang.Math.sin(alpha_A));
-                }
-            }
-
-            Log.d("INFO", "x1: " + x1 + " y1: " + y1 + " x2: " + x2 + " y2: " + y2);
-            Log.d("INFO", "angleOfLine: " + java.lang.Math.toDegrees(angleOfLine) +
-                    " alphaA: " + java.lang.Math.toDegrees(alpha_A));
-            Log.d("INFO", "tangent_x_A: " + tangent_x_A + " tangent_y_A: " + tangent_y_A +
-            " tangent_x_B: " + tangent_x_B + " tangent_y_B: " + tangent_y_B);
-
-            canvas.drawLine(tangent_x_A, tangent_y_A, tangent_x_B, tangent_y_B, paint);
+            canvas.drawLine(coord.get(0), coord.get(1), coord.get(2), coord.get(3), paint);
 
             clickPositionX = -1;
             clickPositionY = -1;
