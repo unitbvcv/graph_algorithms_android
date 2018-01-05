@@ -19,12 +19,12 @@ public class UndirectedGraph extends AbstractGraph
 	 * Returns an Edge object.
 	 */
 	@Override
-	public Edge getEdge(Node a, Node b) 
+	public Edge getEdge(Node a, Node b)
 	{
 		Edge edgeToFind = new Edge(a, b);
 		Optional<Edge> foundEdge = m_edges.stream()
-		.filter(edge -> edge.equals(edgeToFind))
-		.findAny();
+				.filter(edge -> edge.equals(edgeToFind))
+				.findAny();
 		return foundEdge.orElse(null);
 	}
 
@@ -46,7 +46,7 @@ public class UndirectedGraph extends AbstractGraph
 		{
 			Algorithms.DepthFirstTraversalResult result = Algorithms.DepthFirstTraversal(this, m_nodes.iterator().next());
 			HashMap<Node, Integer> vizitat = result.getVisitedTime();
-			//HashMap<Node, Integer> analizat = result.getAnalizedTime();
+			//HashMap<Node, Double> analizat = result.getAnalizedTime();
 			
             Predicate<Edge> isReturnEdge = (edge) -> {
             	

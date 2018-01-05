@@ -1,7 +1,9 @@
 package com.cv.graph;
 
 import java.util.*;
+import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
+import java.util.stream.Collectors;
 
 public class Algorithms {
 
@@ -19,13 +21,13 @@ public class Algorithms {
     }
     public static class BreadthFirstTraversalResult {
         private HashMap<Node, Node> predecessors = new HashMap<>();
-        private HashMap<Node, Integer> roadLengths = new HashMap<>();
+        private HashMap<Node, Double> roadLengths = new HashMap<>();
 
         public HashMap<Node, Node> getPredecessors() {
             return predecessors;
         }
 
-        public HashMap<Node, Integer> getRoadLengths() {
+        public HashMap<Node, Double> getRoadLengths() {
             return roadLengths;
         }
     }
@@ -54,26 +56,26 @@ public class Algorithms {
         }
     }
     public static class BellmanFordDijkstraResult {
-        private HashMap<Node, Integer> distances = new HashMap<>();
-        private HashMap<Node, Integer> predecessors = new HashMap<>();
+        private HashMap<Node, Double> distances = new HashMap<>();
+        private HashMap<Node, Node> predecessors = new HashMap<>();
 
-        public HashMap<Node, Integer> getDistances() {
+        public HashMap<Node, Double> getDistances() {
             return distances;
         }
 
-        public HashMap<Node, Integer> getPredecessors() {
+        public HashMap<Node, Node> getPredecessors() {
             return predecessors;
         }
     }
     public static class FloydWarshallResult {
-        private HashMap<Node, HashMap<Node, Integer>> distances = new HashMap<>();
-        private HashMap<Node, HashMap<Node, Integer>> predecessors = new HashMap<>();
+        private HashMap<Node, HashMap<Node, Double>> distances = new HashMap<>();
+        private HashMap<Node, HashMap<Node, Node>> predecessors = new HashMap<>();
 
-        public HashMap<Node, HashMap<Node, Integer>> getDistances() {
+        public HashMap<Node, HashMap<Node, Double>> getDistances() {
             return distances;
         }
 
-        public HashMap<Node, HashMap<Node, Integer>> getPredecessors() {
+        public HashMap<Node, HashMap<Node, Node>> getPredecessors() {
             return predecessors;
         }
     }
@@ -175,7 +177,7 @@ public class Algorithms {
         result.getPredecessors().put(startNode, null);
 
         // nodul de start are lungimea drumului 0
-        result.getRoadLengths().put(startNode, 0);
+        result.getRoadLengths().put(startNode, 0.0);
 
         while (!analyzed.containsAll(graph.getNodes())) // W != N
         {
@@ -211,7 +213,7 @@ public class Algorithms {
                 visited.clear();
                 visited.add(newStartNode);
                 result.getPredecessors().put(newStartNode, null);
-                result.getRoadLengths().put(newStartNode, 0);
+                result.getRoadLengths().put(newStartNode, 0.0);
             }
         }
         return result;
@@ -295,22 +297,22 @@ public class Algorithms {
         // functia v mapeaza pentru fiecare nod valoarea arcului cu cost minim prin care se poate accesa
         // respectivul nod; aceasta valoare se schimba pe masura ce muchii cu cost mai mic devin vizitate si
         // nodul nu devine din neanalizat analizat
-        HashMap<Node, Integer> v = new HashMap<>();
+        HashMap<Node, Double> v = new HashMap<>();
 
         // functia e mapeaza pentru fiecare nod arcul cu cost minim prin care se acceseaza respectivul nod; analog cu v
         HashMap<Node, WeightedEdge> e = new HashMap<>();
 
         // initializam v
         for (Node node : graph.getNodes())
-            v.put(node, Integer.MAX_VALUE);
-        v.put(startNode, 0);
+            v.put(node, Double.POSITIVE_INFINITY);
+        v.put(startNode, 0.0);
 
         while (!N1.containsAll(graph.getNodes())) {
-            int min = Integer.MAX_VALUE;
+            double min = Double.POSITIVE_INFINITY;
             Node y = null;
 
             // gasirea nodului cu costul minim din v
-            for (Map.Entry<Node, Integer> entry : v.entrySet()) {
+            for (Map.Entry<Node, Double> entry : v.entrySet()) {
                 if (nonN1.contains(entry.getKey()) && entry.getValue() < min) {
                     min = entry.getValue();
                     y = entry.getKey();
@@ -423,21 +425,156 @@ public class Algorithms {
     public static BellmanFordDijkstraResult DijkstraAlgorithm(DirectedWeightedGraph graph, Node startNode) {
         BellmanFordDijkstraResult result = new BellmanFordDijkstraResult();
 
-        // here algorithm
+        // W - nodurile grafului
+        // d - distanta de la nodul de start pana la restul de noduri
+        // p - predecesorul nodului curent
+        ArrayList<Node> W = new ArrayList<>(graph.getNodes());
+        HashMap<Node, Double> d = result.getDistances();
+        HashMap<Node, Node> p = result.getPredecessors();
+
+        for(Node y : W) {
+            d.put(y, Double.POSITIVE_INFINITY);
+            p.put(y, null);
+        }
+
+        d.put(startNode, 0.0);
+
+        while(!W.isEmpty()) {
+            Node x;
+            Map.Entry entry = d.entrySet().stream().filter(pair -> W.contains(pair.getKey())).min((pair1, pair2) -> pair1.getValue().compareTo(pair2.getValue())).orElse(null);
+            if (entry != null) {
+                x = (Node)entry.getKey();
+                W.remove(x);
+                List<Edge> succesorEdgesList = graph.getEdges().stream().filter(edge -> edge.getA().equals(x) && W.contains(edge.getB())).collect(Collectors.toList());
+
+                for(Edge edge : succesorEdgesList) {
+                    Node y = edge.getB();
+
+                    Double arcWeight = ((WeightedArc)edge).getWeight();
+
+                    if (d.get(x) + arcWeight < d.get(y)) {
+                        d.put(y, d.get(x) + arcWeight);
+                        p.put(y, x);
+                    }
+                }
+            }
+        }
 
         return result;
     }
     public static BellmanFordDijkstraResult BellmanFordAlgorithm(DirectedWeightedGraph graph, Node startNode) {
         BellmanFordDijkstraResult result = new BellmanFordDijkstraResult();
 
-        // here algorithm
+        HashMap<Node, Double> d = result.getDistances();
+        HashMap<Node, Double> dp = new HashMap<>();
+        HashMap<Node, Node> p = result.getPredecessors();
+
+        for(Node y : graph.getNodes()) {
+            d.put(y, Double.POSITIVE_INFINITY);
+            p.put(y, null);
+        }
+
+        d.put(startNode, 0.0);
+
+        BiPredicate<HashMap<Node, Double>, HashMap<Node, Double>> doWhileCondition = (l_d, l_dp) -> {
+            for (Map.Entry<Node, Double> pair : l_d.entrySet()) {
+                Double cost1 = pair.getValue();
+                Double cost2 = l_dp.get(pair.getKey());
+
+                if (!cost1.equals(cost2))
+                    return true;
+            }
+
+            return false;
+        };
+
+        do {
+            dp.putAll(d);
+
+            for (Node y : graph.getNodes()) {
+                List<Edge> predecessorEdgesList = graph.getEdges().stream().filter(edge -> edge.getB().equals(y)).collect(Collectors.toList());
+                if (!predecessorEdgesList.isEmpty()) {
+                    ArrayList<Node> predecessorList = new ArrayList<>();
+
+                    for (Edge edge : predecessorEdgesList) {
+                        if(edge.getA() != null)
+                            predecessorList.add(edge.getA());
+                    }
+
+                    BiFunction<Node, Node, Double> compareEquation = (node1, node2) -> {return dp.get(node1) + ((WeightedArc)graph.getEdge(node1, node2)).getWeight();};
+
+                    Node x = predecessorList.stream().min((x1, x2) -> Double.compare(compareEquation.apply(x1, y), compareEquation.apply(x2, y))).orElse(null);
+
+                    if (compareEquation.apply(x, y) < dp.get(y)) {
+                        d.put(y, dp.get(x) + ((WeightedArc)graph.getEdge(x, y)).getWeight());
+                        p.put(y, x);
+                    }
+                }
+            }
+        } while(doWhileCondition.test(d, dp));
 
         return result;
     }
     public static FloydWarshallResult FloydWarshallAlgorithm(DirectedWeightedGraph graph) {
         FloydWarshallResult result = new FloydWarshallResult();
 
-        // do your thing
+        HashMap<Node, HashMap<Node, Double>> d = result.getDistances();
+        HashMap<Node, HashMap<Node, Node>> p = result.getPredecessors();
+
+        BiFunction<Node, Node, Double> bValueCalculator = (node1, node2) -> {
+            if (node1.equals(node2)) {
+                return 0.0;
+            }
+
+            else if (graph.getEdge(node1, node2) != null) {
+                return ((WeightedArc)graph.getEdge(node1, node2)).getWeight();
+            }
+
+            else {
+                return Double.POSITIVE_INFINITY;
+            }
+        };
+
+        HashMap<Node, HashMap<Node, Double>> b = new HashMap<>();
+        for (Node node : graph.getNodes()) {
+            b.put(node, new HashMap<>());
+            d.put(node, new HashMap<>());
+            p.put(node, new HashMap<>());
+        }
+
+        for (Map.Entry<Node, HashMap<Node, Double>> i : b.entrySet()) {
+            for (Node node : graph.getNodes()) {
+                i.getValue().put(node, bValueCalculator.apply(i.getKey(), node));
+            }
+        }
+
+        for (Map.Entry<Node, HashMap<Node, Double>> i : d.entrySet()) {
+            for (Node node : graph.getNodes()) {
+                i.getValue().put(node, bValueCalculator.apply(i.getKey(), node));
+            }
+        }
+
+        for (Map.Entry<Node, HashMap<Node, Node>> i : p.entrySet()) {
+            for (Node node : graph.getNodes()) {
+                if (!i.getKey().equals(node) && d.get(i.getKey()).get(node) < Double.POSITIVE_INFINITY) {
+                    p.get(i.getKey()).put(node, i.getKey());
+                }
+                else {
+                    p.get(i.getKey()).put(node, null);
+                }
+            }
+        }
+
+        for (Node k : graph.getNodes()) {
+            for (Node i : graph.getNodes()) {
+                for (Node j : graph.getNodes()) {
+                    if (d.get(i).get(k) + d.get(k).get(j) < d.get(i).get(j)) {
+                        d.get(i).put(j, d.get(i).get(k) + d.get(k).get(j));
+                        p.get(i).put(j, p.get(k).get(j));
+                    }
+                }
+            }
+        }
 
         return result;
     }
@@ -450,7 +587,7 @@ public class Algorithms {
         ArrayList<Node> W = result.getEulerianNodes();
 
         // b - vector in care marcam daca un arc e din arborele parcurgere
-        HashMap<Arc, Integer> b = new HashMap<>();
+        HashMap<Arc, Double> b = new HashMap<>();
 
         // V-x  = lista nodurilor adiacente catre interiorul lui x
         HashMap<Node, ArrayList<Node>> V_x = new HashMap<>();
@@ -467,8 +604,8 @@ public class Algorithms {
             Arc arc = (Arc) edge1;
             Node y_predecessor = ptdf.getPredecessors().get(arc.getB());
             if (y_predecessor != null && y_predecessor.equals(arc.getA()))
-                b.put(arc, 1);
-            else b.put(arc, 0);
+                b.put(arc, 1.0);
+            else b.put(arc, 0.0);
         }
 
         for (Node node : graph.getNodes())
@@ -478,7 +615,7 @@ public class Algorithms {
         }
 
         graph.getEdges().stream().map(edge -> (Arc) edge).forEach(arc -> {
-            if (b.get(arc) == 0)
+            if (b.get(arc) == 0.0)
                 V_x.get(arc.getB()).add(0, arc.getA());
             else
                 V_x.get(arc.getB()).add(arc.getA());

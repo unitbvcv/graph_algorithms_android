@@ -23,7 +23,7 @@ public class DirectedGraph extends AbstractGraph
 	{
 		Arc arcToFind = new Arc(a, b);
 		Optional<Edge> arcFound = m_edges.stream()
-				.filter(edge -> ((Arc)edge).equals(arcToFind) )
+				.filter(edge -> edge.equals(arcToFind))
 				.findAny();
 		return arcFound.orElse(null);
 	}

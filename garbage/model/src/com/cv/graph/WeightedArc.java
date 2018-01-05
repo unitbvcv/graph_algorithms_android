@@ -3,15 +3,15 @@ package com.cv.graph;
 public class WeightedArc extends Arc
 {
 	
-	private Integer m_weight = null;
+	private Double m_weight = null;
 
-	public WeightedArc(Node first, Node second, int weight) 
+	public WeightedArc(Node first, Node second, Double weight)
 	{
 		super(first, second);
-		m_weight = new Integer(weight);
+		m_weight = new Double(weight);
 	}
 
-	public Integer getWeight() 
+	public Double getWeight()
 	{
 		return m_weight;
 	}

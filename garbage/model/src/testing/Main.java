@@ -205,13 +205,13 @@ public class Main
         graph.addNode(n4);
         graph.addNode(n5);
 
-        WeightedEdge edge1 = new WeightedEdge(n1, n2, 35);
-        WeightedEdge edge2 = new WeightedEdge(n1, n3, 40);
-        WeightedEdge edge3 = new WeightedEdge(n3, n2, 25);
-        WeightedEdge edge4 = new WeightedEdge(n4, n2, 10);
-        WeightedEdge edge5 = new WeightedEdge(n3, n4, 20);
-        WeightedEdge edge6 = new WeightedEdge(n5, n3, 15);
-        WeightedEdge edge7 = new WeightedEdge(n4, n5, 30);
+        WeightedEdge edge1 = new WeightedEdge(n1, n2, 35.0);
+        WeightedEdge edge2 = new WeightedEdge(n1, n3, 40.0);
+        WeightedEdge edge3 = new WeightedEdge(n3, n2, 25.0);
+        WeightedEdge edge4 = new WeightedEdge(n4, n2, 10.0);
+        WeightedEdge edge5 = new WeightedEdge(n3, n4, 20.0);
+        WeightedEdge edge6 = new WeightedEdge(n5, n3, 15.0);
+        WeightedEdge edge7 = new WeightedEdge(n4, n5, 30.0);
         //WeightedEdge edge8 = new WeightedEdge(n5, n2,  5);
 
         graph.addEdge(edge1);
@@ -297,14 +297,14 @@ public class Main
         graph.addNode(n4);
         graph.addNode(n5);
 
-        WeightedEdge edge1 = new WeightedEdge(n1, n2, 35);
-        WeightedEdge edge2 = new WeightedEdge(n1, n3, 40);
-        WeightedEdge edge3 = new WeightedEdge(n3, n2, 25);
-        WeightedEdge edge4 = new WeightedEdge(n4, n2, 10);
-        WeightedEdge edge5 = new WeightedEdge(n3, n4, 20);
-        WeightedEdge edge6 = new WeightedEdge(n5, n3, 15);
-        WeightedEdge edge7 = new WeightedEdge(n4, n5, 30);
-        WeightedEdge edge8 = new WeightedEdge(n5, n2,  5);
+        WeightedEdge edge1 = new WeightedEdge(n1, n2, 35.0);
+        WeightedEdge edge2 = new WeightedEdge(n1, n3, 40.0);
+        WeightedEdge edge3 = new WeightedEdge(n3, n2, 25.0);
+        WeightedEdge edge4 = new WeightedEdge(n4, n2, 10.0);
+        WeightedEdge edge5 = new WeightedEdge(n3, n4, 20.0);
+        WeightedEdge edge6 = new WeightedEdge(n5, n3, 15.0);
+        WeightedEdge edge7 = new WeightedEdge(n4, n5, 30.0);
+        WeightedEdge edge8 = new WeightedEdge(n5, n2,  5.0);
 
         graph.addEdge(edge1);
         graph.addEdge(edge2);
@@ -338,14 +338,14 @@ public class Main
         graph.addNode(n4);
         graph.addNode(n5);
 
-        WeightedEdge edge1 = new WeightedEdge(n1, n2, 35);
-        WeightedEdge edge2 = new WeightedEdge(n1, n3, 40);
-        WeightedEdge edge3 = new WeightedEdge(n3, n2, 25);
-        WeightedEdge edge4 = new WeightedEdge(n4, n2, 10);
-        WeightedEdge edge5 = new WeightedEdge(n3, n4, 20);
-        WeightedEdge edge6 = new WeightedEdge(n5, n3, 15);
-        WeightedEdge edge7 = new WeightedEdge(n4, n5, 30);
-        WeightedEdge edge8 = new WeightedEdge(n5, n2,  5);
+        WeightedEdge edge1 = new WeightedEdge(n1, n2, 35.0);
+        WeightedEdge edge2 = new WeightedEdge(n1, n3, 40.0);
+        WeightedEdge edge3 = new WeightedEdge(n3, n2, 25.0);
+        WeightedEdge edge4 = new WeightedEdge(n4, n2, 10.0);
+        WeightedEdge edge5 = new WeightedEdge(n3, n4, 20.0);
+        WeightedEdge edge6 = new WeightedEdge(n5, n3, 15.0);
+        WeightedEdge edge7 = new WeightedEdge(n4, n5, 30.0);
+        WeightedEdge edge8 = new WeightedEdge(n5, n2,  5.0);
 
         graph.addEdge(edge1);
         graph.addEdge(edge2);
@@ -361,6 +361,211 @@ public class Main
         result.getTreeEdges().stream()
                 .forEach(edge -> System.out.println(edge.getA().getID()
                         + " - " + edge.getB().getID() + " Cost: " + edge.getWeight()));
+    }
+
+    public static void testAlgorithm7() {
+        DirectedWeightedGraph graph = new DirectedWeightedGraph();
+
+        Node n1 = new Node("1");
+        Node n2 = new Node("2");
+        Node n3 = new Node("3");
+        Node n4 = new Node("4");
+        Node n5 = new Node("5");
+        Node n6 = new Node("6");
+        Node n7 = new Node("7");
+        Node n8 = new Node("8");
+
+        graph.addNode(n1);
+        graph.addNode(n2);
+        graph.addNode(n3);
+        graph.addNode(n4);
+        graph.addNode(n5);
+        graph.addNode(n6);
+        graph.addNode(n7);
+        graph.addNode(n8);
+
+        WeightedArc a1 = new WeightedArc(n1, n2, 28.0);
+        WeightedArc a2 = new WeightedArc(n1, n3, 1.0);
+        WeightedArc a3 = new WeightedArc(n1, n4, 2.0);
+        WeightedArc a4 = new WeightedArc(n2, n5, 9.0);
+        WeightedArc a5 = new WeightedArc(n2, n7, 10.0);
+        WeightedArc a6 = new WeightedArc(n3, n2, 8.0);
+        WeightedArc a7 = new WeightedArc(n3, n7, 26.0);
+        WeightedArc a8 = new WeightedArc(n4, n7, 24.0);
+        WeightedArc a9 = new WeightedArc(n4, n8, 27.0);
+        WeightedArc a10 = new WeightedArc(n5, n3, 5.0);
+        WeightedArc a11 = new WeightedArc(n5, n6, 8.0);
+        WeightedArc a12 = new WeightedArc(n5, n8, 7.0);
+        WeightedArc a13 = new WeightedArc(n6, n8, 7.0);
+        WeightedArc a14 = new WeightedArc(n7, n8, 1.0);
+
+        graph.addEdge(a1);
+        graph.addEdge(a2);
+        graph.addEdge(a3);
+        graph.addEdge(a4);
+        graph.addEdge(a5);
+        graph.addEdge(a6);
+        graph.addEdge(a7);
+        graph.addEdge(a8);
+        graph.addEdge(a9);
+        graph.addEdge(a10);
+        graph.addEdge(a11);
+        graph.addEdge(a12);
+        graph.addEdge(a13);
+        graph.addEdge(a14);
+
+        Algorithms.BellmanFordDijkstraResult result = Algorithms.DijkstraAlgorithm(graph, n1);
+        System.out.println("------------ DISTANCES -------------");
+        result.getDistances().forEach((node, weight) -> System.out.println(n1.getID() + " -> " + node.getID() + " (" + weight + ")"));
+        System.out.println("----------- PREDECESSORS -----------");
+        result.getPredecessors().forEach((node1, node2) -> {
+            if (node1 == null)
+                System.out.println("null" + " <- " + node2.getID());
+            else if (node2 == null)
+                System.out.println(node1.getID() + " <- " + "null");
+            else
+                System.out.println(node1.getID() + " <- " + node2.getID());
+        });
+}
+
+    public static void testAlgorithm8() {
+        DirectedWeightedGraph graph = new DirectedWeightedGraph();
+
+        Node n1 = new Node("1");
+        Node n2 = new Node("2");
+        Node n3 = new Node("3");
+        Node n4 = new Node("4");
+        Node n5 = new Node("5");
+        Node n6 = new Node("6");
+        Node n7 = new Node("7");
+        Node n8 = new Node("8");
+
+        graph.addNode(n1);
+        graph.addNode(n2);
+        graph.addNode(n3);
+        graph.addNode(n4);
+        graph.addNode(n5);
+        graph.addNode(n6);
+        graph.addNode(n7);
+        graph.addNode(n8);
+
+        WeightedArc a1 = new WeightedArc(n1, n2, 28.0);
+        WeightedArc a2 = new WeightedArc(n1, n3, 1.0);
+        WeightedArc a3 = new WeightedArc(n1, n4, 2.0);
+        WeightedArc a4 = new WeightedArc(n2, n5, 9.0);
+        WeightedArc a5 = new WeightedArc(n2, n7, 10.0);
+        WeightedArc a6 = new WeightedArc(n3, n2, 8.0);
+        WeightedArc a7 = new WeightedArc(n3, n7, 26.0);
+        WeightedArc a8 = new WeightedArc(n4, n7, 24.0);
+        WeightedArc a9 = new WeightedArc(n4, n8, 27.0);
+        WeightedArc a10 = new WeightedArc(n5, n3, 5.0);
+        WeightedArc a11 = new WeightedArc(n5, n6, 8.0);
+        WeightedArc a12 = new WeightedArc(n5, n8, 7.0);
+        WeightedArc a13 = new WeightedArc(n6, n8, 7.0);
+        WeightedArc a14 = new WeightedArc(n7, n8, 1.0);
+
+        graph.addEdge(a1);
+        graph.addEdge(a2);
+        graph.addEdge(a3);
+        graph.addEdge(a4);
+        graph.addEdge(a5);
+        graph.addEdge(a6);
+        graph.addEdge(a7);
+        graph.addEdge(a8);
+        graph.addEdge(a9);
+        graph.addEdge(a10);
+        graph.addEdge(a11);
+        graph.addEdge(a12);
+        graph.addEdge(a13);
+        graph.addEdge(a14);
+
+        Algorithms.BellmanFordDijkstraResult result = Algorithms.BellmanFordAlgorithm(graph, n1);
+        System.out.println("------------ DISTANCES -------------");
+        result.getDistances().forEach((node, weight) -> System.out.println(n1.getID() + " -> " + node.getID() + " (" + weight + ")"));
+        System.out.println("----------- PREDECESSORS -----------");
+        result.getPredecessors().forEach((node1, node2) -> {
+            if (node1 == null)
+                System.out.println("null" + " <- " + node2.getID());
+            else if (node2 == null)
+                System.out.println(node1.getID() + " <- " + "null");
+            else
+                System.out.println(node1.getID() + " <- " + node2.getID());
+        });
+    }
+
+    public static void testAlgorithm9() {
+        DirectedWeightedGraph graph = new DirectedWeightedGraph();
+
+        Node n1 = new Node("1");
+        Node n2 = new Node("2");
+        Node n3 = new Node("3");
+        Node n4 = new Node("4");
+        Node n5 = new Node("5");
+
+        graph.addNode(n1);
+        graph.addNode(n2);
+        graph.addNode(n3);
+        graph.addNode(n4);
+        graph.addNode(n5);
+
+        WeightedArc a1 = new WeightedArc(n1, n2, 2.0);
+        WeightedArc a2 = new WeightedArc(n1, n3, 4.0);
+        WeightedArc a3 = new WeightedArc(n1, n5, 3.0);
+        WeightedArc a4 = new WeightedArc(n2, n1, 2.0);
+        WeightedArc a5 = new WeightedArc(n2, n3, 8.0);
+        WeightedArc a6 = new WeightedArc(n2, n5, 1.0);
+        WeightedArc a7 = new WeightedArc(n3, n1, 6.0);
+        WeightedArc a8 = new WeightedArc(n3, n2, 2.0);
+        WeightedArc a9 = new WeightedArc(n3, n4, 4.0);
+        WeightedArc a10 = new WeightedArc(n3, n5, 3.0);
+        WeightedArc a11 = new WeightedArc(n4, n1, 1.0);
+        WeightedArc a12 = new WeightedArc(n4, n5, 5.0);
+        WeightedArc a13 = new WeightedArc(n5, n4, 1.0);
+
+        graph.addEdge(a1);
+        graph.addEdge(a2);
+        graph.addEdge(a3);
+        graph.addEdge(a4);
+        graph.addEdge(a5);
+        graph.addEdge(a6);
+        graph.addEdge(a7);
+        graph.addEdge(a8);
+        graph.addEdge(a9);
+        graph.addEdge(a10);
+        graph.addEdge(a11);
+        graph.addEdge(a12);
+        graph.addEdge(a13);
+
+        Algorithms.FloydWarshallResult result = Algorithms.FloydWarshallAlgorithm(graph);
+
+        System.out.println("------------ DISTANCES -------------");
+        result.getDistances().entrySet().stream().sorted((node1, node2) -> {
+            return node1.getKey().getID().compareTo(node2.getKey().getID());
+        })
+                .forEach((node_i) -> {
+                    node_i.getValue().entrySet().stream().sorted((node1, node2) -> {
+                        return node1.getKey().getID().compareTo(node2.getKey().getID());
+                    })
+                            .forEach((node_j) -> {
+                                System.out.print(padLeftSpaces("" + node_j.getValue(), 8) + " ");
+                            });
+                System.out.println("");});
+
+        System.out.println("----------- PREDECESSORS -----------");
+        result.getPredecessors().entrySet().stream().sorted((node1, node2) -> {
+            return node1.getKey().getID().compareTo(node2.getKey().getID());
+        })
+                .forEach((node_i) -> {
+                    node_i.getValue().entrySet().stream().sorted((node1, node2) -> {
+                        return node1.getKey().getID().compareTo(node2.getKey().getID());
+                    })
+                            .forEach((node_j) -> {
+                                if (node_j.getValue() == null)
+                                    System.out.print(padLeftSpaces("null", 8) + " ");
+                                else
+                                    System.out.print(padLeftSpaces("" + node_j.getValue().getID(), 8) + " ");
+                            });
+                    System.out.println("");});
     }
 
     public static void testAlgorithm10()
@@ -410,10 +615,17 @@ public class Main
                 + arc.getB().getID()));
     }
 
+    public static String padLeftSpaces(String str, int spaces) {
+        return String.format("%1$" + spaces + "s", str);
+    }
+
+    public static String padRightSpaces(String str, int spaces) {
+        return String.format("%1$-" + spaces + "s", str);
+    }
 
     public static void main(String args[])
     {
-    	testAlgorithm10();
+    	testAlgorithm9();
     }
 
 }
