@@ -4,9 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.v4.math.MathUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -35,7 +33,8 @@ public class GraphView extends View {
     private final int BACKGROUND_COLOR_G = 255;
     private final int BACKGROUND_COLOR_B = 255;
 
-    private final float ARROW_LEG_LENGTH = 100;
+    private final float ARROW_LEG_LENGTH = 50;
+    private final double ARROW_LEG_ANGLE = java.lang.Math.PI / 6;
 
     private boolean canvasNeedsClearing = false;
 
@@ -103,16 +102,28 @@ public class GraphView extends View {
                     x2 + NODE_CIRCLE_RADIUS, y2 + NODE_CIRCLE_RADIUS,
                     0.0f, 360.0f, false, paint);
 
-            Vector<Float> coord = Math.generateCirclesConnectionPoints(x1, y1, NODE_CIRCLE_RADIUS, x2, y2, NODE_CIRCLE_RADIUS);
 
 //            Log.d("INFO", "x1: " + x1 + " y1: " + y1 + " x2: " + x2 + " y2: " + y2);
 //            Log.d("INFO", "angleOfLine: " + java.lang.Math.toDegrees(angleOfLine) +
 //                    " alphaA: " + java.lang.Math.toDegrees(alpha_A));
 //            Log.d("INFO", "tangent_x_A: " + tangent_x_A + " tangent_y_A: " + tangent_y_A +
 //            " tangent_x_B: " + tangent_x_B + " tangent_y_B: " + tangent_y_B);
-            int i  = 0;
 
-            canvas.drawLine(coord.get(0), coord.get(1), coord.get(2), coord.get(3), paint);
+            Vector<Float> coord = Math.generateCirclesConnectionPoints(x1, y1, NODE_CIRCLE_RADIUS, x2, y2, NODE_CIRCLE_RADIUS);
+            float tan_x1 = coord.get(0),
+                    tan_y1 = coord.get(1),
+                    tan_x2 = coord.get(2),
+                    tan_y2 = coord.get(3);
+
+            Vector<Float> legsCoord = Math.generateArrowLegsCoordinates(tan_x1, tan_y1, tan_x2, tan_y2, ARROW_LEG_LENGTH, ARROW_LEG_ANGLE);
+            float C_x = legsCoord.get(0),
+                    C_y = legsCoord.get(1),
+                    D_x = legsCoord.get(2),
+                    D_y = legsCoord.get(3);
+
+            canvas.drawLine(tan_x1, tan_y1, tan_x2, tan_y2, paint);
+            canvas.drawLine(tan_x2, tan_y2, C_x, C_y, paint);
+            canvas.drawLine(tan_x2, tan_y2, D_x, D_y, paint);
 
             clickPositionX = -1;
             clickPositionY = -1;

@@ -70,4 +70,40 @@ public class Math {
         return result;
     }
 
+
+    public static double distanceBetweenTwoPoints(float x1, float y1, float x2, float y2)
+    {
+        return java.lang.Math.sqrt( (y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1) );
+    }
+
+    public static Vector<Float> rotatePoint(float cx, float cy, double angle, float x, float y)
+    {
+        Vector<Float> result = new Vector<>(2);
+
+        double new_x = java.lang.Math.cos(angle) * (x - cx) - java.lang.Math.sin(angle) * (y - cy) + cx;
+        double new_y = java.lang.Math.sin(angle) * (x - cx) + java.lang.Math.cos(angle) * (y - cy) + cy;
+
+        result.add(Float.valueOf((float)new_x));
+        result.add(Float.valueOf((float)new_y));
+        return result;
+    }
+
+    public static Vector<Float> generateArrowLegsCoordinates(float startX, float startY, float stopX, float stopY, float legLength, double angle)
+    {
+        Vector<Float> result = new Vector<>(4);
+
+        double arrowLength = Math.distanceBetweenTwoPoints(startX, startY, stopX, stopY);
+
+        float C_x, D_x, C_y, D_y;
+        C_x = D_x = (float) (startX + arrowLength - legLength * java.lang.Math.cos(angle));
+        C_y = (float) (startY - legLength * java.lang.Math.sin(angle));
+        D_y = (float) (startY + legLength * java.lang.Math.sin(angle));
+
+        Vector<Float> C_rotated = Math.rotatePoint(startX, startY, Math.angleOfLineToOx(startX, startY, stopX, stopY), C_x, C_y);
+        Vector<Float> D_rotated = Math.rotatePoint(startX, startY, Math.angleOfLineToOx(startX, startY, stopX, stopY), D_x, D_y);
+
+        result.addAll(C_rotated);
+        result.addAll(D_rotated);
+        return result;
+    }
 }
