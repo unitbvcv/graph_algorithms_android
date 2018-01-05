@@ -1,6 +1,5 @@
 package com.unitbv.cv.aggrafuri.ui;
 
-
 import com.unitbv.cv.aggrafuri.graph.Arc;
 import com.unitbv.cv.aggrafuri.graph.WeightedArc;
 import com.unitbv.cv.aggrafuri.graph.WeightedEdge;
@@ -30,9 +29,9 @@ public class ArcView {
         {
             this.cost = cost;
             if (arc instanceof WeightedArc)
-                ((WeightedArc)arc).setWeight(Integer.parseInt(cost.getMessage()));
+                ((WeightedArc)arc).setWeight(Double.parseDouble(cost.getMessage()));
             else
-                arc = new WeightedArc(arc.getA(), arc.getB(), Integer.parseInt(cost.getMessage()));
+                arc = new WeightedArc(arc.getA(), arc.getB(), Double.parseDouble(cost.getMessage()));
         }
     }
 

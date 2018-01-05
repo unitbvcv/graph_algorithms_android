@@ -15,6 +15,8 @@ public class WeightedArc extends Arc
 	{
 		return m_weight;
 	}
+
+	public void setWeight(Double weight) { this.m_weight = weight; }
 	
 	public boolean equals(Object other)
 	{

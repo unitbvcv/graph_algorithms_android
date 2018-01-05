@@ -27,9 +27,9 @@ public class EdgeView {
         {
             this.cost = cost;
             if (edge instanceof WeightedEdge)
-                ((WeightedEdge)edge).setWeight(Integer.parseInt(cost.getMessage()));
+                ((WeightedEdge)edge).setWeight(Double.parseDouble(cost.getMessage()));
             else
-                edge = new WeightedEdge(edge.getA(), edge.getB(), Integer.parseInt(cost.getMessage()));
+                edge = new WeightedEdge(edge.getA(), edge.getB(), Double.parseDouble(cost.getMessage()));
         }
     }
 
