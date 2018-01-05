@@ -1,4 +1,6 @@
-package com.unitbv.cv.aggrafuri.graph;
+package com.cv.graph;
+
+import java.util.Optional;
 
 public class UndirectedWeightedGraph extends UndirectedGraph
 {
@@ -20,6 +22,19 @@ public class UndirectedWeightedGraph extends UndirectedGraph
 		if (edge instanceof WeightedEdge)
 			return m_edges.add(edge);
 		return false;
+	}
+
+	/**
+	 * Returns an Edge object.
+	 */
+	@Override
+	public Edge getEdge(Node a, Node b)
+	{
+		Edge edgeToFind = new Edge(a, b);
+		Optional<Edge> foundEdge = m_edges.stream()
+				.filter(edge -> edgeToFind.equals(edge))
+				.findAny();
+		return foundEdge.orElse(null);
 	}
 
 	/**

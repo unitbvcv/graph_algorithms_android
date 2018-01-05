@@ -1,4 +1,6 @@
-package com.unitbv.cv.aggrafuri.graph;
+package com.cv.graph;
+
+import java.util.Optional;
 
 public class DirectedWeightedGraph extends DirectedGraph
 {
@@ -19,6 +21,19 @@ public class DirectedWeightedGraph extends DirectedGraph
 		if (edge instanceof WeightedArc)
 			return m_edges.add(edge);
 		return false;
+	}
+
+	/**
+	 * Returns an Arc object.
+	 */
+	@Override
+	public Edge getEdge(Node a, Node b)
+	{
+		Arc arcToFind = new Arc(a, b);
+		Optional<Edge> arcFound = m_edges.stream()
+				.filter(edge -> arcToFind.equals(edge) )
+				.findAny();
+		return arcFound.orElse(null);
 	}
 
 	/**

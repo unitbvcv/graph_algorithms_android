@@ -1,4 +1,4 @@
-package com.unitbv.cv.aggrafuri.graph;
+package com.cv.graph;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -19,12 +19,12 @@ public class UndirectedGraph extends AbstractGraph
 	 * Returns an Edge object.
 	 */
 	@Override
-	public Edge getEdge(Node a, Node b) 
+	public Edge getEdge(Node a, Node b)
 	{
 		Edge edgeToFind = new Edge(a, b);
 		Optional<Edge> foundEdge = m_edges.stream()
-		.filter(edge -> edge.equals(edgeToFind))
-		.findAny();
+				.filter(edge -> edge.equals(edgeToFind))
+				.findAny();
 		return foundEdge.orElse(null);
 	}
 

@@ -1,24 +1,19 @@
-package com.unitbv.cv.aggrafuri.graph;
+package com.cv.graph;
 
 public class WeightedArc extends Arc
 {
 	
-	private Integer m_weight = null;
+	private Double m_weight = null;
 
-	public WeightedArc(Node first, Node second, int weight) 
+	public WeightedArc(Node first, Node second, Double weight)
 	{
 		super(first, second);
-		m_weight = Integer.valueOf(weight);
+		m_weight = new Double(weight);
 	}
 
-	public Integer getWeight() 
+	public Double getWeight()
 	{
 		return m_weight;
-	}
-
-	public void setWeight(int weight)
-	{
-		m_weight = Integer.valueOf(weight);
 	}
 	
 	public boolean equals(Object other)

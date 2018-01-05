@@ -1,4 +1,4 @@
-package com.unitbv.cv.aggrafuri.graph;
+package com.cv.graph;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -32,7 +32,7 @@ public abstract class AbstractGraph
 		return m_nodes.remove(node);
 	}
 	
-	public HashSet<Edge> getEdges()
+	public HashSet<Edge> getEdges() 
 	{
 		return m_edges;
 	}

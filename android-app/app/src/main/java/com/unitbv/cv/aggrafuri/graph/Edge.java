@@ -1,4 +1,4 @@
-package com.unitbv.cv.aggrafuri.graph;
+package com.cv.graph;
 
 public class Edge 
 {
