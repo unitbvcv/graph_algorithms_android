@@ -6,8 +6,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v4.math.MathUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.unitbv.cv.aggrafuri.utils.Math;
 
 import java.util.Random;
 
@@ -29,6 +32,8 @@ public class GraphView extends View {
     private final int BACKGROUND_COLOR_G = 255;
     private final int BACKGROUND_COLOR_B = 255;
 
+    private final float ARROW_LEG_LENGTH = 100;
+
     private boolean canvasNeedsClearing = false;
 
     public enum GraphViewType {
@@ -47,12 +52,9 @@ public class GraphView extends View {
         setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP)
-                {
-                    clickPositionX = motionEvent.getX();
-                    clickPositionY = motionEvent.getY();
-                    invalidate();
-                }
+                clickPositionX = motionEvent.getX();
+                clickPositionY = motionEvent.getY();
+                invalidate();
                 return true;
             }
         });
@@ -75,61 +77,20 @@ public class GraphView extends View {
             canvasNeedsClearing = false;
         }
 
-//        if(clickPositionX >= 0 && clickPositionY >= 0) {
-//            canvas.drawCircle(clickPositionX, clickPositionY, NODE_CIRCLE_RADIUS, paint);
-//            clickPositionX = -1;
-//            clickPositionY = -1;
-//        }
+        canvas.drawCircle(500, 500,30, paint);
 
-        int k = 30;
+        if (clickPositionX != -1 && clickPositionY != -1) {
+            canvas.drawLine(500, 500, clickPositionX, clickPositionY, paint);
+            canvas.drawCircle(clickPositionX, clickPositionY, 30, paint);
 
-        Random generator = new Random();
-        int x1 = generator.nextInt(500);
-        int y1 = generator.nextInt(500);
-        int x2 = generator.nextInt(500);
-        int y2 = generator.nextInt(500);
+            double angle = Math.angleOfLineToOx(500, 500, clickPositionX, clickPositionY);
 
-        double alpha, alpha1, alpha2;
+            Log.d("INFO", "TOUCH POINT: " + clickPositionX + " " + clickPositionY);
+            Log.d("INFO", "ALPHA: " + angle + " (" + java.lang.Math.toDegrees(angle) + "°)");
 
-
-        // Caz orizontal
-        if (y1 == y2)
-        {
-            if (x2 > x1)
-                alpha = 0.0f;
-            else
-                alpha = Math.PI;
+            clickPositionX = -1;
+            clickPositionY = -1;
         }
-        else
-        {
-            if (x1 == x2) // caz vertical
-            {
-                if (y2 > y1)
-                    alpha = Math.PI / 2;
-                else
-                    alpha = 3 * Math.PI / 2;
-            }
-            else // caz oblic
-                alpha = Math.atan(  ((double)(y2 - y1)) / (x2 - x1) );
-        }
-
-        alpha1 = alpha + Math.PI / 6;
-        alpha2 = alpha - Math.PI / 6;
-
-        int x3 = (int) (x2 - k * Math.cos(alpha1));
-        int y3 = (int) (y2 - k * Math.sin(alpha1));
-
-        int x4 = (int) (x2 - k * Math.cos(alpha2));
-        int y4 = (int) (y2 - k * Math.sin(alpha2));
-
-        // First line from (x1, y1) to (x2, y2)
-        canvas.drawLine(x1, y1, x2, y2, paint);
-
-        // Second line from (x2, y2) to (x3, y3)
-        canvas.drawLine(x2, y2, x3, y3, paint);
-
-        // Third line from (x2, y2) to (x4, y4)
-        canvas.drawLine(x2, y2, x4, y4, paint);
     }
 
     public void clear() {
