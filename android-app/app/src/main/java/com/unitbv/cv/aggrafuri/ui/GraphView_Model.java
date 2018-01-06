@@ -21,6 +21,8 @@ public class GraphView_Model {
     private HashMap<Edge, EdgeView> edges = new HashMap<>();
     private HashMap<Arc, ArcView> arcs = new HashMap<>();
 
+    private GraphView_ViewModel graphView_viewModel;
+
     private GraphType type = GraphType.NOT_SET;
 
     public GraphView_Model(GraphType type)
@@ -35,6 +37,10 @@ public class GraphView_Model {
     public void setType(GraphType type) {
         this.type = type;
         clear();
+    }
+
+    public void setGraphView_viewModel(GraphView_ViewModel graphView_viewModel) {
+        this.graphView_viewModel = graphView_viewModel;
     }
 
     public void clear()

@@ -217,6 +217,9 @@ public class GraphView extends View {
 
     public void clear() {
         canvasNeedsClearing = true;
+        arcs.clear();
+        lines.clear();
+        texts.clear();
         invalidate();
     }
 

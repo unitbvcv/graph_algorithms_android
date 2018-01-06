@@ -31,6 +31,7 @@ public class GraphView_ViewModel {
         this.graphView_model = viewModel;
 
         graphView.setView_viewModel(this);
+        graphView_model.setGraphView_viewModel(this);
     }
 
     public GraphModel getGraphModel() {
@@ -50,6 +51,14 @@ public class GraphView_ViewModel {
         graphModel.setType(type);
         graphView_model.setType(type);
         graphView.clear();
+    }
+
+    public Node getSelectedNode() {
+        return selectedNode;
+    }
+
+    public void setSelectedNode(Node selectedNode) {
+        this.selectedNode = selectedNode;
     }
 
     public void onViewTouch(float x, float y)
@@ -75,12 +84,18 @@ public class GraphView_ViewModel {
                                 Edge newEdge = new Edge(selectedNode, entry.getValue().getNode());
                                 graphView_model.addEdge(newEdge);
                                 graphModel.getGraph().addEdge(newEdge);
+                                graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
+                                selectedNode = null;
+                                sendDataToViewAndInvalidate();
                                 break;
                             }
                             case DIRECTED: {
                                 Arc newArc = new Arc(selectedNode, entry.getValue().getNode());
                                 graphView_model.addArc(newArc);
                                 graphModel.getGraph().addEdge(newArc);
+                                graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
+                                selectedNode = null;
+                                sendDataToViewAndInvalidate();
                                 break;
                             }
                             case UNDIRECTED_WEIGHTED: {
@@ -102,9 +117,12 @@ public class GraphView_ViewModel {
                                     @Override
                                     public void onResult(View view) {
                                         WeightedEdge newWeightedEdge = new WeightedEdge(selectedNode,
-                                                entry.getValue().getNode(), Double.parseDouble(inputView.getText().toString()));
+                                                entry.getKey(), Double.parseDouble(inputView.getText().toString()));
                                         graphView_model.addWeightedEdge(newWeightedEdge);
                                         graphModel.getGraph().addEdge(newWeightedEdge);
+                                        graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
+                                        selectedNode = null;
+                                        sendDataToViewAndInvalidate();
                                     }
                                 });
                                 break;
@@ -131,21 +149,29 @@ public class GraphView_ViewModel {
                                                 entry.getValue().getNode(), Double.parseDouble(inputView.getText().toString()));
                                         graphView_model.addWeightedArc(newWeightedArc);
                                         graphModel.getGraph().addEdge(newWeightedArc);
+                                        graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
+                                        selectedNode = null;
+                                        sendDataToViewAndInvalidate();
                                     }
                                 });
                                 break;
                             }
                         }
                     }
-
-                    graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
-                    selectedNode = null;
+                    else {
+                        graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
+                        selectedNode = null;
+                        sendDataToViewAndInvalidate();
+                    }
                 }
                 // if we don't have another node selected
                 else {
                     selectedNode = entry.getValue().getNode();
                     nodeParams.setSelected(true);
+                    sendDataToViewAndInvalidate();
                 }
+
+                break;
             }
         }
 
@@ -155,6 +181,7 @@ public class GraphView_ViewModel {
             if (selectedNode != null) {
                 graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
                 selectedNode = null;
+                sendDataToViewAndInvalidate();
             }
             // if we don't have a node already selected, then draw a new node
             else {
@@ -177,20 +204,11 @@ public class GraphView_ViewModel {
                         Node newNode = new Node(inputView.getText().toString());
                         graphView_model.addNode(newNode, x, y);
                         graphModel.getGraph().addNode(newNode);
+                        sendDataToViewAndInvalidate();
                     }
                 });
             }
         }
-
-        // send the view the new data then invalidate the view
-        ArrayList<Object> result = graphView_model.generateParamsLists();
-        ArrayList<ArcParams> arcParamsList = (ArrayList<ArcParams>)result.get(0);
-        ArrayList<LineParams> lineParamsList = (ArrayList<LineParams>)result.get(1);
-        ArrayList<TextParams> textParamsList = (ArrayList<TextParams>)result.get(2);
-        graphView.setArcs(arcParamsList);
-        graphView.setLines(lineParamsList);
-        graphView.setTexts(textParamsList);
-        graphView.invalidate();
     }
 
     public void clearModels() {
@@ -200,5 +218,17 @@ public class GraphView_ViewModel {
 
     public boolean isEmpty() {
         return graphView_model.getNodes().isEmpty();
+    }
+
+    public void sendDataToViewAndInvalidate() {
+        // send the view the new data then invalidate the view
+        ArrayList<Object> result = graphView_model.generateParamsLists();
+        ArrayList<ArcParams> arcParamsList = (ArrayList<ArcParams>)result.get(0);
+        ArrayList<LineParams> lineParamsList = (ArrayList<LineParams>)result.get(1);
+        ArrayList<TextParams> textParamsList = (ArrayList<TextParams>)result.get(2);
+        graphView.setArcs(arcParamsList);
+        graphView.setLines(lineParamsList);
+        graphView.setTexts(textParamsList);
+        graphView.invalidate();
     }
 }
