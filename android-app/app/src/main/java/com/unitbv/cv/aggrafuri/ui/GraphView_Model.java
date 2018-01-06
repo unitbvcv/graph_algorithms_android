@@ -18,7 +18,6 @@ public class GraphView_Model {
     private HashMap<Edge, EdgeView> edges = new HashMap<>();
     private HashMap<Arc, ArcView> arcs = new HashMap<>();
 
-
     private GraphType type = GraphType.NOT_SET;
 
     public GraphView_Model(GraphType type)
@@ -60,25 +59,25 @@ public class GraphView_Model {
         // trebuie construit un ArcParams raportat la x si y si folosind raza
     }
 
-    private void addEdge(Edge edge)
+    public void addEdge(Edge edge)
     {
         // trebuie construit LineParams: se afla pe care 2 noduri le leaga edge-ul, se afla coordonatele lor si se calculeaza punctele
     }
 
-    private void addArc(Arc arc)
+    public void addArc(Arc arc)
     {
         // trebuie construit LineParams: se afla pe care 2 noduri le leaga arcul, se afla coordonatele lor si se calculeaza punctele
         // trebuie construit LineParams pt arrow parts
     }
 
-    private void addWeightedEdge(WeightedEdge weightedEdge)
+    public void addWeightedEdge(WeightedEdge weightedEdge)
     {
         // trebuie construit LineParams: se afla pe care 2 noduri le leaga edge-ul, se afla coordonatele lor si se calculeaza punctele
         // trebuie construit un TextParams cu costul edge-ului, x si y
         // trebuie calculate x si y in functie de unghiul liniei
     }
 
-    private void addWeightedArc(WeightedArc weightedArc)
+    public void addWeightedArc(WeightedArc weightedArc)
     {
         // trebuie construit LineParams: se afla pe care 2 noduri le leaga arcul, se afla coordonatele lor si se calculeaza punctele
         // trebuie construit LineParams pt arrow parts

@@ -1,10 +1,21 @@
 package com.unitbv.cv.aggrafuri.ui;
 
+import android.content.Context;
 import android.graphics.RectF;
+import android.text.InputType;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.unitbv.cv.aggrafuri.graph.Arc;
+import com.unitbv.cv.aggrafuri.graph.Edge;
 import com.unitbv.cv.aggrafuri.graph.GraphModel;
 import com.unitbv.cv.aggrafuri.graph.GraphType;
 import com.unitbv.cv.aggrafuri.graph.Node;
+import com.unitbv.cv.aggrafuri.graph.WeightedArc;
+import com.unitbv.cv.aggrafuri.graph.WeightedEdge;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class GraphView_ViewModel {
@@ -43,6 +54,8 @@ public class GraphView_ViewModel {
 
     public void onViewTouch(float x, float y)
     {
+        boolean nodeTouched = false;
+
         // check if we touched a node
         for (Map.Entry<Node, NodeView> entry : graphView_model.getNodes().entrySet()) {
             ArcParams nodeParams = entry.getValue().getArc();
@@ -50,33 +63,133 @@ public class GraphView_ViewModel {
 
             // if the current node is the one touched
             if (entryRect.contains(x, y)) {
+                nodeTouched = true;
                 // if we have another node selected
                 if (selectedNode != null) {
                     // deselect the selected node
+                    // if the selectedNode is not the same as the current node, create an edge
+                    // at the end deselect the current node
+                    if (selectedNode != entry.getKey()) {
+                        switch (graphView_model.getType()) {
+                            case UNDIRECTED: {
+                                Edge newEdge = new Edge(selectedNode, entry.getValue().getNode());
+                                graphView_model.addEdge(newEdge);
+                                graphModel.getGraph().addEdge(newEdge);
+                                break;
+                            }
+                            case DIRECTED: {
+                                Arc newArc = new Arc(selectedNode, entry.getValue().getNode());
+                                graphView_model.addArc(newArc);
+                                graphModel.getGraph().addEdge(newArc);
+                                break;
+                            }
+                            case UNDIRECTED_WEIGHTED: {
+                                graphView.promptDialog("Add weighted edge", "Please insert the weight of the edge:", new AlertDialogInterface() {
+                                    EditText inputView;
+
+                                    @Override
+                                    public View onBuildDialog(Context context) {
+                                        inputView = new EditText(context);
+                                        inputView.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                                        return inputView;
+                                    }
+
+                                    @Override
+                                    public void onCancel() {
+
+                                    }
+
+                                    @Override
+                                    public void onResult(View view) {
+                                        WeightedEdge newWeightedEdge = new WeightedEdge(selectedNode,
+                                                entry.getValue().getNode(), Double.parseDouble(inputView.getText().toString()));
+                                        graphView_model.addWeightedEdge(newWeightedEdge);
+                                        graphModel.getGraph().addEdge(newWeightedEdge);
+                                    }
+                                });
+                                break;
+                            }
+                            case DIRECTED_WEIGHTED: {
+                                graphView.promptDialog("Add weighted edge", "Please insert the weight of the edge:", new AlertDialogInterface() {
+                                    EditText inputView;
+
+                                    @Override
+                                    public View onBuildDialog(Context context) {
+                                        inputView = new EditText(context);
+                                        inputView.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                                        return inputView;
+                                    }
+
+                                    @Override
+                                    public void onCancel() {
+
+                                    }
+
+                                    @Override
+                                    public void onResult(View view) {
+                                        WeightedArc newWeightedArc = new WeightedArc(selectedNode,
+                                                entry.getValue().getNode(), Double.parseDouble(inputView.getText().toString()));
+                                        graphView_model.addWeightedArc(newWeightedArc);
+                                        graphModel.getGraph().addEdge(newWeightedArc);
+                                    }
+                                });
+                                break;
+                            }
+                        }
+                    }
+
                     graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
                     selectedNode = null;
-
-                    // TODO: draw a line between the nodes (selectedNode to currentNode)
                 }
                 // if we don't have another node selected
                 else {
                     selectedNode = entry.getValue().getNode();
                     nodeParams.setSelected(true);
                 }
-
-                return;
             }
         }
 
         // we didn't touch a node
-        // if we have a node already selected, then deselect it
-        if (selectedNode != null) {
-            graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
-            selectedNode = null;
+        if (nodeTouched == false) {
+            // if we have a node already selected, then deselect it
+            if (selectedNode != null) {
+                graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
+                selectedNode = null;
+            }
+            // if we don't have a node already selected, then draw a new node
+            else {
+                graphView.promptDialog("Add node", "Please insert the node name:", new AlertDialogInterface() {
+                    EditText inputView;
+
+                    @Override
+                    public View onBuildDialog(Context context) {
+                        inputView = new EditText(context);
+                        return inputView;
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onResult(View view) {
+                        Node newNode = new Node(inputView.getText().toString());
+                        graphView_model.addNode(newNode, x, y);
+                        graphModel.getGraph().addNode(newNode);
+                    }
+                });
+            }
         }
-        // if we don't have a node already selected, then draw a new node
-        else {
-            // TODO: draw a new node
-        }
+
+        // send the view the new data then invalidate it
+        ArrayList<Object> result = graphView_model.generateParamsLists();
+        ArrayList<ArcParams> arcParamsList = (ArrayList<ArcParams>)result.get(0);
+        ArrayList<LineParams> lineParamsList = (ArrayList<LineParams>)result.get(1);
+        ArrayList<TextParams> textParamsList = (ArrayList<TextParams>)result.get(2);
+        graphView.setArcs(arcParamsList);
+        graphView.setLines(lineParamsList);
+        graphView.setTexts(textParamsList);
+        graphView.invalidate();
     }
 }
