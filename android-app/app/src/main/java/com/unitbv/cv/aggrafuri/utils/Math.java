@@ -169,4 +169,15 @@ public class Math {
 
         return result;
     }
+
+    public static Vector<Integer> centerOfRectangle(int left, int top, int right, int bottom)
+    {
+        Vector<Integer> result = new Vector<>(2);
+        Rect rect = new Rect(left, top, right, bottom);
+
+        result.add(rect.centerX());
+        result.add(rect.centerY());
+        return result;
+    }
+
 }

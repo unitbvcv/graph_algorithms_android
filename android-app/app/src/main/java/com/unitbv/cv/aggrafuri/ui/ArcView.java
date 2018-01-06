@@ -24,14 +24,7 @@ public class ArcView {
     }
 
     public void setWeight(TextParams weight) {
-        if (arc != null)
-        {
-            this.weight = weight;
-            if (arc instanceof WeightedArc)
-                ((WeightedArc)arc).setWeight(Double.parseDouble(weight.getMessage()));
-            else
-                arc = new WeightedArc(arc.getA(), arc.getB(), Double.parseDouble(weight.getMessage()));
-        }
+        this.weight = weight;
     }
 
     public Arc getArc() {
@@ -46,7 +39,7 @@ public class ArcView {
         return arrow_p1;
     }
 
-    public void setArrow_p1(LineParams arrow_p1) {
+    public void setArrow_P1(LineParams arrow_p1) {
         this.arrow_p1 = arrow_p1;
     }
 

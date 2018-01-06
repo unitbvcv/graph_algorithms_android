@@ -18,6 +18,13 @@ public class TextParams extends ViewParams {
         this.y = y;
     }
 
+    public TextParams(String message, Path path)
+    {
+        this.message = message;
+        isWeight = true;
+        this.path = path;
+    }
+
     public String getMessage() {
         return message;
     }

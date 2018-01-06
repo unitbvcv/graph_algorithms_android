@@ -23,14 +23,7 @@ public class EdgeView {
     }
 
     public void setWeight(TextParams weight) {
-        if (edge != null)
-        {
-            this.weight = weight;
-            if (edge instanceof WeightedEdge)
-                ((WeightedEdge)edge).setWeight(Double.parseDouble(weight.getMessage()));
-            else
-                edge = new WeightedEdge(edge.getA(), edge.getB(), Double.parseDouble(weight.getMessage()));
-        }
+        this.weight = weight;
     }
 
     public Edge getEdge() {
