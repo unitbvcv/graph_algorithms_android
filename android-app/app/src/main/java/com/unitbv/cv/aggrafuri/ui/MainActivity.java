@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case R.id.nav_graphview_reset:
-                graphView.clear();
+                graphView_viewModel.clearModels();
                 break;
 
             // Generic Graph Traversal
@@ -146,7 +146,14 @@ public class MainActivity extends AppCompatActivity
                     public void onResult(View view) {
                         String input = inputView.getText().toString();
                         Node startNode = new Node(input);
-                        String output = Algorithms.GenericGraphTraversal(graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
+
+                        String output;
+                        if (graphView_viewModel.getGraphModel().getGraph().getNodes().contains(startNode)) {
+                            output = Algorithms.GenericGraphTraversal(graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
+                        }
+                        else {
+                            output = "Start node not found!";
+                        }
 
                         graphView.promptDialog("Generic Graph Traversal: Output", output, new AlertDialogInterface() {
                             TextView outputView;
@@ -192,7 +199,14 @@ public class MainActivity extends AppCompatActivity
                     public void onResult(View view) {
                         String input = inputView.getText().toString();
                         Node startNode = new Node(input);
-                        String output = Algorithms.BreadthFirstTraversal(graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
+
+                        String output;
+                        if (graphView_viewModel.getGraphModel().getGraph().getNodes().contains(startNode)) {
+                            output = Algorithms.BreadthFirstTraversal(graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
+                        }
+                        else {
+                            output = "Start node not found!";
+                        }
 
                         graphView.promptDialog("Breadth First Traversal: Output", output, new AlertDialogInterface() {
                             TextView outputView;
@@ -238,7 +252,14 @@ public class MainActivity extends AppCompatActivity
                     public void onResult(View view) {
                         String input = inputView.getText().toString();
                         Node startNode = new Node(input);
-                        String output = Algorithms.DepthFirstTraversal(graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
+
+                        String output;
+                        if (graphView_viewModel.getGraphModel().getGraph().getNodes().contains(startNode)) {
+                            output = Algorithms.DepthFirstTraversal(graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
+                        }
+                        else {
+                            output = "Start node not found!";
+                        }
 
                         graphView.promptDialog("Depth First Traversal: Output", output, new AlertDialogInterface() {
                             TextView outputView;
@@ -284,7 +305,14 @@ public class MainActivity extends AppCompatActivity
                     public void onResult(View view) {
                         String input = inputView.getText().toString();
                         Node startNode = new Node(input);
-                        String output = Algorithms.PrimsAlgorithm((UndirectedWeightedGraph)graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
+
+                        String output;
+                        if (graphView_viewModel.getGraphModel().getGraph().getNodes().contains(startNode)) {
+                            output = Algorithms.PrimsAlgorithm((UndirectedWeightedGraph)graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
+                        }
+                        else {
+                            output = "Start node not found!";
+                        }
 
                         graphView.promptDialog("Prim's Algorithm: Output", output, new AlertDialogInterface() {
                             TextView outputView;
@@ -381,7 +409,14 @@ public class MainActivity extends AppCompatActivity
                     public void onResult(View view) {
                         String input = inputView.getText().toString();
                         Node startNode = new Node(input);
-                        String output = Algorithms.DijkstraAlgorithm((DirectedWeightedGraph)graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
+
+                        String output;
+                        if (graphView_viewModel.getGraphModel().getGraph().getNodes().contains(startNode)) {
+                            output = Algorithms.DijkstraAlgorithm((DirectedWeightedGraph)graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
+                        }
+                        else {
+                            output = "Start node not found!";
+                        }
 
                         graphView.promptDialog("Dijkstra's Algorithm: Output", output, new AlertDialogInterface() {
                             TextView outputView;
@@ -498,7 +533,14 @@ public class MainActivity extends AppCompatActivity
                     public void onResult(View view) {
                         String input = inputView.getText().toString();
                         Node startNode = new Node(input);
-                        String output = Algorithms.EulerianCircuit((DirectedWeightedGraph)graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
+
+                        String output;
+                        if (graphView_viewModel.getGraphModel().getGraph().getNodes().contains(startNode)) {
+                            output = Algorithms.EulerianCircuit((DirectedWeightedGraph)graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
+                        }
+                        else {
+                            output = "Start node not found!";
+                        }
 
                         graphView.promptDialog("Eulerian Circuit Algorithm: Output", output, new AlertDialogInterface() {
                             TextView outputView;
