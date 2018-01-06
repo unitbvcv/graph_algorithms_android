@@ -11,12 +11,14 @@ import android.view.MotionEvent;
 import android.view.View;
 
 
+import com.unitbv.cv.aggrafuri.utils.Math;
+
 import java.util.ArrayList;
 
 
 public class GraphView extends View {
 
-    GraphView_ViewModel viewModel = null;
+    GraphView_ViewModel view_viewModel = null;
 
     // drawing model
     ArrayList<ArcParams> arcs = new ArrayList<>();
@@ -26,8 +28,10 @@ public class GraphView extends View {
     private Context context;
     private Paint drawPaint = new Paint();
 
-    private float clickPositionX = -1;
-    private float clickPositionY = -1;
+    private float downTouchPositionX = -1;
+    private float downTouchPositionY = -1;
+
+    private final float TOUCH_SENSITIVITY_PIXELS = 5;
 
     private final int NODE_COLOR_A = 255;
     private final int NODE_COLOR_R = 0;
@@ -59,12 +63,21 @@ public class GraphView extends View {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    clickPositionX = motionEvent.getX();
-                    clickPositionY = motionEvent.getY();
-                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    if (motionEvent.getX() == clickPositionX && motionEvent.getY() == clickPositionY) {
-                        clickPositionX = motionEvent.getX();
-                        clickPositionY = motionEvent.getY();
+                    downTouchPositionX = motionEvent.getX();
+                    downTouchPositionY = motionEvent.getY();
+                }
+                else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    float upTouchPositionX = motionEvent.getX();
+                    float upTouchPositionY = motionEvent.getY();
+
+                    // check if the user didn't move the finger (ignore input when it is a gesture) +- a precision
+                    if (Math.numberBetween(downTouchPositionX, upTouchPositionX - TOUCH_SENSITIVITY_PIXELS,
+                            upTouchPositionX + TOUCH_SENSITIVITY_PIXELS, true, true)
+                            && Math.numberBetween(downTouchPositionY, upTouchPositionY - TOUCH_SENSITIVITY_PIXELS,
+                            upTouchPositionY + TOUCH_SENSITIVITY_PIXELS, true, true))
+                    {
+                        // we need to update the model and the view
+                        view_viewModel.onViewTouch(upTouchPositionX, upTouchPositionY);
                         invalidate();
                     }
                 }
@@ -74,8 +87,8 @@ public class GraphView extends View {
         });
     }
 
-    public void setViewModel(GraphView_ViewModel viewModel) {
-        this.viewModel = viewModel;
+    public void setView_viewviewModel(GraphView_ViewModel viewModel) {
+        this.view_viewModel = viewModel;
     }
 
     public void setArcs(ArrayList<ArcParams> arcs) {
@@ -99,49 +112,56 @@ public class GraphView extends View {
             canvasNeedsClearing = false;
         }
 
-        if (clickPositionX != -1 && clickPositionY != -1) {
-            // draw arcs
-            for (ArcParams currentArc : arcs) {
-                if (currentArc.isSelected()) {
-                    drawPaint.setColor(Color.RED);
-                }
-
-                canvas.drawArc(currentArc.getLeft(), currentArc.getTop(),
-                        currentArc.getRight(), currentArc.getBottom(),
-                        currentArc.getStartAngle(), currentArc.getSweepAngle(),
-                        currentArc.isUseCenter(), drawPaint);
-
-                drawPaint.setColor(Color.BLACK);
+        // draw arcs
+        for (ArcParams currentArc : arcs) {
+            if (currentArc.isSelected()) {
+                drawPaint.setColor(Color.RED);
             }
 
-            // draw lines
-            for (LineParams currentLine : lines) {
-                canvas.drawLine(currentLine.getStartX(), currentLine.getStartY(),
-                        currentLine.getStopX(), currentLine.getStopY(), drawPaint);
-            }
+            canvas.drawArc(currentArc.getLeft(), currentArc.getTop(),
+                    currentArc.getRight(), currentArc.getBottom(),
+                    currentArc.getStartAngle(), currentArc.getSweepAngle(),
+                    currentArc.isUseCenter(), drawPaint);
 
-            // draw texts
-            for (TextParams currentText : texts) {
+            drawPaint.setColor(Color.BLACK);
+        }
+
+        // draw lines
+        for (LineParams currentLine : lines) {
+            canvas.drawLine(currentLine.getStartX(), currentLine.getStartY(),
+                    currentLine.getStopX(), currentLine.getStopY(), drawPaint);
+        }
+
+        // draw texts
+        for (TextParams currentText : texts) {
+            if (currentText.getIsWeight())
+            {
+                //canvas.drawTextOnPath(currentText.getMessage(), currentText.getPath(),
+//                            0.0f, 0.0f, drawPaint);
+            }
+            else
+            {
                 canvas.drawText(currentText.getMessage(), currentText.getX(),
                         currentText.getY(), drawPaint);
             }
+        }
 
-//            Random gen = new Random();
+//        Random gen = new Random();
 //
-//            int x1 = gen.nextInt(getWidth());
-//            int y1 = gen.nextInt(getHeight());
-//            int x2 = gen.nextInt(getWidth());
-//            int y2 = gen.nextInt(getHeight());
+//        int x1 = gen.nextInt(getWidth());
+//        int y1 = gen.nextInt(getHeight());
+//        int x2 = gen.nextInt(getWidth());
+//        int y2 = gen.nextInt(getHeight());
 //
-//            drawPaint.setColor(Color.RED);
-//            canvas.drawArc(x1 - NODE_CIRCLE_RADIUS, y1 - NODE_CIRCLE_RADIUS,
-//                    x1 + NODE_CIRCLE_RADIUS, y1 + NODE_CIRCLE_RADIUS,
-//                    0.0f, 360.0f, false, drawPaint);
-//            drawPaint.setColor(Color.BLACK);
+//        drawPaint.setColor(Color.RED);
+//        canvas.drawArc(x1 - NODE_CIRCLE_RADIUS, y1 - NODE_CIRCLE_RADIUS,
+//                x1 + NODE_CIRCLE_RADIUS, y1 + NODE_CIRCLE_RADIUS,
+//                0.0f, 360.0f, false, drawPaint);
+//        drawPaint.setColor(Color.BLACK);
 //
-//            canvas.drawArc(x2 - NODE_CIRCLE_RADIUS, y2 - NODE_CIRCLE_RADIUS,
-//                    x2 + NODE_CIRCLE_RADIUS, y2 + NODE_CIRCLE_RADIUS,
-//                    0.0f, 360.0f, false, drawPaint);
+//        canvas.drawArc(x2 - NODE_CIRCLE_RADIUS, y2 - NODE_CIRCLE_RADIUS,
+//                x2 + NODE_CIRCLE_RADIUS, y2 + NODE_CIRCLE_RADIUS,
+//                0.0f, 360.0f, false, drawPaint);
 //
 //
 ////            Log.d("INFO", "x1: " + x1 + " y1: " + y1 + " x2: " + x2 + " y2: " + y2);
@@ -150,25 +170,22 @@ public class GraphView extends View {
 ////            Log.d("INFO", "tangent_x_A: " + tangent_x_A + " tangent_y_A: " + tangent_y_A +
 ////            " tangent_x_B: " + tangent_x_B + " tangent_y_B: " + tangent_y_B);
 //
-//            Vector<Float> coord = Math.generateCirclesConnectionPoints(x1, y1, NODE_CIRCLE_RADIUS, x2, y2, NODE_CIRCLE_RADIUS);
-//            float tan_x1 = coord.get(0),
-//                    tan_y1 = coord.get(1),
-//                    tan_x2 = coord.get(2),
-//                    tan_y2 = coord.get(3);
+//        Vector<Float> coord = Math.generateCirclesConnectionPoints(x1, y1, NODE_CIRCLE_RADIUS, x2, y2, NODE_CIRCLE_RADIUS);
+//        float tan_x1 = coord.get(0),
+//                tan_y1 = coord.get(1),
+//                tan_x2 = coord.get(2),
+//                tan_y2 = coord.get(3);
 //
-//            Vector<Float> legsCoord = Math.generateArrowLegsCoordinates(tan_x1, tan_y1, tan_x2, tan_y2, ARROW_LEG_LENGTH, ARROW_LEG_ANGLE);
-//            float C_x = legsCoord.get(0),
-//                    C_y = legsCoord.get(1),
-//                    D_x = legsCoord.get(2),
-//                    D_y = legsCoord.get(3);
+//        Vector<Float> legsCoord = Math.generateArrowLegsCoordinates(tan_x1, tan_y1, tan_x2, tan_y2, ARROW_LEG_LENGTH, ARROW_LEG_ANGLE);
+//        float C_x = legsCoord.get(0),
+//                C_y = legsCoord.get(1),
+//                D_x = legsCoord.get(2),
+//                D_y = legsCoord.get(3);
 //
 //            canvas.drawLine(tan_x1, tan_y1, tan_x2, tan_y2, drawPaint);
 //            canvas.drawLine(tan_x2, tan_y2, C_x, C_y, drawPaint);
-//            canvas.drawLine(tan_x2, tan_y2, D_x, D_y, drawPaint);
+//            canvas.drawLine(tan_x2, tan_y2, D_x, D_y, drawPaint)
 
-            clickPositionX = -1;
-            clickPositionY = -1;
-        }
 //        canvas.drawCircle(500, 500,30, drawPaint);
 //
 //        if (clickPositionX != -1 && clickPositionY != -1) {
