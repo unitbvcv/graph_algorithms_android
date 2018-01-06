@@ -3,6 +3,7 @@ package com.unitbv.cv.aggrafuri.utils;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
+import android.graphics.RectF;
 
 import com.unitbv.cv.aggrafuri.ui.GraphView;
 
@@ -170,14 +171,27 @@ public class Math {
         return result;
     }
 
-    public static Vector<Integer> centerOfRectangle(int left, int top, int right, int bottom)
+    public static Vector<Float> centerOfRectangle(float left, float top, float right, float bottom)
     {
-        Vector<Integer> result = new Vector<>(2);
-        Rect rect = new Rect(left, top, right, bottom);
+        Vector<Float> result = new Vector<>(2);
+        RectF rect = new RectF(left, top, right, bottom);
 
         result.add(rect.centerX());
         result.add(rect.centerY());
         return result;
     }
 
+    public static Vector<Float> generateNodeTextCoordinates(float cx, float cy, String text, Paint paint) {
+        Vector<Float> result = new Vector<>(2);
+
+        Rect textBounds = new Rect();
+        paint.getTextBounds(text, 0, text.length(), textBounds);
+        int textLength = textBounds.width();
+        int textHeight = textBounds.height();
+
+        result.add(cx - textLength/2);
+        result.add(cy - textHeight/2);
+
+        return result;
+    }
 }

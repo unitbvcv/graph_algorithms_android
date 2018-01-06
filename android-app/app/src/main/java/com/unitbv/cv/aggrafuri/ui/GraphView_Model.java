@@ -90,8 +90,8 @@ public class GraphView_Model {
         ArcParams node1 = nodes.get(edge.getA()).getArc();
         ArcParams node2 = nodes.get(edge.getB()).getArc();
 
-        Vector<Integer> node1Center = Math.centerOfRectangle((int) node1.getLeft(),(int) node1.getTop(),(int) node1.getRight(),(int) node1.getBottom());
-        Vector<Integer> node2Center = Math.centerOfRectangle((int) node2.getLeft(),(int) node2.getTop(),(int) node2.getRight(),(int) node2.getBottom());
+        Vector<Float> node1Center = Math.centerOfRectangle(node1.getLeft(), node1.getTop(), node1.getRight(), node1.getBottom());
+        Vector<Float> node2Center = Math.centerOfRectangle(node2.getLeft(), node2.getTop(), node2.getRight(), node2.getBottom());
 
         Vector<Float> tangentPoints = Math.generateCirclesConnectionPoints(node1Center.get(0), node1Center.get(1), GraphView.NODE_CIRCLE_RADIUS,
                 node2Center.get(0), node2Center.get(1), GraphView.NODE_CIRCLE_RADIUS);
