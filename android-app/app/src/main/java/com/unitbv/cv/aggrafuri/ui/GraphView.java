@@ -6,23 +6,27 @@ import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.unitbv.cv.aggrafuri.utils.Math;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
 
 public class GraphView extends View {
     private GraphViewType graphType = GraphViewType.NOT_SET;
 
+    // drawing model
+    ArrayList<ArcParams> arcs;
+    ArrayList<LineParams> lines;
+    ArrayList<TextParams> texts;
+
     private Context context;
-    private Paint paint = new Paint();
+    private Paint drawPaint = new Paint();
 
     private float clickPositionX = -1;
     private float clickPositionY = -1;
@@ -57,9 +61,9 @@ public class GraphView extends View {
 
         this.context = context;
 
-        paint.setARGB(NODE_COLOR_A, NODE_COLOR_R, NODE_COLOR_G, NODE_COLOR_B);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(NODE_STROKE_WIDTH);
+        drawPaint.setARGB(NODE_COLOR_A, NODE_COLOR_R, NODE_COLOR_G, NODE_COLOR_B);
+        drawPaint.setStyle(Paint.Style.STROKE);
+        drawPaint.setStrokeWidth(NODE_STROKE_WIDTH);
 
         setOnTouchListener(new OnTouchListener() {
             @Override
@@ -88,6 +92,18 @@ public class GraphView extends View {
         this.graphType = graphType;
     }
 
+    public void setArcs(ArrayList<ArcParams> arcs) {
+        this.arcs = arcs;
+    }
+
+    public void setLines(ArrayList<LineParams> lines) {
+        this.lines = lines;
+    }
+
+    public void setTexts(ArrayList<TextParams> texts) {
+        this.texts = texts;
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -98,54 +114,80 @@ public class GraphView extends View {
         }
 
         if (clickPositionX != -1 && clickPositionY != -1) {
-            Random gen = new Random();
+            // draw arcs
+            for (ArcParams currentArc : arcs) {
+                if (currentArc.isSelected()) {
+                    drawPaint.setColor(Color.RED);
+                }
 
-            int x1 = gen.nextInt(getWidth());
-            int y1 = gen.nextInt(getHeight());
-            int x2 = gen.nextInt(getWidth());
-            int y2 = gen.nextInt(getHeight());
+                canvas.drawArc(currentArc.getLeft(), currentArc.getTop(),
+                        currentArc.getRight(), currentArc.getBottom(),
+                        currentArc.getStartAngle(), currentArc.getSweepAngle(),
+                        currentArc.isUseCenter(), drawPaint);
 
-            paint.setColor(Color.RED);
-            canvas.drawArc(x1 - NODE_CIRCLE_RADIUS, y1 - NODE_CIRCLE_RADIUS,
-                    x1 + NODE_CIRCLE_RADIUS, y1 + NODE_CIRCLE_RADIUS,
-                    0.0f, 360.0f, false, paint);
-            paint.setColor(Color.BLACK);
+                drawPaint.setColor(Color.BLACK);
+            }
 
-            canvas.drawArc(x2 - NODE_CIRCLE_RADIUS, y2 - NODE_CIRCLE_RADIUS,
-                    x2 + NODE_CIRCLE_RADIUS, y2 + NODE_CIRCLE_RADIUS,
-                    0.0f, 360.0f, false, paint);
+            // draw lines
+            for (LineParams currentLine : lines) {
+                canvas.drawLine(currentLine.getStartX(), currentLine.getStartY(),
+                        currentLine.getStopX(), currentLine.getStopY(), drawPaint);
+            }
 
+            // draw texts
+            for (TextParams currentText : texts) {
+                canvas.drawText(currentText.getMessage(), currentText.getX(),
+                        currentText.getY(), drawPaint);
+            }
 
-//            Log.d("INFO", "x1: " + x1 + " y1: " + y1 + " x2: " + x2 + " y2: " + y2);
-//            Log.d("INFO", "angleOfLine: " + java.lang.Math.toDegrees(angleOfLine) +
-//                    " alphaA: " + java.lang.Math.toDegrees(alpha_A));
-//            Log.d("INFO", "tangent_x_A: " + tangent_x_A + " tangent_y_A: " + tangent_y_A +
-//            " tangent_x_B: " + tangent_x_B + " tangent_y_B: " + tangent_y_B);
-
-            Vector<Float> coord = Math.generateCirclesConnectionPoints(x1, y1, NODE_CIRCLE_RADIUS, x2, y2, NODE_CIRCLE_RADIUS);
-            float tan_x1 = coord.get(0),
-                    tan_y1 = coord.get(1),
-                    tan_x2 = coord.get(2),
-                    tan_y2 = coord.get(3);
-
-            Vector<Float> legsCoord = Math.generateArrowLegsCoordinates(tan_x1, tan_y1, tan_x2, tan_y2, ARROW_LEG_LENGTH, ARROW_LEG_ANGLE);
-            float C_x = legsCoord.get(0),
-                    C_y = legsCoord.get(1),
-                    D_x = legsCoord.get(2),
-                    D_y = legsCoord.get(3);
-
-            canvas.drawLine(tan_x1, tan_y1, tan_x2, tan_y2, paint);
-            canvas.drawLine(tan_x2, tan_y2, C_x, C_y, paint);
-            canvas.drawLine(tan_x2, tan_y2, D_x, D_y, paint);
+//            Random gen = new Random();
+//
+//            int x1 = gen.nextInt(getWidth());
+//            int y1 = gen.nextInt(getHeight());
+//            int x2 = gen.nextInt(getWidth());
+//            int y2 = gen.nextInt(getHeight());
+//
+//            drawPaint.setColor(Color.RED);
+//            canvas.drawArc(x1 - NODE_CIRCLE_RADIUS, y1 - NODE_CIRCLE_RADIUS,
+//                    x1 + NODE_CIRCLE_RADIUS, y1 + NODE_CIRCLE_RADIUS,
+//                    0.0f, 360.0f, false, drawPaint);
+//            drawPaint.setColor(Color.BLACK);
+//
+//            canvas.drawArc(x2 - NODE_CIRCLE_RADIUS, y2 - NODE_CIRCLE_RADIUS,
+//                    x2 + NODE_CIRCLE_RADIUS, y2 + NODE_CIRCLE_RADIUS,
+//                    0.0f, 360.0f, false, drawPaint);
+//
+//
+////            Log.d("INFO", "x1: " + x1 + " y1: " + y1 + " x2: " + x2 + " y2: " + y2);
+////            Log.d("INFO", "angleOfLine: " + java.lang.Math.toDegrees(angleOfLine) +
+////                    " alphaA: " + java.lang.Math.toDegrees(alpha_A));
+////            Log.d("INFO", "tangent_x_A: " + tangent_x_A + " tangent_y_A: " + tangent_y_A +
+////            " tangent_x_B: " + tangent_x_B + " tangent_y_B: " + tangent_y_B);
+//
+//            Vector<Float> coord = Math.generateCirclesConnectionPoints(x1, y1, NODE_CIRCLE_RADIUS, x2, y2, NODE_CIRCLE_RADIUS);
+//            float tan_x1 = coord.get(0),
+//                    tan_y1 = coord.get(1),
+//                    tan_x2 = coord.get(2),
+//                    tan_y2 = coord.get(3);
+//
+//            Vector<Float> legsCoord = Math.generateArrowLegsCoordinates(tan_x1, tan_y1, tan_x2, tan_y2, ARROW_LEG_LENGTH, ARROW_LEG_ANGLE);
+//            float C_x = legsCoord.get(0),
+//                    C_y = legsCoord.get(1),
+//                    D_x = legsCoord.get(2),
+//                    D_y = legsCoord.get(3);
+//
+//            canvas.drawLine(tan_x1, tan_y1, tan_x2, tan_y2, drawPaint);
+//            canvas.drawLine(tan_x2, tan_y2, C_x, C_y, drawPaint);
+//            canvas.drawLine(tan_x2, tan_y2, D_x, D_y, drawPaint);
 
             clickPositionX = -1;
             clickPositionY = -1;
         }
-//        canvas.drawCircle(500, 500,30, paint);
+//        canvas.drawCircle(500, 500,30, drawPaint);
 //
 //        if (clickPositionX != -1 && clickPositionY != -1) {
-//            canvas.drawLine(500, 500, clickPositionX, clickPositionY, paint);
-//            canvas.drawCircle(clickPositionX, clickPositionY, 30, paint);
+//            canvas.drawLine(500, 500, clickPositionX, clickPositionY, drawPaint);
+//            canvas.drawCircle(clickPositionX, clickPositionY, 30, drawPaint);
 //
 //            double angle = Math.angleOfLineToOx(500, 500, clickPositionX, clickPositionY);
 //
