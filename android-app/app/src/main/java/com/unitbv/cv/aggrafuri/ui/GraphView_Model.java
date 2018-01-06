@@ -21,7 +21,6 @@ public class GraphView_Model {
     private HashMap<Edge, EdgeView> edges = new HashMap<>();
     private HashMap<Arc, ArcView> arcs = new HashMap<>();
 
-
     private GraphType type = GraphType.NOT_SET;
 
     public GraphView_Model(GraphType type)
@@ -123,7 +122,7 @@ public class GraphView_Model {
 
         arcs.put(arc, newArc);
     }
-
+    
     private Vector<LineParams> getArrowLegsLineParams(LineParams lineParams)
     {
         Vector<LineParams> result = new Vector<>(2);
