@@ -1,17 +1,13 @@
 package com.unitbv.cv.aggrafuri.ui;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,6 +16,7 @@ import com.unitbv.cv.aggrafuri.R;
 import com.unitbv.cv.aggrafuri.graph.Algorithms;
 import com.unitbv.cv.aggrafuri.graph.DirectedWeightedGraph;
 import com.unitbv.cv.aggrafuri.graph.GraphModel;
+import com.unitbv.cv.aggrafuri.graph.GraphType;
 import com.unitbv.cv.aggrafuri.graph.Node;
 import com.unitbv.cv.aggrafuri.graph.UndirectedWeightedGraph;
 
@@ -57,13 +54,16 @@ public class MainActivity extends AppCompatActivity
         Menu navigationMenu = navigationView.getMenu();
         GraphView graphView = (GraphView) findViewById(R.id.graphView);
         if (graphView_viewModel == null) {
-            graphView_viewModel = new GraphView_ViewModel(new GraphModel(), graphView, new GraphView_Model());
+            graphView_viewModel = new GraphView_ViewModel(
+                    new GraphModel(GraphType.UNDIRECTED),
+                    graphView,
+                    new GraphView_Model(GraphType.UNDIRECTED) );
         }
 
         switch(buttonID)
         {
             case R.id.nav_graphview_undirected:
-                graphView.clear();
+                graphView_viewModel.setGraphType(GraphType.UNDIRECTED);
 
                 navigationMenu.findItem(R.id.nav_algorithm_1).setEnabled(true);
                 navigationMenu.findItem(R.id.nav_algorithm_2).setEnabled(true);
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case R.id.nav_graphview_directed:
-                graphView.clear();
+                graphView_viewModel.setGraphType(GraphType.DIRECTED);
 
                 navigationMenu.findItem(R.id.nav_algorithm_1).setEnabled(true);
                 navigationMenu.findItem(R.id.nav_algorithm_2).setEnabled(true);
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case R.id.nav_graphview_undirected_weighted:
-                graphView.clear();
+                graphView_viewModel.setGraphType(GraphType.UNDIRECTED_WEIGHTED);
 
                 navigationMenu.findItem(R.id.nav_algorithm_1).setEnabled(true);
                 navigationMenu.findItem(R.id.nav_algorithm_2).setEnabled(true);
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case R.id.nav_graphview_directed_weighted:
-                graphView.clear();
+                graphView_viewModel.setGraphType(GraphType.DIRECTED_WEIGHTED);
 
                 navigationMenu.findItem(R.id.nav_algorithm_1).setEnabled(true);
                 navigationMenu.findItem(R.id.nav_algorithm_2).setEnabled(true);
@@ -338,7 +338,7 @@ public class MainActivity extends AppCompatActivity
 
             // Boruvka's Algorithm
             case R.id.nav_algorithm_6: {
-                String output = Algorithms.KruskalAlgorithm((UndirectedWeightedGraph) graphView_viewModel.getGraphModel().getGraph()).toString();
+                String output = Algorithms.BoruvkaAlgorithm((UndirectedWeightedGraph) graphView_viewModel.getGraphModel().getGraph()).toString();
                 graphView.promptDialog("Boruvka's Algorithm: Output", output, new AlertDialogInterface() {
                     TextView outputView;
 
