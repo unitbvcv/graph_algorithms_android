@@ -650,6 +650,8 @@ public class Algorithms {
             return false;
         };
 
+        BiFunction<Node, Node, Double> compareEquation = (node1, node2) -> {return dp.get(node1) + ((WeightedArc)graph.getEdge(node1, node2)).getWeight();};
+
         do {
             dp.putAll(d);
 
@@ -659,11 +661,10 @@ public class Algorithms {
                     ArrayList<Node> predecessorList = new ArrayList<>();
 
                     for (Edge edge : predecessorEdgesList) {
-                        if(edge.getA() != null)
+                        if(edge.getA() != null) {
                             predecessorList.add(edge.getA());
+                        }
                     }
-
-                    BiFunction<Node, Node, Double> compareEquation = (node1, node2) -> {return dp.get(node1) + ((WeightedArc)graph.getEdge(node1, node2)).getWeight();};
 
                     Node x = predecessorList.stream().min((x1, x2) -> Double.compare(compareEquation.apply(x1, y), compareEquation.apply(x2, y))).orElse(null);
 
