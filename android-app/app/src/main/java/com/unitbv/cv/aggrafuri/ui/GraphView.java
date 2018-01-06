@@ -1,12 +1,17 @@
 package com.unitbv.cv.aggrafuri.ui;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.unitbv.cv.aggrafuri.utils.Math;
 
@@ -16,6 +21,7 @@ import java.util.Vector;
 public class GraphView extends View {
     private GraphViewType graphType = GraphViewType.NOT_SET;
 
+    private Context context;
     private Paint paint = new Paint();
 
     private float clickPositionX = -1;
@@ -49,6 +55,8 @@ public class GraphView extends View {
     public GraphView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        this.context = context;
+
         paint.setARGB(NODE_COLOR_A, NODE_COLOR_R, NODE_COLOR_G, NODE_COLOR_B);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(NODE_STROKE_WIDTH);
@@ -56,12 +64,17 @@ public class GraphView extends View {
         setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP)
-                {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     clickPositionX = motionEvent.getX();
                     clickPositionY = motionEvent.getY();
-                    invalidate();
+                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    if (motionEvent.getX() == clickPositionX && motionEvent.getY() == clickPositionY) {
+                        clickPositionX = motionEvent.getX();
+                        clickPositionY = motionEvent.getY();
+                        invalidate();
+                    }
                 }
+
                 return true;
             }
         });
@@ -147,5 +160,54 @@ public class GraphView extends View {
     public void clear() {
         canvasNeedsClearing = true;
         invalidate();
+    }
+
+    public void showOutputDialog(String title, String message)
+    {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        dialog.setTitle(title);
+
+        TextView textView = new TextView(context);
+        textView.setText(message);
+        dialog.setView(textView);
+
+        dialog.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                dialog.create().cancel();
+            }
+        });
+
+        dialog.show();
+    }
+
+    public void promptDialog(String title, String message, final AlertDialogInterface dialogInterface) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(message);
+
+        final View view = dialogInterface.onBuildDialog(context);
+        if (view != null) {
+            alertDialog.setView(view);
+        }
+
+        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialogInterface.onResult(view);
+                dialog.dismiss();
+            }
+        });
+
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialogInterface.onCancel();
+                dialog.dismiss();
+            }
+        });
+
+        alertDialog.show();
     }
 }

@@ -1,6 +1,7 @@
 package com.unitbv.cv.aggrafuri.ui;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -10,7 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.unitbv.cv.aggrafuri.R;
 
@@ -116,30 +120,46 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case R.id.nav_algorithm_1:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Title");
+                graphView.promptDialog("Input", "Test message", new AlertDialogInterface() {
+                    EditText inputView;
 
-                // Set up the input
-                final EditText input = new EditText(this);
-                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                builder.setView(input);
-
-                // Set up the buttons
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        input.getText().toString();
+                    public View onBuildDialog(Context context) {
+                        inputView = new EditText(context);
+                        return inputView;
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onResult(View view) {
+                        String output = inputView.getText().toString();
+
+                        graphView.promptDialog("Output", output, new AlertDialogInterface() {
+                            TextView outputView;
+
+                            @Override
+                            public View onBuildDialog(Context context) {
+                                outputView = new TextView(context);
+                                return outputView;
+                            }
+
+                            @Override
+                            public void onCancel() {
+
+                            }
+
+                            @Override
+                            public void onResult(View view) {
+
+                            }
+                        });
                     }
                 });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
 
-                builder.show();
                 break;
 
             case R.id.nav_algorithm_2:
