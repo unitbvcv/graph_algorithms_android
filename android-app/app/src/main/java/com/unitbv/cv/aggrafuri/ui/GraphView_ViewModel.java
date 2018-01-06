@@ -1,9 +1,8 @@
 package com.unitbv.cv.aggrafuri.ui;
 
-import android.view.MotionEvent;
-import android.view.View;
 
 import com.unitbv.cv.aggrafuri.graph.GraphModel;
+import com.unitbv.cv.aggrafuri.graph.GraphType;
 
 public class GraphView_ViewModel {
     GraphModel graphModel;
@@ -11,7 +10,9 @@ public class GraphView_ViewModel {
     GraphView_Model graphView_model;
 
     public GraphView_ViewModel(GraphModel graphModel, GraphView view, GraphView_Model viewModel) {
-
+        this.graphModel = graphModel;
+        this.graphView = view;
+        this.graphView_model = viewModel;
     }
 
     public GraphModel getGraphModel() {
@@ -24,5 +25,17 @@ public class GraphView_ViewModel {
 
     public GraphView_Model getGraphView_model() {
         return graphView_model;
+    }
+
+    public void setGraphType(GraphType type)
+    {
+        graphModel.setType(type);
+        graphView_model.setType(type);
+        graphView.clear();
+    }
+
+    public void onViewTouch(float x, float y)
+    {
+        // logica principala
     }
 }
