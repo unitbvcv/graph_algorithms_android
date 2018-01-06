@@ -2,11 +2,10 @@ package com.unitbv.cv.aggrafuri.ui;
 
 import com.unitbv.cv.aggrafuri.graph.Arc;
 import com.unitbv.cv.aggrafuri.graph.WeightedArc;
-import com.unitbv.cv.aggrafuri.graph.WeightedEdge;
 
 public class ArcView {
-    private LineParams line = null, smallLine1 = null, smallLine2 = null;
-    private TextParams cost;
+    private LineParams line = null, arrow_p1 = null, arrow_p2 = null;
+    private TextParams weight;
     private Arc arc = null;
 
     public ArcView() {}
@@ -20,18 +19,18 @@ public class ArcView {
         
     }
 
-    public TextParams getCost() {
-        return cost;
+    public TextParams getWeight() {
+        return weight;
     }
 
-    public void setCost(TextParams cost) {
+    public void setWeight(TextParams weight) {
         if (arc != null)
         {
-            this.cost = cost;
+            this.weight = weight;
             if (arc instanceof WeightedArc)
-                ((WeightedArc)arc).setWeight(Double.parseDouble(cost.getMessage()));
+                ((WeightedArc)arc).setWeight(Double.parseDouble(weight.getMessage()));
             else
-                arc = new WeightedArc(arc.getA(), arc.getB(), Double.parseDouble(cost.getMessage()));
+                arc = new WeightedArc(arc.getA(), arc.getB(), Double.parseDouble(weight.getMessage()));
         }
     }
 
@@ -41,5 +40,21 @@ public class ArcView {
 
     public void setArc(Arc arc) {
         this.arc = arc;
+    }
+
+    public LineParams getArrow_P1() {
+        return arrow_p1;
+    }
+
+    public void setArrow_p1(LineParams arrow_p1) {
+        this.arrow_p1 = arrow_p1;
+    }
+
+    public LineParams getArrow_P2() {
+        return arrow_p2;
+    }
+
+    public void setArrow_P2(LineParams arrow_p2) {
+        this.arrow_p2 = arrow_p2;
     }
 }

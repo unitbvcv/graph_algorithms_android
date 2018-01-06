@@ -5,7 +5,7 @@ import com.unitbv.cv.aggrafuri.graph.WeightedEdge;
 
 public class EdgeView {
     private LineParams line = null;
-    private TextParams cost = null;
+    private TextParams weight = null;
     private Edge edge = null;
 
     public EdgeView() {}
@@ -18,18 +18,18 @@ public class EdgeView {
         this.line = line;
     }
 
-    public TextParams getCost() {
-        return cost;
+    public TextParams getWeight() {
+        return weight;
     }
 
-    public void setCost(TextParams cost) {
+    public void setWeight(TextParams weight) {
         if (edge != null)
         {
-            this.cost = cost;
+            this.weight = weight;
             if (edge instanceof WeightedEdge)
-                ((WeightedEdge)edge).setWeight(Double.parseDouble(cost.getMessage()));
+                ((WeightedEdge)edge).setWeight(Double.parseDouble(weight.getMessage()));
             else
-                edge = new WeightedEdge(edge.getA(), edge.getB(), Double.parseDouble(cost.getMessage()));
+                edge = new WeightedEdge(edge.getA(), edge.getB(), Double.parseDouble(weight.getMessage()));
         }
     }
 
