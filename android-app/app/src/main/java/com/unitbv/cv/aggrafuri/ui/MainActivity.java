@@ -26,12 +26,12 @@ import com.unitbv.cv.aggrafuri.graph.UndirectedWeightedGraph;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    GraphView graphView;
-    GraphView_ViewModel graphView_viewModel;
+    GraphView_ViewModel graphView_viewModel = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -40,9 +40,6 @@ public class MainActivity extends AppCompatActivity
         // Set the default selection as Undirected Graph
         navigationView.getMenu().findItem(R.id.nav_graphview_undirected).setChecked(true);
         selectNavigationButton(R.id.nav_graphview_undirected);
-
-        graphView = (GraphView) findViewById(R.id.graphView);
-        graphView_viewModel = new GraphView_ViewModel(new GraphModel(), graphView, new GraphView_Model());
     }
 
     @Override
@@ -58,6 +55,10 @@ public class MainActivity extends AppCompatActivity
     private void selectNavigationButton(int buttonID) {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         Menu navigationMenu = navigationView.getMenu();
+        GraphView graphView = (GraphView) findViewById(R.id.graphView);
+        if (graphView_viewModel == null) {
+            graphView_viewModel = new GraphView_ViewModel(new GraphModel(), graphView, new GraphView_Model());
+        }
 
         switch(buttonID)
         {

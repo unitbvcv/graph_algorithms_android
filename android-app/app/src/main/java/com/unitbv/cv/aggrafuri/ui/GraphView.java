@@ -19,9 +19,9 @@ import java.util.Vector;
 
 public class GraphView extends View {
     // drawing model
-    ArrayList<ArcParams> arcs;
-    ArrayList<LineParams> lines;
-    ArrayList<TextParams> texts;
+    ArrayList<ArcParams> arcs = new ArrayList<>();
+    ArrayList<LineParams> lines = new ArrayList<>();
+    ArrayList<TextParams> texts = new ArrayList<>();
 
     private Context context;
     private Paint drawPaint = new Paint();
