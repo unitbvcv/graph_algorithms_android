@@ -3,7 +3,7 @@ package com.unitbv.cv.aggrafuri.ui;
 public class ArcParams {
     private float left = 0.0f, right = 0.0f, top = 0.0f,
             bottom = 0.0f, startAngle = 0.0f, sweepAngle = 0.0f;
-    private boolean useCenter = false;
+    private boolean useCenter = false, isSelected = false;
 
     public ArcParams() {}
 
@@ -72,5 +72,13 @@ public class ArcParams {
 
     public void setUseCenter(boolean useCenter) {
         this.useCenter = useCenter;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }
