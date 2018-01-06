@@ -18,6 +18,8 @@ public class GraphView_ViewModel {
         this.graphModel = graphModel;
         this.graphView = view;
         this.graphView_model = viewModel;
+
+        graphView.setView_viewModel(this);
     }
 
     public GraphModel getGraphModel() {

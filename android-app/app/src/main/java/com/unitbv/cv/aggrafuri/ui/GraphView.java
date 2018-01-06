@@ -17,7 +17,6 @@ import java.util.ArrayList;
 
 
 public class GraphView extends View {
-
     GraphView_ViewModel view_viewModel = null;
 
     // drawing model
@@ -89,7 +88,7 @@ public class GraphView extends View {
         });
     }
 
-    public void setView_viewviewModel(GraphView_ViewModel viewModel) {
+    public void setView_viewModel(GraphView_ViewModel viewModel) {
         this.view_viewModel = viewModel;
     }
 
