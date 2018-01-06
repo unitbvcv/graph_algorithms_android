@@ -9,15 +9,15 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TextView;
 
-import com.unitbv.cv.aggrafuri.utils.Math;
 
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.Vector;
+
 
 public class GraphView extends View {
+
+    GraphView_ViewModel viewModel = null;
+
     // drawing model
     ArrayList<ArcParams> arcs = new ArrayList<>();
     ArrayList<LineParams> lines = new ArrayList<>();
@@ -33,16 +33,16 @@ public class GraphView extends View {
     private final int NODE_COLOR_R = 0;
     private final int NODE_COLOR_G = 0;
     private final int NODE_COLOR_B = 0;
-    private final float NODE_CIRCLE_RADIUS = 50;
 
-    private final float NODE_STROKE_WIDTH = 3.0f;
+    private final static float NODE_CIRCLE_RADIUS = 50;
+    private final static float NODE_STROKE_WIDTH = 3.0f;
 
     private final int BACKGROUND_COLOR_R = 255;
     private final int BACKGROUND_COLOR_G = 255;
     private final int BACKGROUND_COLOR_B = 255;
 
-    private final float ARROW_LEG_LENGTH = 50;
-    private final double ARROW_LEG_ANGLE = java.lang.Math.PI / 6;
+    private final static float ARROW_LEG_LENGTH = 50;
+    private final static double ARROW_LEG_ANGLE = java.lang.Math.PI / 6;
 
     private boolean canvasNeedsClearing = false;
 
@@ -72,6 +72,10 @@ public class GraphView extends View {
                 return true;
             }
         });
+    }
+
+    public void setViewModel(GraphView_ViewModel viewModel) {
+        this.viewModel = viewModel;
     }
 
     public void setArcs(ArrayList<ArcParams> arcs) {
@@ -184,25 +188,6 @@ public class GraphView extends View {
     public void clear() {
         canvasNeedsClearing = true;
         invalidate();
-    }
-
-    public void showOutputDialog(String title, String message)
-    {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-        dialog.setTitle(title);
-
-        TextView textView = new TextView(context);
-        textView.setText(message);
-        dialog.setView(textView);
-
-        dialog.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int which) {
-                dialog.create().cancel();
-            }
-        });
-
-        dialog.show();
     }
 
     public void promptDialog(String title, String message, final AlertDialogInterface dialogInterface) {
