@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -14,6 +15,8 @@ import android.view.View;
 import com.unitbv.cv.aggrafuri.utils.Math;
 
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.Vector;
 
 
 public class GraphView extends View {
@@ -40,7 +43,8 @@ public class GraphView extends View {
     public final static float NODE_CIRCLE_RADIUS = 50;
     public final static float NODE_STROKE_WIDTH = 3.0f;
 
-    public final static float WEIGHTS_SPACING = 5.0f;
+    public final static float WEIGHT_SPACING = 5.0f;
+    public final static float FONT_SIZE_WEIGHT = 50.0f;
 
     public final static int BACKGROUND_COLOR_R = 255;
     public final static int BACKGROUND_COLOR_G = 255;
@@ -147,60 +151,64 @@ public class GraphView extends View {
 			}
         }
 
-//        Random gen = new Random();
-//
-//        int x1 = gen.nextInt(getWidth());
-//        int y1 = gen.nextInt(getHeight());
-//        int x2 = gen.nextInt(getWidth());
-//        int y2 = gen.nextInt(getHeight());
-//
-//        drawPaint.setColor(Color.RED);
-//        canvas.drawArc(x1 - NODE_CIRCLE_RADIUS, y1 - NODE_CIRCLE_RADIUS,
-//                x1 + NODE_CIRCLE_RADIUS, y1 + NODE_CIRCLE_RADIUS,
-//                0.0f, 360.0f, false, drawPaint);
-//        drawPaint.setColor(Color.BLACK);
-//
-//        canvas.drawArc(x2 - NODE_CIRCLE_RADIUS, y2 - NODE_CIRCLE_RADIUS,
-//                x2 + NODE_CIRCLE_RADIUS, y2 + NODE_CIRCLE_RADIUS,
-//                0.0f, 360.0f, false, drawPaint);
-//
-//
-//			Log.d("INFO", "x1: " + x1 + " y1: " + y1 + " x2: " + x2 + " y2: " + y2);
-//			Log.d("INFO", "angleOfLine: " + java.lang.Math.toDegrees(angleOfLine) +
-//                    " alphaA: " + java.lang.Math.toDegrees(alpha_A));
-//      	Log.d("INFO", "tangent_x_A: " + tangent_x_A + " tangent_y_A: " + tangent_y_A +
-//            " tangent_x_B: " + tangent_x_B + " tangent_y_B: " + tangent_y_B);
-//
-//        Vector<Float> coord = Math.generateCirclesConnectionPoints(x1, y1, NODE_CIRCLE_RADIUS, x2, y2, NODE_CIRCLE_RADIUS);
-//        float tan_x1 = coord.get(0),
-//                tan_y1 = coord.get(1),
-//                tan_x2 = coord.get(2),
-//                tan_y2 = coord.get(3);
-//
-//        Vector<Float> legsCoord = Math.generateArrowLegsCoordinates(tan_x1, tan_y1, tan_x2, tan_y2, ARROW_LEG_LENGTH, ARROW_LEG_ANGLE);
-//        float C_x = legsCoord.get(0),
-//                C_y = legsCoord.get(1),
-//                D_x = legsCoord.get(2),
-//                D_y = legsCoord.get(3);
-//
-//            canvas.drawLine(tan_x1, tan_y1, tan_x2, tan_y2, drawPaint);
-//            canvas.drawLine(tan_x2, tan_y2, C_x, C_y, drawPaint);
-//            canvas.drawLine(tan_x2, tan_y2, D_x, D_y, drawPaint)
-//
-//        canvas.drawCircle(500, 500,30, drawPaint);
-//
-//        if (clickPositionX != -1 && clickPositionY != -1) {
-//            canvas.drawLine(500, 500, clickPositionX, clickPositionY, drawPaint);
-//            canvas.drawCircle(clickPositionX, clickPositionY, 30, drawPaint);
-//
-//            double angle = Math.angleOfLineToOx(500, 500, clickPositionX, clickPositionY);
-//
-//            Log.d("INFO", "TOUCH POINT: " + clickPositionX + " " + clickPositionY);
-//            Log.d("INFO", "ALPHA: " + angle + " (" + java.lang.Math.toDegrees(angle) + "°)");
-//
-//            clickPositionX = -1;
-//            clickPositionY = -1;
-//        }
+        /* Generate two random points and connect them (with weight).
+
+        Random gen = new Random();
+
+        int x1 = gen.nextInt(getWidth());
+        int y1 = gen.nextInt(getHeight());
+        int x2 = gen.nextInt(getWidth());
+        int y2 = gen.nextInt(getHeight());
+
+        drawPaint.setColor(Color.RED);
+        canvas.drawArc(x1 - NODE_CIRCLE_RADIUS, y1 - NODE_CIRCLE_RADIUS,
+                x1 + NODE_CIRCLE_RADIUS, y1 + NODE_CIRCLE_RADIUS,
+                0.0f, 360.0f, false, drawPaint);
+        drawPaint.setColor(Color.BLACK);
+
+        canvas.drawArc(x2 - NODE_CIRCLE_RADIUS, y2 - NODE_CIRCLE_RADIUS,
+                x2 + NODE_CIRCLE_RADIUS, y2 + NODE_CIRCLE_RADIUS,
+                0.0f, 360.0f, false, drawPaint);
+
+        Vector<Float> coord = Math.generateCirclesConnectionPoints(x1, y1, NODE_CIRCLE_RADIUS, x2, y2, NODE_CIRCLE_RADIUS);
+        float tan_x1 = coord.get(0),
+                tan_y1 = coord.get(1),
+                tan_x2 = coord.get(2),
+                tan_y2 = coord.get(3);
+
+        Vector<Float> legsCoord = Math.generateArrowLegsCoordinates(tan_x1, tan_y1, tan_x2, tan_y2, ARROW_LEG_LENGTH, ARROW_LEG_ANGLE);
+        float C_x = legsCoord.get(0),
+                C_y = legsCoord.get(1),
+                D_x = legsCoord.get(2),
+                D_y = legsCoord.get(3);
+
+            canvas.drawLine(tan_x1, tan_y1, tan_x2, tan_y2, drawPaint);
+            canvas.drawLine(tan_x2, tan_y2, C_x, C_y, drawPaint);
+            canvas.drawLine(tan_x2, tan_y2, D_x, D_y, drawPaint);
+
+            String message = "300000";
+
+            Paint textPaint = new Paint();
+            textPaint.setTextSize(FONT_SIZE_WEIGHT);
+
+            canvas.drawTextOnPath(message, Math.generateWeightTextPath(tan_x1, tan_y1, tan_x2, tan_y2, message, textPaint), 0, 0, textPaint);
+        */
+
+        /* Generate a central point and a point on touched area and Log the touch position and the angle of the line relative to Ox.
+
+        if (clickPositionX != -1 && clickPositionY != -1) {
+            canvas.drawLine(500, 500, clickPositionX, clickPositionY, drawPaint);
+            canvas.drawCircle(clickPositionX, clickPositionY, 30, drawPaint);
+
+            double angle = Math.angleOfLineToOx(500, 500, clickPositionX, clickPositionY);
+
+            Log.d("INFO", "TOUCH POINT: " + clickPositionX + " " + clickPositionY);
+            Log.d("INFO", "ALPHA: " + angle + " (" + java.lang.Math.toDegrees(angle) + "°)");
+
+            clickPositionX = -1;
+            clickPositionY = -1;
+        }
+        */
     }
 
     public void clear() {

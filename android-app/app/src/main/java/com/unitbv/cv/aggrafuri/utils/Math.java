@@ -128,13 +128,12 @@ public class Math {
         }
     }
 
-    public static Path generateWeightTextPath(float startX, float startY, float stopX, float stopY, String message)
+    public static Path generateWeightTextPath(float startX, float startY, float stopX, float stopY, String message, Paint paint)
     {
         Path result = new Path();
 
         Rect textBounds = new Rect();
-        Paint painter = new Paint();
-        painter.getTextBounds(message, 0, message.length(), textBounds);
+        paint.getTextBounds(message, 0, message.length(), textBounds);
         int textLength = textBounds.width();
         int textHeight = textBounds.height();
 
@@ -145,7 +144,7 @@ public class Math {
         double lineMiddle_y = startY;
 
         double topLeft_x = lineMiddle_x - textLength / 2;
-        double topLeft_y = lineMiddle_y + textHeight + GraphView.WEIGHTS_SPACING;
+        double topLeft_y = lineMiddle_y + textHeight + GraphView.WEIGHT_SPACING;
 
         double topRight_x = lineMiddle_x + textLength / 2;
         double topRight_y = topLeft_y;
