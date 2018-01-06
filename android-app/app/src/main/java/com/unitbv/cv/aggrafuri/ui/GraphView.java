@@ -29,20 +29,22 @@ public class GraphView extends View {
     private float clickPositionX = -1;
     private float clickPositionY = -1;
 
-    private final int NODE_COLOR_A = 255;
-    private final int NODE_COLOR_R = 0;
-    private final int NODE_COLOR_G = 0;
-    private final int NODE_COLOR_B = 0;
+    public final static int NODE_COLOR_A = 255;
+    public final static int NODE_COLOR_R = 0;
+    public final static int NODE_COLOR_G = 0;
+    public final static int NODE_COLOR_B = 0;
 
-    private final static float NODE_CIRCLE_RADIUS = 50;
-    private final static float NODE_STROKE_WIDTH = 3.0f;
+    public final static float NODE_CIRCLE_RADIUS = 50;
+    public final static float NODE_STROKE_WIDTH = 3.0f;
 
-    private final int BACKGROUND_COLOR_R = 255;
-    private final int BACKGROUND_COLOR_G = 255;
-    private final int BACKGROUND_COLOR_B = 255;
+    public final static float WEIGHTS_SPACING = 5.0f;
 
-    private final static float ARROW_LEG_LENGTH = 50;
-    private final static double ARROW_LEG_ANGLE = java.lang.Math.PI / 6;
+    public final static int BACKGROUND_COLOR_R = 255;
+    public final static int BACKGROUND_COLOR_G = 255;
+    public final static int BACKGROUND_COLOR_B = 255;
+
+    public final static float ARROW_LEG_LENGTH = 50;
+    public final static double ARROW_LEG_ANGLE = java.lang.Math.PI / 6;
 
     private boolean canvasNeedsClearing = false;
 
@@ -122,8 +124,16 @@ public class GraphView extends View {
 
             // draw texts
             for (TextParams currentText : texts) {
+                if (currentText.getIsWeight())
+                {
+                    //canvas.drawTextOnPath(currentText.getMessage(), currentText.getPath(),
+//                            0.0f, 0.0f, drawPaint);
+                }
+                else
+                {
                 canvas.drawText(currentText.getMessage(), currentText.getX(),
                         currentText.getY(), drawPaint);
+                }
             }
 
 //            Random gen = new Random();
