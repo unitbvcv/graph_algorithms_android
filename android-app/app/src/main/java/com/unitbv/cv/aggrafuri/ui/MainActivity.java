@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity
         {
             case R.id.nav_graphview_undirected:
                 graphView.clear();
-                graphView.setGraphType(GraphView.GraphViewType.UNDIRECTED);
 
                 navigationMenu.findItem(R.id.nav_algorithm_1).setEnabled(true);
                 navigationMenu.findItem(R.id.nav_algorithm_2).setEnabled(true);
@@ -79,7 +78,6 @@ public class MainActivity extends AppCompatActivity
 
             case R.id.nav_graphview_directed:
                 graphView.clear();
-                graphView.setGraphType(GraphView.GraphViewType.DIRECTED);
 
                 navigationMenu.findItem(R.id.nav_algorithm_1).setEnabled(true);
                 navigationMenu.findItem(R.id.nav_algorithm_2).setEnabled(true);
@@ -95,7 +93,6 @@ public class MainActivity extends AppCompatActivity
 
             case R.id.nav_graphview_undirected_weighted:
                 graphView.clear();
-                graphView.setGraphType(GraphView.GraphViewType.UNDIRECTED_WEIGHTED);
 
                 navigationMenu.findItem(R.id.nav_algorithm_1).setEnabled(true);
                 navigationMenu.findItem(R.id.nav_algorithm_2).setEnabled(true);
@@ -111,7 +108,6 @@ public class MainActivity extends AppCompatActivity
 
             case R.id.nav_graphview_directed_weighted:
                 graphView.clear();
-                graphView.setGraphType(GraphView.GraphViewType.DIRECTED_WEIGHTED);
 
                 navigationMenu.findItem(R.id.nav_algorithm_1).setEnabled(true);
                 navigationMenu.findItem(R.id.nav_algorithm_2).setEnabled(true);
