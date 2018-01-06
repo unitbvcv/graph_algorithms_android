@@ -18,8 +18,6 @@ import java.util.Random;
 import java.util.Vector;
 
 public class GraphView extends View {
-    private GraphViewType graphType = GraphViewType.NOT_SET;
-
     // drawing model
     ArrayList<ArcParams> arcs;
     ArrayList<LineParams> lines;
@@ -48,14 +46,6 @@ public class GraphView extends View {
 
     private boolean canvasNeedsClearing = false;
 
-    public enum GraphViewType {
-        NOT_SET,
-        UNDIRECTED,
-        DIRECTED,
-        UNDIRECTED_WEIGHTED,
-        DIRECTED_WEIGHTED
-    }
-
     public GraphView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -82,14 +72,6 @@ public class GraphView extends View {
                 return true;
             }
         });
-    }
-
-    public GraphViewType getGraphType() {
-        return graphType;
-    }
-
-    public void setGraphType(GraphViewType graphType) {
-        this.graphType = graphType;
     }
 
     public void setArcs(ArrayList<ArcParams> arcs) {

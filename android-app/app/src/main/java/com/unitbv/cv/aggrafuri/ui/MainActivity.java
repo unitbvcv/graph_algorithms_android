@@ -17,9 +17,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.unitbv.cv.aggrafuri.R;
+import com.unitbv.cv.aggrafuri.graph.Algorithms;
+import com.unitbv.cv.aggrafuri.graph.DirectedWeightedGraph;
+import com.unitbv.cv.aggrafuri.graph.GraphModel;
+import com.unitbv.cv.aggrafuri.graph.Node;
+import com.unitbv.cv.aggrafuri.graph.UndirectedWeightedGraph;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    GraphView graphView;
+    GraphView_ViewModel graphView_viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +39,10 @@ public class MainActivity extends AppCompatActivity
 
         // Set the default selection as Undirected Graph
         navigationView.getMenu().findItem(R.id.nav_graphview_undirected).setChecked(true);
-        setNavigationButtonsState(R.id.nav_graphview_undirected);
+        selectNavigationButton(R.id.nav_graphview_undirected);
+
+        graphView = (GraphView) findViewById(R.id.graphView);
+        graphView_viewModel = new GraphView_ViewModel(new GraphModel(), graphView, new GraphView_Model());
     }
 
     @Override
@@ -44,12 +55,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void setNavigationButtonsState(int viewID) {
+    private void selectNavigationButton(int buttonID) {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         Menu navigationMenu = navigationView.getMenu();
-        GraphView graphView = (GraphView) findViewById(R.id.graphView);
 
-        switch(viewID)
+        switch(buttonID)
         {
             case R.id.nav_graphview_undirected:
                 graphView.clear();
@@ -119,8 +129,9 @@ public class MainActivity extends AppCompatActivity
                 graphView.clear();
                 break;
 
+            // Generic Graph Traversal
             case R.id.nav_algorithm_1:
-                graphView.promptDialog("Input", "Test message", new AlertDialogInterface() {
+                graphView.promptDialog("Generic Graph Traversal: Input", "Please insert the start node name:", new AlertDialogInterface() {
                     EditText inputView;
 
                     @Override
@@ -136,9 +147,11 @@ public class MainActivity extends AppCompatActivity
 
                     @Override
                     public void onResult(View view) {
-                        String output = inputView.getText().toString();
+                        String input = inputView.getText().toString();
+                        Node startNode = new Node(input);
+                        String output = Algorithms.GenericGraphTraversal(graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
 
-                        graphView.promptDialog("Output", output, new AlertDialogInterface() {
+                        graphView.promptDialog("Generic Graph Traversal: Output", output, new AlertDialogInterface() {
                             TextView outputView;
 
                             @Override
@@ -162,31 +175,356 @@ public class MainActivity extends AppCompatActivity
 
                 break;
 
+            // Breadth First Traversal
             case R.id.nav_algorithm_2:
+                graphView.promptDialog("Breadth First Traversal: Input", "Please insert the start node name:", new AlertDialogInterface() {
+                    EditText inputView;
+
+                    @Override
+                    public View onBuildDialog(Context context) {
+                        inputView = new EditText(context);
+                        return inputView;
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onResult(View view) {
+                        String input = inputView.getText().toString();
+                        Node startNode = new Node(input);
+                        String output = Algorithms.BreadthFirstTraversal(graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
+
+                        graphView.promptDialog("Breadth First Traversal: Output", output, new AlertDialogInterface() {
+                            TextView outputView;
+
+                            @Override
+                            public View onBuildDialog(Context context) {
+                                outputView = new TextView(context);
+                                return outputView;
+                            }
+
+                            @Override
+                            public void onCancel() {
+
+                            }
+
+                            @Override
+                            public void onResult(View view) {
+
+                            }
+                        });
+                    }
+                });
+
                 break;
 
+            // Depth First Traversal
             case R.id.nav_algorithm_3:
+                graphView.promptDialog("Depth First Traversal: Input", "Please insert the start node name:", new AlertDialogInterface() {
+                    EditText inputView;
+
+                    @Override
+                    public View onBuildDialog(Context context) {
+                        inputView = new EditText(context);
+                        return inputView;
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onResult(View view) {
+                        String input = inputView.getText().toString();
+                        Node startNode = new Node(input);
+                        String output = Algorithms.DepthFirstTraversal(graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
+
+                        graphView.promptDialog("Depth First Traversal: Output", output, new AlertDialogInterface() {
+                            TextView outputView;
+
+                            @Override
+                            public View onBuildDialog(Context context) {
+                                outputView = new TextView(context);
+                                return outputView;
+                            }
+
+                            @Override
+                            public void onCancel() {
+
+                            }
+
+                            @Override
+                            public void onResult(View view) {
+
+                            }
+                        });
+                    }
+                });
+
                 break;
 
+            // Prim's Algorithm
             case R.id.nav_algorithm_4:
+                graphView.promptDialog("Prim's Algorithm: Input", "Please insert the start node name:", new AlertDialogInterface() {
+                    EditText inputView;
+
+                    @Override
+                    public View onBuildDialog(Context context) {
+                        inputView = new EditText(context);
+                        return inputView;
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onResult(View view) {
+                        String input = inputView.getText().toString();
+                        Node startNode = new Node(input);
+                        String output = Algorithms.PrimsAlgorithm((UndirectedWeightedGraph)graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
+
+                        graphView.promptDialog("Prim's Algorithm: Output", output, new AlertDialogInterface() {
+                            TextView outputView;
+
+                            @Override
+                            public View onBuildDialog(Context context) {
+                                outputView = new TextView(context);
+                                return outputView;
+                            }
+
+                            @Override
+                            public void onCancel() {
+
+                            }
+
+                            @Override
+                            public void onResult(View view) {
+
+                            }
+                        });
+                    }
+                });
+
                 break;
 
-            case R.id.nav_algorithm_5:
-                break;
+            // Kruskal's Algorithm
+            case R.id.nav_algorithm_5: {
+                String output = Algorithms.KruskalAlgorithm((UndirectedWeightedGraph) graphView_viewModel.getGraphModel().getGraph()).toString();
+                graphView.promptDialog("Kruskal's Algorithm: Output", output, new AlertDialogInterface() {
+                    TextView outputView;
 
-            case R.id.nav_algorithm_6:
-                break;
+                    @Override
+                    public View onBuildDialog(Context context) {
+                        outputView = new TextView(context);
+                        return outputView;
+                    }
 
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onResult(View view) {
+
+                    }
+                });
+
+                break;
+            }
+
+            // Boruvka's Algorithm
+            case R.id.nav_algorithm_6: {
+                String output = Algorithms.KruskalAlgorithm((UndirectedWeightedGraph) graphView_viewModel.getGraphModel().getGraph()).toString();
+                graphView.promptDialog("Boruvka's Algorithm: Output", output, new AlertDialogInterface() {
+                    TextView outputView;
+
+                    @Override
+                    public View onBuildDialog(Context context) {
+                        outputView = new TextView(context);
+                        return outputView;
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onResult(View view) {
+
+                    }
+                });
+                break;
+            }
+
+            // Dijkstra's Algorithm
             case R.id.nav_algorithm_7:
+                graphView.promptDialog("Dijkstra's Algorithm: Input", "Please insert the start node name:", new AlertDialogInterface() {
+                    EditText inputView;
+
+                    @Override
+                    public View onBuildDialog(Context context) {
+                        inputView = new EditText(context);
+                        return inputView;
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onResult(View view) {
+                        String input = inputView.getText().toString();
+                        Node startNode = new Node(input);
+                        String output = Algorithms.DijkstraAlgorithm((DirectedWeightedGraph)graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
+
+                        graphView.promptDialog("Dijkstra's Algorithm: Output", output, new AlertDialogInterface() {
+                            TextView outputView;
+
+                            @Override
+                            public View onBuildDialog(Context context) {
+                                outputView = new TextView(context);
+                                return outputView;
+                            }
+
+                            @Override
+                            public void onCancel() {
+
+                            }
+
+                            @Override
+                            public void onResult(View view) {
+
+                            }
+                        });
+                    }
+                });
+
                 break;
 
+            // Bellman-Ford Algorithm
             case R.id.nav_algorithm_8:
+                graphView.promptDialog("Bellman-Ford Algorithm: Input", "Please insert the start node name:", new AlertDialogInterface() {
+                    EditText inputView;
+
+                    @Override
+                    public View onBuildDialog(Context context) {
+                        inputView = new EditText(context);
+                        return inputView;
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onResult(View view) {
+                        String input = inputView.getText().toString();
+                        Node startNode = new Node(input);
+                        String output = Algorithms.BellmanFordAlgorithm((DirectedWeightedGraph)graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
+
+                        graphView.promptDialog("Bellman-Ford Algorithm: Output", output, new AlertDialogInterface() {
+                            TextView outputView;
+
+                            @Override
+                            public View onBuildDialog(Context context) {
+                                outputView = new TextView(context);
+                                return outputView;
+                            }
+
+                            @Override
+                            public void onCancel() {
+
+                            }
+
+                            @Override
+                            public void onResult(View view) {
+
+                            }
+                        });
+                    }
+                });
+
                 break;
 
+            // Floyd-Warshall Algorithm
             case R.id.nav_algorithm_9:
+                String output = Algorithms.FloydWarshallAlgorithm((DirectedWeightedGraph) graphView_viewModel.getGraphModel().getGraph()).toString();
+                graphView.promptDialog("Floyd-Warshall Algorithm: Output", output, new AlertDialogInterface() {
+                    TextView outputView;
+
+                    @Override
+                    public View onBuildDialog(Context context) {
+                        outputView = new TextView(context);
+                        return outputView;
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onResult(View view) {
+
+                    }
+                });
+
                 break;
 
+            // Eulerian Circuit Algorithm
             case R.id.nav_algorithm_10:
+                graphView.promptDialog("Eulerian Circuit Algorithm: Input", "Please insert the start node name:", new AlertDialogInterface() {
+                    EditText inputView;
+
+                    @Override
+                    public View onBuildDialog(Context context) {
+                        inputView = new EditText(context);
+                        return inputView;
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onResult(View view) {
+                        String input = inputView.getText().toString();
+                        Node startNode = new Node(input);
+                        String output = Algorithms.EulerianCircuit((DirectedWeightedGraph)graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
+
+                        graphView.promptDialog("Eulerian Circuit Algorithm: Output", output, new AlertDialogInterface() {
+                            TextView outputView;
+
+                            @Override
+                            public View onBuildDialog(Context context) {
+                                outputView = new TextView(context);
+                                return outputView;
+                            }
+
+                            @Override
+                            public void onCancel() {
+
+                            }
+
+                            @Override
+                            public void onResult(View view) {
+
+                            }
+                        });
+                    }
+                });
+
                 break;
 
         }
@@ -197,7 +535,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        setNavigationButtonsState(id);
+        selectNavigationButton(id);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

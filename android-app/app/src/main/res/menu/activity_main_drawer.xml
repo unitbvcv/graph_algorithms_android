@@ -62,7 +62,7 @@
         <item
             android:id="@+id/nav_algorithm_8"
             android:icon="@drawable/ic_filter_8_black_24dp"
-            android:title="Dijkstra Algorithm" />
+            android:title="Dijkstra's Algorithm" />
         <item
             android:id="@+id/nav_algorithm_9"
             android:icon="@drawable/ic_filter_9_black_24dp"
