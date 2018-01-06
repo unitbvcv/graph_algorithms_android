@@ -33,20 +33,22 @@ public class GraphView extends View {
 
     private final float TOUCH_SENSITIVITY_PIXELS = 5;
 
-    private final int NODE_COLOR_A = 255;
-    private final int NODE_COLOR_R = 0;
-    private final int NODE_COLOR_G = 0;
-    private final int NODE_COLOR_B = 0;
+    public final static int NODE_COLOR_A = 255;
+    public final static int NODE_COLOR_R = 0;
+    public final static int NODE_COLOR_G = 0;
+    public final static int NODE_COLOR_B = 0;
 
-    private final static float NODE_CIRCLE_RADIUS = 50;
-    private final static float NODE_STROKE_WIDTH = 3.0f;
+    public final static float NODE_CIRCLE_RADIUS = 50;
+    public final static float NODE_STROKE_WIDTH = 3.0f;
 
-    private final int BACKGROUND_COLOR_R = 255;
-    private final int BACKGROUND_COLOR_G = 255;
-    private final int BACKGROUND_COLOR_B = 255;
+    public final static float WEIGHTS_SPACING = 5.0f;
 
-    private final static float ARROW_LEG_LENGTH = 50;
-    private final static double ARROW_LEG_ANGLE = java.lang.Math.PI / 6;
+    public final static int BACKGROUND_COLOR_R = 255;
+    public final static int BACKGROUND_COLOR_G = 255;
+    public final static int BACKGROUND_COLOR_B = 255;
+
+    public final static float ARROW_LEG_LENGTH = 50;
+    public final static double ARROW_LEG_ANGLE = java.lang.Math.PI / 6;
 
     private boolean canvasNeedsClearing = false;
 
@@ -141,9 +143,9 @@ public class GraphView extends View {
             }
             else
             {
-                canvas.drawText(currentText.getMessage(), currentText.getX(),
-                        currentText.getY(), drawPaint);
-            }
+				canvas.drawText(currentText.getMessage(), currentText.getX(),
+					currentText.getY(), drawPaint);
+			}
         }
 
 //        Random gen = new Random();
@@ -164,11 +166,11 @@ public class GraphView extends View {
 //                0.0f, 360.0f, false, drawPaint);
 //
 //
-////            Log.d("INFO", "x1: " + x1 + " y1: " + y1 + " x2: " + x2 + " y2: " + y2);
-////            Log.d("INFO", "angleOfLine: " + java.lang.Math.toDegrees(angleOfLine) +
-////                    " alphaA: " + java.lang.Math.toDegrees(alpha_A));
-////            Log.d("INFO", "tangent_x_A: " + tangent_x_A + " tangent_y_A: " + tangent_y_A +
-////            " tangent_x_B: " + tangent_x_B + " tangent_y_B: " + tangent_y_B);
+//			Log.d("INFO", "x1: " + x1 + " y1: " + y1 + " x2: " + x2 + " y2: " + y2);
+//			Log.d("INFO", "angleOfLine: " + java.lang.Math.toDegrees(angleOfLine) +
+//                    " alphaA: " + java.lang.Math.toDegrees(alpha_A));
+//      	Log.d("INFO", "tangent_x_A: " + tangent_x_A + " tangent_y_A: " + tangent_y_A +
+//            " tangent_x_B: " + tangent_x_B + " tangent_y_B: " + tangent_y_B);
 //
 //        Vector<Float> coord = Math.generateCirclesConnectionPoints(x1, y1, NODE_CIRCLE_RADIUS, x2, y2, NODE_CIRCLE_RADIUS);
 //        float tan_x1 = coord.get(0),
@@ -185,7 +187,7 @@ public class GraphView extends View {
 //            canvas.drawLine(tan_x1, tan_y1, tan_x2, tan_y2, drawPaint);
 //            canvas.drawLine(tan_x2, tan_y2, C_x, C_y, drawPaint);
 //            canvas.drawLine(tan_x2, tan_y2, D_x, D_y, drawPaint)
-
+//
 //        canvas.drawCircle(500, 500,30, drawPaint);
 //
 //        if (clickPositionX != -1 && clickPositionY != -1) {

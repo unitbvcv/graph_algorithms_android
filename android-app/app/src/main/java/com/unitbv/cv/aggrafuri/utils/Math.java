@@ -1,5 +1,11 @@
 package com.unitbv.cv.aggrafuri.utils;
 
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Rect;
+
+import com.unitbv.cv.aggrafuri.ui.GraphView;
+
 import java.util.Vector;
 
 public class Math {
@@ -120,5 +126,48 @@ public class Math {
         else {
             return number > lowerLimit && number < upperLimit;
         }
+    }
+
+    public static Path generateWeightTextPath(float startX, float startY, float stopX, float stopY, String message)
+    {
+        Path result = new Path();
+
+        Rect textBounds = new Rect();
+        Paint painter = new Paint();
+        painter.getTextBounds(message, 0, message.length(), textBounds);
+        int textLength = textBounds.width();
+        int textHeight = textBounds.height();
+
+        double lineLength = distanceBetweenTwoPoints(startX, startY, stopX, stopY);
+        double lineAngle = angleOfLineToOx(startX, startY, stopX, stopY);
+
+        double lineMiddle_x = startX + lineLength / 2;
+        double lineMiddle_y = startY;
+
+        double topLeft_x = lineMiddle_x - textLength / 2;
+        double topLeft_y = lineMiddle_y + textHeight + GraphView.WEIGHTS_SPACING;
+
+        double topRight_x = lineMiddle_x + textLength / 2;
+        double topRight_y = topLeft_y;
+
+        Vector<Float> topLeftRotated = rotatePoint(startX, startY, lineAngle, (float) topLeft_x, (float) topLeft_y);
+        Vector<Float> topRightRotated = rotatePoint(startX, startY, lineAngle, (float) topRight_x, (float) topRight_y);
+
+        if (numberBetween(lineAngle,
+                java.lang.Math.PI / 2,
+                java.lang.Math.PI * 3 / 2,
+                false,
+                false))
+        {
+            result.moveTo(topRightRotated.get(0), topRightRotated.get(1));
+            result.lineTo(topLeftRotated.get(0), topLeftRotated.get(1));
+        }
+        else
+        {
+            result.moveTo(topLeftRotated.get(0), topLeftRotated.get(1));
+            result.lineTo(topRightRotated.get(0), topRightRotated.get(1));
+        }
+
+        return result;
     }
 }
