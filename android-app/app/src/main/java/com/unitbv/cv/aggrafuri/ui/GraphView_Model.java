@@ -59,9 +59,9 @@ public class GraphView_Model {
     public void addNode(Node node, float x, float y)
     {
         NodeView newNode = new NodeView();
+        Vector<Float> textCoordinates = Math.generateNodeTextCoordinates(x, y, node.getID(), GraphView.textPaint);
 
-        // oh no! magic numbers!
-        TextParams nodeID = new TextParams(node.getID(), x - 10, y - 10);
+        TextParams nodeID = new TextParams(node.getID(), textCoordinates.get(0), textCoordinates.get(1));
 
         ArcParams arcParams = new ArcParams(x - GraphView.NODE_CIRCLE_RADIUS, y - GraphView.NODE_CIRCLE_RADIUS,
                 x + GraphView.NODE_CIRCLE_RADIUS, y + GraphView.NODE_CIRCLE_RADIUS, 0.0f, 360.0f, false);

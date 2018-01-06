@@ -145,13 +145,13 @@ public class GraphView extends View {
         for (TextParams currentText : texts) {
             if (currentText.getIsWeight())
             {
-                //canvas.drawTextOnPath(currentText.getMessage(), currentText.getPath(),
-//                            0.0f, 0.0f, drawPaint);
+                canvas.drawTextOnPath(currentText.getMessage(), currentText.getPath(),
+                            0.0f, 0.0f, textPaint);
             }
             else
             {
 				canvas.drawText(currentText.getMessage(), currentText.getX(),
-					currentText.getY(), drawPaint);
+					currentText.getY(), textPaint);
 			}
         }
 
