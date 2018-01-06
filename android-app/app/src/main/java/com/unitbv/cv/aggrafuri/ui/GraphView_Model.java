@@ -1,5 +1,7 @@
 package com.unitbv.cv.aggrafuri.ui;
 
+import android.view.View;
+
 import com.unitbv.cv.aggrafuri.graph.Arc;
 import com.unitbv.cv.aggrafuri.graph.Edge;
 import com.unitbv.cv.aggrafuri.graph.GraphType;
@@ -113,9 +115,9 @@ public class GraphView_Model {
                 textParamsList.add(weightParams);
         });
 
-        result.addAll(arcParamsList);
-        result.addAll(lineParamsList);
-        result.addAll(textParamsList);
+        result.add(arcParamsList);
+        result.add(lineParamsList);
+        result.add(textParamsList);
         return result;
     }
 
