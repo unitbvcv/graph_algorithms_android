@@ -122,7 +122,7 @@ public class GraphView_Model {
 
         arcs.put(arc, newArc);
     }
-    
+
     private Vector<LineParams> getArrowLegsLineParams(LineParams lineParams)
     {
         Vector<LineParams> result = new Vector<>(2);
@@ -157,21 +157,41 @@ public class GraphView_Model {
 
         // trebuie construit un TextParams cu costul edge-ului, x si y
         // trebuie calculate x si y in functie de unghiul liniei
-        TextParams weightParams = new TextParams();
+        TextParams weightParams = new TextParams(weightedEdge.getWeight().toString(),
+                Math.generateWeightTextPath(lineParams.getStartX(), lineParams.getStartY(),
+                lineParams.getStopX(), lineParams.getStopY(), weightedEdge.getWeight().toString(), GraphView.textPaint));
 
 
         newEdge.setEdge(weightedEdge);
         newEdge.setLine(lineParams);
         newEdge.setWeight(weightParams);
+
         edges.put(weightedEdge, newEdge);
     }
 
     public void addWeightedArc(WeightedArc weightedArc)
     {
+        ArcView newArc = new ArcView();
+
         // trebuie construit LineParams: se afla pe care 2 noduri le leaga arcul, se afla coordonatele lor si se calculeaza punctele
+        LineParams lineParams = getLineParams(weightedArc);
+
         // trebuie construit LineParams pt arrow parts
+        Vector<LineParams> arrowLegLineParams = getArrowLegsLineParams(lineParams);
+
         // trebuie construit un TextParams cu costul edge-ului, x si y
         // trebuie calculate x si y in functie de unghiul liniei
+        TextParams weightParams = new TextParams(weightedArc.getWeight().toString(),
+                Math.generateWeightTextPath(lineParams.getStartX(), lineParams.getStartY(),
+                        lineParams.getStopX(), lineParams.getStopY(), weightedArc.getWeight().toString(), GraphView.textPaint));
+
+        newArc.setArc(weightedArc);
+        newArc.setLine(lineParams);
+        newArc.setArrow_P1(arrowLegLineParams.get(0));
+        newArc.setArrow_P2(arrowLegLineParams.get(1));
+        newArc.setWeight(weightParams);
+
+        arcs.put(weightedArc, newArc);
     }
 
     public ArrayList<Object> generateParamsLists()
