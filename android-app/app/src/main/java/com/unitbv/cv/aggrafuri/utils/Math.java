@@ -106,4 +106,19 @@ public class Math {
         result.addAll(D_rotated);
         return result;
     }
+
+    public static boolean numberBetween(double number, double lowerLimit, double upperLimit, boolean inclusiveLower, boolean inclusiveUpper) {
+        if (inclusiveLower && inclusiveUpper) {
+            return number >= lowerLimit && number <= upperLimit;
+        }
+        else if (inclusiveLower) {
+            return number >= lowerLimit && number < upperLimit;
+        }
+        else if (inclusiveUpper) {
+            return number > lowerLimit && number <= upperLimit;
+        }
+        else {
+            return number > lowerLimit && number < upperLimit;
+        }
+    }
 }
