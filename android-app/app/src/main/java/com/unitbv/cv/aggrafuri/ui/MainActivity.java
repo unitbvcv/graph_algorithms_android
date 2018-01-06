@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
 
         switch(buttonID)
         {
-            case R.id.nav_graphview_undirected:
+            case R.id.nav_graphview_undirected: {
                 graphView_viewModel.setGraphType(GraphType.UNDIRECTED);
 
                 navigationMenu.findItem(R.id.nav_algorithm_1).setEnabled(true);
@@ -76,8 +76,9 @@ public class MainActivity extends AppCompatActivity
                 navigationMenu.findItem(R.id.nav_algorithm_9).setEnabled(false);
                 navigationMenu.findItem(R.id.nav_algorithm_10).setEnabled(false);
                 break;
+            }
 
-            case R.id.nav_graphview_directed:
+            case R.id.nav_graphview_directed: {
                 graphView_viewModel.setGraphType(GraphType.DIRECTED);
 
                 navigationMenu.findItem(R.id.nav_algorithm_1).setEnabled(true);
@@ -91,8 +92,9 @@ public class MainActivity extends AppCompatActivity
                 navigationMenu.findItem(R.id.nav_algorithm_9).setEnabled(false);
                 navigationMenu.findItem(R.id.nav_algorithm_10).setEnabled(true);
                 break;
+            }
 
-            case R.id.nav_graphview_undirected_weighted:
+            case R.id.nav_graphview_undirected_weighted: {
                 graphView_viewModel.setGraphType(GraphType.UNDIRECTED_WEIGHTED);
 
                 navigationMenu.findItem(R.id.nav_algorithm_1).setEnabled(true);
@@ -106,8 +108,9 @@ public class MainActivity extends AppCompatActivity
                 navigationMenu.findItem(R.id.nav_algorithm_9).setEnabled(false);
                 navigationMenu.findItem(R.id.nav_algorithm_10).setEnabled(false);
                 break;
+            }
 
-            case R.id.nav_graphview_directed_weighted:
+            case R.id.nav_graphview_directed_weighted: {
                 graphView_viewModel.setGraphType(GraphType.DIRECTED_WEIGHTED);
 
                 navigationMenu.findItem(R.id.nav_algorithm_1).setEnabled(true);
@@ -121,13 +124,15 @@ public class MainActivity extends AppCompatActivity
                 navigationMenu.findItem(R.id.nav_algorithm_9).setEnabled(true);
                 navigationMenu.findItem(R.id.nav_algorithm_10).setEnabled(false);
                 break;
+            }
 
-            case R.id.nav_graphview_reset:
+            case R.id.nav_graphview_reset: {
                 graphView_viewModel.clearModels();
                 break;
+            }
 
             // Generic Graph Traversal
-            case R.id.nav_algorithm_1:
+            case R.id.nav_algorithm_1: {
                 graphView.promptDialog("Generic Graph Traversal: Input", "Please insert the start node name:", new AlertDialogInterface() {
                     EditText inputView;
 
@@ -150,8 +155,7 @@ public class MainActivity extends AppCompatActivity
                         String output;
                         if (graphView_viewModel.getGraphModel().getGraph().getNodes().contains(startNode)) {
                             output = Algorithms.GenericGraphTraversal(graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
-                        }
-                        else {
+                        } else {
                             output = "Start node not found!";
                         }
 
@@ -178,9 +182,10 @@ public class MainActivity extends AppCompatActivity
                 });
 
                 break;
+            }
 
             // Breadth First Traversal
-            case R.id.nav_algorithm_2:
+            case R.id.nav_algorithm_2: {
                 graphView.promptDialog("Breadth First Traversal: Input", "Please insert the start node name:", new AlertDialogInterface() {
                     EditText inputView;
 
@@ -203,8 +208,7 @@ public class MainActivity extends AppCompatActivity
                         String output;
                         if (graphView_viewModel.getGraphModel().getGraph().getNodes().contains(startNode)) {
                             output = Algorithms.BreadthFirstTraversal(graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
-                        }
-                        else {
+                        } else {
                             output = "Start node not found!";
                         }
 
@@ -231,9 +235,10 @@ public class MainActivity extends AppCompatActivity
                 });
 
                 break;
+            }
 
             // Depth First Traversal
-            case R.id.nav_algorithm_3:
+            case R.id.nav_algorithm_3: {
                 graphView.promptDialog("Depth First Traversal: Input", "Please insert the start node name:", new AlertDialogInterface() {
                     EditText inputView;
 
@@ -256,8 +261,7 @@ public class MainActivity extends AppCompatActivity
                         String output;
                         if (graphView_viewModel.getGraphModel().getGraph().getNodes().contains(startNode)) {
                             output = Algorithms.DepthFirstTraversal(graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
-                        }
-                        else {
+                        } else {
                             output = "Start node not found!";
                         }
 
@@ -284,9 +288,10 @@ public class MainActivity extends AppCompatActivity
                 });
 
                 break;
+            }
 
             // Prim's Algorithm
-            case R.id.nav_algorithm_4:
+            case R.id.nav_algorithm_4: {
                 graphView.promptDialog("Prim's Algorithm: Input", "Please insert the start node name:", new AlertDialogInterface() {
                     EditText inputView;
 
@@ -308,9 +313,8 @@ public class MainActivity extends AppCompatActivity
 
                         String output;
                         if (graphView_viewModel.getGraphModel().getGraph().getNodes().contains(startNode)) {
-                            output = Algorithms.PrimsAlgorithm((UndirectedWeightedGraph)graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
-                        }
-                        else {
+                            output = Algorithms.PrimsAlgorithm((UndirectedWeightedGraph) graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
+                        } else {
                             output = "Start node not found!";
                         }
 
@@ -337,10 +341,19 @@ public class MainActivity extends AppCompatActivity
                 });
 
                 break;
+            }
 
             // Kruskal's Algorithm
             case R.id.nav_algorithm_5: {
-                String output = Algorithms.KruskalAlgorithm((UndirectedWeightedGraph) graphView_viewModel.getGraphModel().getGraph()).toString();
+                String output;
+
+                if (graphView_viewModel.getGraphModel().hasNodes()) {
+                    output = Algorithms.KruskalAlgorithm((UndirectedWeightedGraph) graphView_viewModel.getGraphModel().getGraph()).toString();
+                }
+                else {
+                    output = "The graph has no nodes!";
+                }
+
                 graphView.promptDialog("Kruskal's Algorithm: Output", output, new AlertDialogInterface() {
                     TextView outputView;
 
@@ -366,7 +379,15 @@ public class MainActivity extends AppCompatActivity
 
             // Boruvka's Algorithm
             case R.id.nav_algorithm_6: {
-                String output = Algorithms.BoruvkaAlgorithm((UndirectedWeightedGraph) graphView_viewModel.getGraphModel().getGraph()).toString();
+                String output;
+
+                if (graphView_viewModel.getGraphModel().hasNodes()) {
+                    output = Algorithms.BoruvkaAlgorithm((UndirectedWeightedGraph) graphView_viewModel.getGraphModel().getGraph()).toString();
+                }
+                else {
+                    output = "The graph has no nodes!";
+                }
+
                 graphView.promptDialog("Boruvka's Algorithm: Output", output, new AlertDialogInterface() {
                     TextView outputView;
 
@@ -390,7 +411,7 @@ public class MainActivity extends AppCompatActivity
             }
 
             // Dijkstra's Algorithm
-            case R.id.nav_algorithm_7:
+            case R.id.nav_algorithm_7: {
                 graphView.promptDialog("Dijkstra's Algorithm: Input", "Please insert the start node name:", new AlertDialogInterface() {
                     EditText inputView;
 
@@ -412,9 +433,8 @@ public class MainActivity extends AppCompatActivity
 
                         String output;
                         if (graphView_viewModel.getGraphModel().getGraph().getNodes().contains(startNode)) {
-                            output = Algorithms.DijkstraAlgorithm((DirectedWeightedGraph)graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
-                        }
-                        else {
+                            output = Algorithms.DijkstraAlgorithm((DirectedWeightedGraph) graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
+                        } else {
                             output = "Start node not found!";
                         }
 
@@ -441,9 +461,10 @@ public class MainActivity extends AppCompatActivity
                 });
 
                 break;
+            }
 
             // Bellman-Ford Algorithm
-            case R.id.nav_algorithm_8:
+            case R.id.nav_algorithm_8: {
                 graphView.promptDialog("Bellman-Ford Algorithm: Input", "Please insert the start node name:", new AlertDialogInterface() {
                     EditText inputView;
 
@@ -462,7 +483,7 @@ public class MainActivity extends AppCompatActivity
                     public void onResult(View view) {
                         String input = inputView.getText().toString();
                         Node startNode = new Node(input);
-                        String output = Algorithms.BellmanFordAlgorithm((DirectedWeightedGraph)graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
+                        String output = Algorithms.BellmanFordAlgorithm((DirectedWeightedGraph) graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
 
                         graphView.promptDialog("Bellman-Ford Algorithm: Output", output, new AlertDialogInterface() {
                             TextView outputView;
@@ -487,10 +508,18 @@ public class MainActivity extends AppCompatActivity
                 });
 
                 break;
+            }
 
             // Floyd-Warshall Algorithm
-            case R.id.nav_algorithm_9:
-                String output = Algorithms.FloydWarshallAlgorithm((DirectedWeightedGraph) graphView_viewModel.getGraphModel().getGraph()).toString();
+            case R.id.nav_algorithm_9: {
+                String output;
+
+                if (graphView_viewModel.getGraphModel().hasNodes()) {
+                    output = Algorithms.FloydWarshallAlgorithm((DirectedWeightedGraph) graphView_viewModel.getGraphModel().getGraph()).toString();
+                } else {
+                    output = "The graph has no nodes!";
+                }
+
                 graphView.promptDialog("Floyd-Warshall Algorithm: Output", output, new AlertDialogInterface() {
                     TextView outputView;
 
@@ -512,9 +541,10 @@ public class MainActivity extends AppCompatActivity
                 });
 
                 break;
+            }
 
             // Eulerian Circuit Algorithm
-            case R.id.nav_algorithm_10:
+            case R.id.nav_algorithm_10: {
                 graphView.promptDialog("Eulerian Circuit Algorithm: Input", "Please insert the start node name:", new AlertDialogInterface() {
                     EditText inputView;
 
@@ -536,9 +566,8 @@ public class MainActivity extends AppCompatActivity
 
                         String output;
                         if (graphView_viewModel.getGraphModel().getGraph().getNodes().contains(startNode)) {
-                            output = Algorithms.EulerianCircuit((DirectedWeightedGraph)graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
-                        }
-                        else {
+                            output = Algorithms.EulerianCircuit((DirectedWeightedGraph) graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
+                        } else {
                             output = "Start node not found!";
                         }
 
@@ -565,7 +594,7 @@ public class MainActivity extends AppCompatActivity
                 });
 
                 break;
-
+            }
         }
     }
 

@@ -197,4 +197,8 @@ public class GraphView_ViewModel {
         graphModel.clear();
         graphView_model.clear();
     }
+
+    public boolean isEmpty() {
+        return graphView_model.getNodes().isEmpty();
+    }
 }

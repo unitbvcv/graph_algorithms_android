@@ -51,4 +51,8 @@ public class GraphModel {
     public void clear() {
         initGraph();
     }
+
+    public boolean hasNodes() {
+        return graph.getNodes().isEmpty();
+    }
 }
