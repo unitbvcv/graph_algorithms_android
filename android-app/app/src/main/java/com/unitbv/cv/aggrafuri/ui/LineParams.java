@@ -1,6 +1,6 @@
 package com.unitbv.cv.aggrafuri.ui;
 
-public class LineParams {
+public class LineParams extends ViewParams {
     private float startX = 0.0f, startY = 0.0f, stopX = 0.0f, stopY = 0.0f;
 
     public LineParams() {}

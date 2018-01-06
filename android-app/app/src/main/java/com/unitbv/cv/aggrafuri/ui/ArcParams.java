@@ -1,6 +1,6 @@
 package com.unitbv.cv.aggrafuri.ui;
 
-public class ArcParams {
+public class ArcParams extends ViewParams {
     private float left = 0.0f, right = 0.0f, top = 0.0f,
             bottom = 0.0f, startAngle = 0.0f, sweepAngle = 0.0f;
     private boolean useCenter = false, isSelected = false;

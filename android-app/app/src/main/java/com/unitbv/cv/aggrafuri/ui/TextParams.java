@@ -1,6 +1,8 @@
 package com.unitbv.cv.aggrafuri.ui;
 
-public class TextParams {
+import android.view.View;
+
+public class TextParams extends ViewParams {
     private String message = null;
     private float x = 0.0f, y = 0.0f;
 
