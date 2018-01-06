@@ -182,7 +182,7 @@ public class GraphView_ViewModel {
             }
         }
 
-        // send the view the new data then invalidate it
+        // send the view the new data then invalidate the view
         ArrayList<Object> result = graphView_model.generateParamsLists();
         ArrayList<ArcParams> arcParamsList = (ArrayList<ArcParams>)result.get(0);
         ArrayList<LineParams> lineParamsList = (ArrayList<LineParams>)result.get(1);
@@ -191,5 +191,10 @@ public class GraphView_ViewModel {
         graphView.setLines(lineParamsList);
         graphView.setTexts(textParamsList);
         graphView.invalidate();
+    }
+
+    public void clearModels() {
+        graphModel.clear();
+        graphView_model.clear();
     }
 }

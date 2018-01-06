@@ -47,4 +47,8 @@ public class GraphModel {
         this.type = type;
         initGraph();
     }
+
+    public void clear() {
+        initGraph();
+    }
 }
