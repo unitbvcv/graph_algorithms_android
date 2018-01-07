@@ -79,82 +79,143 @@ public class GraphView_ViewModel {
                     // if the selectedNode is not the same as the current node, create an edge
                     // at the end deselect the current node
                     if (selectedNode != entry.getKey()) {
-                        switch (graphView_model.getType()) {
-                            case UNDIRECTED: {
-                                Edge newEdge = new Edge(selectedNode, entry.getValue().getNode());
-                                graphView_model.addEdge(newEdge);
-                                graphModel.getGraph().addEdge(newEdge);
-                                graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
-                                selectedNode = null;
-                                sendDataToViewAndInvalidate();
-                                break;
+                        Edge edgeToFind = graphModel.getGraph().getEdge(selectedNode, entry.getKey());
+                        if (edgeToFind != null) {
+                            switch (graphView_model.getType()) {
+                                case UNDIRECTED_WEIGHTED: {
+                                    graphView.promptDialog("Edit weighted edge", "Please insert the new weight of the edge:", new AlertDialogInterface() {
+                                        EditText inputView;
+
+                                        @Override
+                                        public View onBuildDialog(Context context) {
+                                            inputView = new EditText(context);
+                                            inputView.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                                            return inputView;
+                                        }
+
+                                        @Override
+                                        public void onCancel() {
+
+                                        }
+
+                                        @Override
+                                        public void onResult(View view) {
+                                            ((WeightedEdge)edgeToFind).setWeight(Double.parseDouble(inputView.getText().toString()));
+                                            graphView_model.getEdges().get(edgeToFind).getWeight().setMessage(Double.valueOf(inputView.getText().toString()).toString());
+                                            graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
+                                            selectedNode = null;
+                                            sendDataToViewAndInvalidate();
+                                        }
+                                    });
+                                    break;
+                                }
+                                case DIRECTED_WEIGHTED: {
+                                    graphView.promptDialog("Edit weighted arc", "Please insert the new weight of the arc:", new AlertDialogInterface() {
+                                        EditText inputView;
+
+                                        @Override
+                                        public View onBuildDialog(Context context) {
+                                            inputView = new EditText(context);
+                                            inputView.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                                            return inputView;
+                                        }
+
+                                        @Override
+                                        public void onCancel() {
+
+                                        }
+
+                                        @Override
+                                        public void onResult(View view) {
+                                            ((WeightedArc)edgeToFind).setWeight(Double.parseDouble(inputView.getText().toString()));
+                                            graphView_model.getArcs().get(edgeToFind).getWeight().setMessage(Double.valueOf(inputView.getText().toString()).toString());
+                                            graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
+                                            selectedNode = null;
+                                            sendDataToViewAndInvalidate();
+                                        }
+                                    });
+                                    break;
+                                }
                             }
-                            case DIRECTED: {
-                                Arc newArc = new Arc(selectedNode, entry.getValue().getNode());
-                                graphView_model.addArc(newArc);
-                                graphModel.getGraph().addEdge(newArc);
-                                graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
-                                selectedNode = null;
-                                sendDataToViewAndInvalidate();
-                                break;
-                            }
-                            case UNDIRECTED_WEIGHTED: {
-                                graphView.promptDialog("Add weighted edge", "Please insert the weight of the edge:", new AlertDialogInterface() {
-                                    EditText inputView;
+                        }
+                        else {
+                            switch (graphView_model.getType()) {
+                                case UNDIRECTED: {
+                                    Edge newEdge = new Edge(selectedNode, entry.getValue().getNode());
+                                    graphView_model.addEdge(newEdge);
+                                    graphModel.getGraph().addEdge(newEdge);
+                                    graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
+                                    selectedNode = null;
+                                    sendDataToViewAndInvalidate();
+                                    break;
+                                }
+                                case DIRECTED: {
+                                    Arc newArc = new Arc(selectedNode, entry.getValue().getNode());
+                                    graphView_model.addArc(newArc);
+                                    graphModel.getGraph().addEdge(newArc);
+                                    graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
+                                    selectedNode = null;
+                                    sendDataToViewAndInvalidate();
+                                    break;
+                                }
+                                case UNDIRECTED_WEIGHTED: {
+                                    graphView.promptDialog("Add weighted edge", "Please insert the weight of the edge:", new AlertDialogInterface() {
+                                        EditText inputView;
 
-                                    @Override
-                                    public View onBuildDialog(Context context) {
-                                        inputView = new EditText(context);
-                                        inputView.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                                        return inputView;
-                                    }
+                                        @Override
+                                        public View onBuildDialog(Context context) {
+                                            inputView = new EditText(context);
+                                            inputView.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                                            return inputView;
+                                        }
 
-                                    @Override
-                                    public void onCancel() {
+                                        @Override
+                                        public void onCancel() {
 
-                                    }
+                                        }
 
-                                    @Override
-                                    public void onResult(View view) {
-                                        WeightedEdge newWeightedEdge = new WeightedEdge(selectedNode,
-                                                entry.getKey(), Double.parseDouble(inputView.getText().toString()));
-                                        graphView_model.addWeightedEdge(newWeightedEdge);
-                                        graphModel.getGraph().addEdge(newWeightedEdge);
-                                        graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
-                                        selectedNode = null;
-                                        sendDataToViewAndInvalidate();
-                                    }
-                                });
-                                break;
-                            }
-                            case DIRECTED_WEIGHTED: {
-                                graphView.promptDialog("Add weighted edge", "Please insert the weight of the edge:", new AlertDialogInterface() {
-                                    EditText inputView;
+                                        @Override
+                                        public void onResult(View view) {
+                                            WeightedEdge newWeightedEdge = new WeightedEdge(selectedNode,
+                                                    entry.getKey(), Double.parseDouble(inputView.getText().toString()));
+                                            graphView_model.addWeightedEdge(newWeightedEdge);
+                                            graphModel.getGraph().addEdge(newWeightedEdge);
+                                            graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
+                                            selectedNode = null;
+                                            sendDataToViewAndInvalidate();
+                                        }
+                                    });
+                                    break;
+                                }
+                                case DIRECTED_WEIGHTED: {
+                                    graphView.promptDialog("Add weighted arc", "Please insert the weight of the arc:", new AlertDialogInterface() {
+                                        EditText inputView;
 
-                                    @Override
-                                    public View onBuildDialog(Context context) {
-                                        inputView = new EditText(context);
-                                        inputView.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                                        return inputView;
-                                    }
+                                        @Override
+                                        public View onBuildDialog(Context context) {
+                                            inputView = new EditText(context);
+                                            inputView.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                                            return inputView;
+                                        }
 
-                                    @Override
-                                    public void onCancel() {
+                                        @Override
+                                        public void onCancel() {
 
-                                    }
+                                        }
 
-                                    @Override
-                                    public void onResult(View view) {
-                                        WeightedArc newWeightedArc = new WeightedArc(selectedNode,
-                                                entry.getValue().getNode(), Double.parseDouble(inputView.getText().toString()));
-                                        graphView_model.addWeightedArc(newWeightedArc);
-                                        graphModel.getGraph().addEdge(newWeightedArc);
-                                        graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
-                                        selectedNode = null;
-                                        sendDataToViewAndInvalidate();
-                                    }
-                                });
-                                break;
+                                        @Override
+                                        public void onResult(View view) {
+                                            WeightedArc newWeightedArc = new WeightedArc(selectedNode,
+                                                    entry.getValue().getNode(), Double.parseDouble(inputView.getText().toString()));
+                                            graphView_model.addWeightedArc(newWeightedArc);
+                                            graphModel.getGraph().addEdge(newWeightedArc);
+                                            graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
+                                            selectedNode = null;
+                                            sendDataToViewAndInvalidate();
+                                        }
+                                    });
+                                    break;
+                                }
                             }
                         }
                     }
