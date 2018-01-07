@@ -260,9 +260,10 @@ public class GraphView_ViewModel {
         if (nodeTouched == false) {
             // if we have a node already selected, then deselect it
             if (selectedNode != null) {
-                graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
+                // TODO: it crashes here sometime for some reason, when the below condition is met
                 if (graphView_model.getNodes().get(selectedNode) == null)
                     Log.d("INFO", selectedNode.getID());
+                graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
                 selectedNode = null;
                 sendDataToView();
             }
