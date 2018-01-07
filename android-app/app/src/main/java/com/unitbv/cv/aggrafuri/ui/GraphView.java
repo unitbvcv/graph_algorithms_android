@@ -69,6 +69,7 @@ public class GraphView extends View {
 
         textPaint.setTextSize(FONT_SIZE_WEIGHT);
         textPaint.setAntiAlias(true);
+        textPaint.setTextAlign(Paint.Align.CENTER);
 
         setOnTouchListener(new OnTouchListener() {
             @Override
