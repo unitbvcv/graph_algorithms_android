@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity
             }
 
             case R.id.nav_graphview_reset: {
-                graphView_viewModel.clearModels();
+                graphView_viewModel.clear();
                 break;
             }
 
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity
                         Node startNode = new Node(input);
 
                         String output;
-                        if (graphView_viewModel.getGraphModel().getGraph().getNodes().contains(startNode)) {
+                        if (graphView_viewModel.getGraphModel().getGraph().containsNode(startNode)) {
                             output = Algorithms.GenericGraphTraversal(graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
                         } else {
                             output = "Start node not found!";
@@ -206,7 +206,7 @@ public class MainActivity extends AppCompatActivity
                         Node startNode = new Node(input);
 
                         String output;
-                        if (graphView_viewModel.getGraphModel().getGraph().getNodes().contains(startNode)) {
+                        if (graphView_viewModel.getGraphModel().getGraph().containsNode(startNode)) {
                             output = Algorithms.BreadthFirstTraversal(graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
                         } else {
                             output = "Start node not found!";
@@ -259,7 +259,7 @@ public class MainActivity extends AppCompatActivity
                         Node startNode = new Node(input);
 
                         String output;
-                        if (graphView_viewModel.getGraphModel().getGraph().getNodes().contains(startNode)) {
+                        if (graphView_viewModel.getGraphModel().getGraph().containsNode(startNode)) {
                             output = Algorithms.DepthFirstTraversal(graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
                         } else {
                             output = "Start node not found!";
@@ -312,7 +312,7 @@ public class MainActivity extends AppCompatActivity
                         Node startNode = new Node(input);
 
                         String output;
-                        if (graphView_viewModel.getGraphModel().getGraph().getNodes().contains(startNode)) {
+                        if (graphView_viewModel.getGraphModel().getGraph().containsNode(startNode)) {
                             output = Algorithms.PrimsAlgorithm((UndirectedWeightedGraph) graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
                         } else {
                             output = "Start node not found!";
@@ -432,7 +432,7 @@ public class MainActivity extends AppCompatActivity
                         Node startNode = new Node(input);
 
                         String output;
-                        if (graphView_viewModel.getGraphModel().getGraph().getNodes().contains(startNode)) {
+                        if (graphView_viewModel.getGraphModel().getGraph().containsNode(startNode)) {
                             output = Algorithms.DijkstraAlgorithm((DirectedWeightedGraph) graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
                         } else {
                             output = "Start node not found!";
@@ -565,7 +565,7 @@ public class MainActivity extends AppCompatActivity
                         Node startNode = new Node(input);
 
                         String output;
-                        if (graphView_viewModel.getGraphModel().getGraph().getNodes().contains(startNode)) {
+                        if (graphView_viewModel.getGraphModel().getGraph().containsNode(startNode)) {
                             output = Algorithms.EulerianCircuit((DirectedWeightedGraph) graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
                         } else {
                             output = "Start node not found!";

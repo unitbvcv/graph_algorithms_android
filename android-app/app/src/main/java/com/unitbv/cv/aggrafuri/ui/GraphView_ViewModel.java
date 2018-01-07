@@ -263,18 +263,21 @@ public class GraphView_ViewModel {
                     @Override
                     public void onResult(View view) {
                         Node newNode = new Node(inputView.getText().toString());
-                        graphView_model.addNode(newNode, x, y);
-                        graphModel.getGraph().addNode(newNode);
-                        sendDataToViewAndInvalidate();
+                        if (!graphModel.getGraph().containsNode(newNode)) {
+                            graphView_model.addNode(newNode, x, y);
+                            graphModel.getGraph().addNode(newNode);
+                            sendDataToViewAndInvalidate();
+                        }
                     }
                 });
             }
         }
     }
 
-    public void clearModels() {
+    public void clear() {
         graphModel.clear();
         graphView_model.clear();
+        graphView.clear();
     }
 
     public boolean isEmpty() {

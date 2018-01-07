@@ -31,6 +31,24 @@ public abstract class AbstractGraph
 	{
 		return m_nodes.remove(node);
 	}
+
+	public boolean containsNode(Node node) {
+		for (Node currentNode : m_nodes) {
+			if (currentNode.equals(node)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public boolean containsEdge(Edge edge)
+	{
+		for (Edge currentEdge : m_edges)
+			if (currentEdge.equals(edge))
+				return true;
+		return false;
+	}
 	
 	public HashSet<Edge> getEdges() 
 	{

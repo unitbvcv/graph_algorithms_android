@@ -35,18 +35,18 @@ public class GraphView extends View {
     private float downTouchPositionX = -1;
     private float downTouchPositionY = -1;
 
-    private final float TOUCH_SENSITIVITY_PIXELS = 5;
+    private final float TOUCH_SENSITIVITY_PIXELS = 10;
 
     public final static int NODE_COLOR_A = 255;
     public final static int NODE_COLOR_R = 0;
     public final static int NODE_COLOR_G = 0;
     public final static int NODE_COLOR_B = 0;
 
-    public final static float NODE_CIRCLE_RADIUS = 50;
+    public final static float NODE_CIRCLE_RADIUS = 70;
     public final static float FONT_SIZE_WEIGHT = 50.0f;
 
     public final static float NODE_STROKE_WIDTH = 3.0f;
-    public final static float WEIGHT_SPACING = 5.0f;
+    public final static float WEIGHT_SPACING = 15.0f;
 
     public final static int BACKGROUND_COLOR_R = 255;
     public final static int BACKGROUND_COLOR_G = 255;
@@ -65,8 +65,10 @@ public class GraphView extends View {
         drawPaint.setARGB(NODE_COLOR_A, NODE_COLOR_R, NODE_COLOR_G, NODE_COLOR_B);
         drawPaint.setStyle(Paint.Style.STROKE);
         drawPaint.setStrokeWidth(NODE_STROKE_WIDTH);
+        drawPaint.setAntiAlias(true);
 
         textPaint.setTextSize(FONT_SIZE_WEIGHT);
+        textPaint.setAntiAlias(true);
 
         setOnTouchListener(new OnTouchListener() {
             @Override

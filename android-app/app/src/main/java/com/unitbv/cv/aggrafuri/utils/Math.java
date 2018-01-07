@@ -144,26 +144,35 @@ public class Math {
         double lineMiddle_x = startX + lineLength / 2;
         double lineMiddle_y = startY;
 
-        double topLeft_x = lineMiddle_x - textLength / 2;
-        double topLeft_y = lineMiddle_y + textHeight + GraphView.WEIGHT_SPACING;
-
-        double topRight_x = lineMiddle_x + textLength / 2;
-        double topRight_y = topLeft_y;
-
-        Vector<Float> topLeftRotated = rotatePoint(startX, startY, lineAngle, (float) topLeft_x, (float) topLeft_y);
-        Vector<Float> topRightRotated = rotatePoint(startX, startY, lineAngle, (float) topRight_x, (float) topRight_y);
-
         if (numberBetween(lineAngle,
                 java.lang.Math.PI / 2,
                 java.lang.Math.PI * 3 / 2,
                 false,
                 false))
         {
+            double bottomLeft_x = lineMiddle_x - textLength / 2;
+            double bottomLeft_y = lineMiddle_y + GraphView.WEIGHT_SPACING;
+
+            double bottomRight_x = lineMiddle_x + textLength / 2;
+            double bottomRight_y = lineMiddle_y + GraphView.WEIGHT_SPACING;
+
+            Vector<Float> topLeftRotated = rotatePoint(startX, startY, lineAngle, (float) bottomLeft_x, (float) bottomLeft_y);
+            Vector<Float> topRightRotated = rotatePoint(startX, startY, lineAngle, (float) bottomRight_x, (float) bottomRight_y);
+
             result.moveTo(topRightRotated.get(0), topRightRotated.get(1));
             result.lineTo(topLeftRotated.get(0), topLeftRotated.get(1));
         }
         else
         {
+            double bottomLeft_x = lineMiddle_x - textLength / 2;
+            double bottomLeft_y = lineMiddle_y + textHeight + GraphView.WEIGHT_SPACING;
+
+            double bottomRight_x = lineMiddle_x + textLength / 2;
+            double bottomRight_y = lineMiddle_y + textHeight + GraphView.WEIGHT_SPACING;
+
+            Vector<Float> topLeftRotated = rotatePoint(startX, startY, lineAngle, (float) bottomLeft_x, (float) bottomLeft_y);
+            Vector<Float> topRightRotated = rotatePoint(startX, startY, lineAngle, (float) bottomRight_x, (float) bottomRight_y);
+
             result.moveTo(topLeftRotated.get(0), topLeftRotated.get(1));
             result.lineTo(topRightRotated.get(0), topRightRotated.get(1));
         }
@@ -186,12 +195,25 @@ public class Math {
 
         Rect textBounds = new Rect();
         paint.getTextBounds(text, 0, text.length(), textBounds);
-        int textLength = textBounds.width();
+        int textWidth = textBounds.width();
         int textHeight = textBounds.height();
 
-        result.add(cx - textLength/2);
-        result.add(cy - textHeight/2);
+        switch (paint.getTextAlign()) {
+            case CENTER: {
+                result.add(cx);
+                break;
+            }
+            case LEFT: {
+                result.add(cx - textWidth/2);
+                break;
+            }
+            case RIGHT: {
+                result.add(cx + textWidth/2);
+                break;
+            }
+        }
 
+        result.add(cy + textHeight/2);
         return result;
     }
 }
