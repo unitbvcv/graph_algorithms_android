@@ -3,9 +3,9 @@ package com.unitbv.cv.aggrafuri.ui;
 import android.content.Context;
 import android.graphics.RectF;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.unitbv.cv.aggrafuri.graph.Arc;
 import com.unitbv.cv.aggrafuri.graph.Edge;
@@ -100,11 +100,16 @@ public class GraphView_ViewModel {
 
                                         @Override
                                         public void onResult(View view) {
-                                            ((WeightedEdge)edgeToFind).setWeight(Double.parseDouble(inputView.getText().toString()));
-                                            graphView_model.getEdges().get(edgeToFind).getWeight().setMessage(Double.valueOf(inputView.getText().toString()).toString());
-                                            graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
-                                            selectedNode = null;
-                                            sendDataToViewAndInvalidate();
+                                            try {
+                                                ((WeightedEdge) edgeToFind).setWeight(Double.parseDouble(inputView.getText().toString()));
+                                                graphView_model.getEdges().get(edgeToFind).getWeight().setMessage(Double.valueOf(inputView.getText().toString()).toString());
+                                                graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
+                                                selectedNode = null;
+                                                sendDataToView();
+                                            }
+                                            catch (NumberFormatException e) {
+
+                                            }
                                         }
                                     });
                                     break;
@@ -127,11 +132,16 @@ public class GraphView_ViewModel {
 
                                         @Override
                                         public void onResult(View view) {
-                                            ((WeightedArc)edgeToFind).setWeight(Double.parseDouble(inputView.getText().toString()));
-                                            graphView_model.getArcs().get(edgeToFind).getWeight().setMessage(Double.valueOf(inputView.getText().toString()).toString());
-                                            graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
-                                            selectedNode = null;
-                                            sendDataToViewAndInvalidate();
+                                            try {
+                                                ((WeightedArc)edgeToFind).setWeight(Double.parseDouble(inputView.getText().toString()));
+                                                graphView_model.getArcs().get(edgeToFind).getWeight().setMessage(Double.valueOf(inputView.getText().toString()).toString());
+                                                graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
+                                                selectedNode = null;
+                                                sendDataToView();
+                                            }
+                                            catch (NumberFormatException e) {
+
+                                            }
                                         }
                                     });
                                     break;
@@ -146,7 +156,7 @@ public class GraphView_ViewModel {
                                     graphModel.getGraph().addEdge(newEdge);
                                     graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
                                     selectedNode = null;
-                                    sendDataToViewAndInvalidate();
+                                    sendDataToView();
                                     break;
                                 }
                                 case DIRECTED: {
@@ -155,7 +165,7 @@ public class GraphView_ViewModel {
                                     graphModel.getGraph().addEdge(newArc);
                                     graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
                                     selectedNode = null;
-                                    sendDataToViewAndInvalidate();
+                                    sendDataToView();
                                     break;
                                 }
                                 case UNDIRECTED_WEIGHTED: {
@@ -176,13 +186,18 @@ public class GraphView_ViewModel {
 
                                         @Override
                                         public void onResult(View view) {
-                                            WeightedEdge newWeightedEdge = new WeightedEdge(selectedNode,
-                                                    entry.getKey(), Double.parseDouble(inputView.getText().toString()));
-                                            graphView_model.addWeightedEdge(newWeightedEdge);
-                                            graphModel.getGraph().addEdge(newWeightedEdge);
-                                            graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
-                                            selectedNode = null;
-                                            sendDataToViewAndInvalidate();
+                                            try {
+                                                WeightedEdge newWeightedEdge = new WeightedEdge(selectedNode,
+                                                        entry.getKey(), Double.parseDouble(inputView.getText().toString()));
+                                                graphView_model.addWeightedEdge(newWeightedEdge);
+                                                graphModel.getGraph().addEdge(newWeightedEdge);
+                                                graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
+                                                selectedNode = null;
+                                                sendDataToView();
+                                            }
+                                            catch (NumberFormatException e) {
+
+                                            }
                                         }
                                     });
                                     break;
@@ -205,13 +220,18 @@ public class GraphView_ViewModel {
 
                                         @Override
                                         public void onResult(View view) {
-                                            WeightedArc newWeightedArc = new WeightedArc(selectedNode,
-                                                    entry.getValue().getNode(), Double.parseDouble(inputView.getText().toString()));
-                                            graphView_model.addWeightedArc(newWeightedArc);
-                                            graphModel.getGraph().addEdge(newWeightedArc);
-                                            graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
-                                            selectedNode = null;
-                                            sendDataToViewAndInvalidate();
+                                            try {
+                                                WeightedArc newWeightedArc = new WeightedArc(selectedNode,
+                                                        entry.getValue().getNode(), Double.parseDouble(inputView.getText().toString()));
+                                                graphView_model.addWeightedArc(newWeightedArc);
+                                                graphModel.getGraph().addEdge(newWeightedArc);
+                                                graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
+                                                selectedNode = null;
+                                                sendDataToView();
+                                            }
+                                            catch (NumberFormatException e) {
+
+                                            }
                                         }
                                     });
                                     break;
@@ -222,14 +242,14 @@ public class GraphView_ViewModel {
                     else {
                         graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
                         selectedNode = null;
-                        sendDataToViewAndInvalidate();
+                        sendDataToView();
                     }
                 }
                 // if we don't have another node selected
                 else {
                     selectedNode = entry.getValue().getNode();
                     nodeParams.setSelected(true);
-                    sendDataToViewAndInvalidate();
+                    sendDataToView();
                 }
 
                 break;
@@ -241,8 +261,10 @@ public class GraphView_ViewModel {
             // if we have a node already selected, then deselect it
             if (selectedNode != null) {
                 graphView_model.getNodes().get(selectedNode).getArc().setSelected(false);
+                if (graphView_model.getNodes().get(selectedNode) == null)
+                    Log.d("INFO", selectedNode.getID());
                 selectedNode = null;
-                sendDataToViewAndInvalidate();
+                sendDataToView();
             }
             // if we don't have a node already selected, then draw a new node
             else {
@@ -263,10 +285,10 @@ public class GraphView_ViewModel {
                     @Override
                     public void onResult(View view) {
                         Node newNode = new Node(inputView.getText().toString());
-                        if (!graphModel.getGraph().containsNode(newNode)) {
+                        if (!graphModel.getGraph().getNodes().contains(newNode)) {
                             graphView_model.addNode(newNode, x, y);
                             graphModel.getGraph().addNode(newNode);
-                            sendDataToViewAndInvalidate();
+                            sendDataToView();
                         }
                     }
                 });
@@ -284,7 +306,7 @@ public class GraphView_ViewModel {
         return graphView_model.getNodes().isEmpty();
     }
 
-    public void sendDataToViewAndInvalidate() {
+    public void sendDataToView() {
         // send the view the new data then invalidate the view
         ArrayList<Object> result = graphView_model.generateParamsLists();
         ArrayList<ArcParams> arcParamsList = (ArrayList<ArcParams>)result.get(0);
@@ -293,6 +315,5 @@ public class GraphView_ViewModel {
         graphView.setArcs(arcParamsList);
         graphView.setLines(lineParamsList);
         graphView.setTexts(textParamsList);
-        graphView.invalidate();
     }
 }

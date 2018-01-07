@@ -36,4 +36,9 @@ public class Edge
 		}
 		return false;
 	}
+
+	@Override
+	public int hashCode() {
+		return (m_A.getID() + m_B.getID()).hashCode();
+	}
 }

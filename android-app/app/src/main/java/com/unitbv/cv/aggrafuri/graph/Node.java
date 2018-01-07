@@ -14,7 +14,12 @@ public class Node
 		return m_id;
 	}
 
-	public boolean equals(Object other)
+    @Override
+    public int hashCode() {
+        return m_id.hashCode();
+    }
+
+    public boolean equals(Object other)
 	{
 		if (other instanceof Node)
 			return m_id.contentEquals(((Node)other).getID());

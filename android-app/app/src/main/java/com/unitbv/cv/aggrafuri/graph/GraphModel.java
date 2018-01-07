@@ -53,6 +53,6 @@ public class GraphModel {
     }
 
     public boolean hasNodes() {
-        return graph.getNodes().isEmpty();
+        return !graph.getNodes().isEmpty();
     }
 }

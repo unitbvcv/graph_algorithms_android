@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.unitbv.cv.aggrafuri.R;
 import com.unitbv.cv.aggrafuri.graph.Algorithms;
+import com.unitbv.cv.aggrafuri.graph.DirectedGraph;
 import com.unitbv.cv.aggrafuri.graph.DirectedWeightedGraph;
 import com.unitbv.cv.aggrafuri.graph.GraphModel;
 import com.unitbv.cv.aggrafuri.graph.GraphType;
@@ -153,7 +154,7 @@ public class MainActivity extends AppCompatActivity
                         Node startNode = new Node(input);
 
                         String output;
-                        if (graphView_viewModel.getGraphModel().getGraph().containsNode(startNode)) {
+                        if (graphView_viewModel.getGraphModel().getGraph().getNodes().contains(startNode)) {
                             output = Algorithms.GenericGraphTraversal(graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
                         } else {
                             output = "Start node not found!";
@@ -206,7 +207,7 @@ public class MainActivity extends AppCompatActivity
                         Node startNode = new Node(input);
 
                         String output;
-                        if (graphView_viewModel.getGraphModel().getGraph().containsNode(startNode)) {
+                        if (graphView_viewModel.getGraphModel().getGraph().getNodes().contains(startNode)) {
                             output = Algorithms.BreadthFirstTraversal(graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
                         } else {
                             output = "Start node not found!";
@@ -259,7 +260,7 @@ public class MainActivity extends AppCompatActivity
                         Node startNode = new Node(input);
 
                         String output;
-                        if (graphView_viewModel.getGraphModel().getGraph().containsNode(startNode)) {
+                        if (graphView_viewModel.getGraphModel().getGraph().getNodes().contains(startNode)) {
                             output = Algorithms.DepthFirstTraversal(graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
                         } else {
                             output = "Start node not found!";
@@ -312,7 +313,7 @@ public class MainActivity extends AppCompatActivity
                         Node startNode = new Node(input);
 
                         String output;
-                        if (graphView_viewModel.getGraphModel().getGraph().containsNode(startNode)) {
+                        if (graphView_viewModel.getGraphModel().getGraph().getNodes().contains(startNode)) {
                             output = Algorithms.PrimsAlgorithm((UndirectedWeightedGraph) graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
                         } else {
                             output = "Start node not found!";
@@ -432,7 +433,7 @@ public class MainActivity extends AppCompatActivity
                         Node startNode = new Node(input);
 
                         String output;
-                        if (graphView_viewModel.getGraphModel().getGraph().containsNode(startNode)) {
+                        if (graphView_viewModel.getGraphModel().getGraph().getNodes().contains(startNode)) {
                             output = Algorithms.DijkstraAlgorithm((DirectedWeightedGraph) graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
                         } else {
                             output = "Start node not found!";
@@ -565,8 +566,8 @@ public class MainActivity extends AppCompatActivity
                         Node startNode = new Node(input);
 
                         String output;
-                        if (graphView_viewModel.getGraphModel().getGraph().containsNode(startNode)) {
-                            output = Algorithms.EulerianCircuit((DirectedWeightedGraph) graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
+                        if (graphView_viewModel.getGraphModel().getGraph().getNodes().contains(startNode)) {
+                            output = Algorithms.EulerianCircuit((DirectedGraph) graphView_viewModel.getGraphModel().getGraph(), startNode).toString();
                         } else {
                             output = "Start node not found!";
                         }
